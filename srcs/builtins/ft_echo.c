@@ -6,11 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:48:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/02 23:30:07 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/03 23:45:23 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static	int		count_args(char **args)
 {

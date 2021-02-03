@@ -6,11 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:38:47 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/02 22:18:16 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/03 23:44:55 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int		ft_pwd(void)
 {
