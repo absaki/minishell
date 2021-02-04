@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 00:30:46 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/04 23:12:44 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int		exec_builtin(t_sh *sh, char **args)
 	// 	result = ft_cd(args, mini->env);
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
-	// if (ft_strcmp(args[0], "env") == 0)
-	// 	ft_env(mini->env);
+	if (ft_strcmp(args[0], "env") == 0)
+		ft_env(sh->env);
 	// if (ft_strcmp(args[0], "export") == 0)
 	// 	ft_export(args, mini->env, mini->secret_env);
 	// if (ft_strcmp(args[0], "unset") == 0)
@@ -61,7 +61,7 @@ t_sh	*make_new_sh(void)
 	sh->ret = 0;
 	sh->exit = 0;
 	sh->no_exec = 0;
-	// add_list_malloc(cub);
+	add_list_malloc(sh);
 	return (sh);
 }
 
@@ -84,24 +84,24 @@ int		main(int argc, char **argv, char **env_array)
 	init_secret_env(sh, env_array);
 	
 	// for_debug
-	if (ft_strcmp(argv[1], "check_env") == 0)
-	{
-		while (sh->env->next)
-		{
-			printf("%s\n", sh->env->value);
-			sh->env = sh->env->next;
-		}
-		printf("\'%s\' ", sh->env->value);
-	}
-	if (ft_strcmp(argv[1], "check_secret_env") == 0)
-	{
-		while (sh->env->next)
-		{
-			printf("%s\n", sh->env->value);
-			sh->env = sh->env->next;
-		}
-		printf("\'%s\' ", sh->env->value);
-	}
+	// if (ft_strcmp(argv[1], "check_env") == 0)
+	// {
+	// 	while (sh->env->next)
+	// 	{
+	// 		printf("%s\n", sh->env->value);
+	// 		sh->env = sh->env->next;
+	// 	}
+	// 	printf("\'%s\' ", sh->env->value);
+	// }
+	// if (ft_strcmp(argv[1], "check_secret_env") == 0)
+	// {
+	// 	while (sh->env->next)
+	// 	{
+	// 		printf("%s\n", sh->env->value);
+	// 		sh->env = sh->env->next;
+	// 	}
+	// 	printf("\'%s\' ", sh->env->value);
+	// }
 
 	while (i < argc)
 	{
@@ -117,5 +117,6 @@ int		main(int argc, char **argv, char **env_array)
 	// 	free(args[i]);
 	// 	i++;
 	// }
+	ft_lstclear(&g_list_malloc, free);
 	return(argc);
 }

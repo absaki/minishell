@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 19:09:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 00:30:34 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/04 23:24:43 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-
 # define BUFF_SIZE 1024
+
+extern t_list	*g_list_malloc;
 
 typedef struct	s_env
 {
@@ -63,9 +64,12 @@ typedef struct	s_sh
 int				ft_pwd(void);
 int				ft_echo(char **args);
 void			ft_exit(t_sh *sh, char **args);
+int				ft_env(t_env *env);
+
 int				init_env(t_sh *sh, char **env_array);
 int				init_secret_env(t_sh *sh, char **env_array);
-void			exit_and_print(char *s);
-void			exit_and_free(char *s);
-
+void			*malloc_with_list_malloc(size_t size);
+void			add_list_malloc(void *ptr);
+void			*ft_malloc(void *ptr);
+void			free_list_malloc(void);
 #endif
