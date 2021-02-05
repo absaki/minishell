@@ -6,7 +6,7 @@
 #    By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/11 00:24:57 by kdoi              #+#    #+#              #
-#    Updated: 2021/02/02 21:54:40 by kdoi             ###   ########.fr        #
+#    Updated: 2021/02/05 22:42:30 by kdoi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ mandatory := ft_memset.c \
 			 ft_tolower.c \
 			 ft_calloc.c \
 			 ft_strdup.c \
+			 ft_free_and_del.c
 
 mandatory += ft_substr.c \
 			 ft_strjoin.c \

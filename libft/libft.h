@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 14:29:21 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/02 21:54:10 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/05 22:42:01 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 										void (*del)(void *));
+void			*ft_free_and_del(void *ptr);
 
 #endif

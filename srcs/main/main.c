@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 23:12:44 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/05 22:46:33 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		exec_builtin(t_sh *sh, char **args)
 	result = 0;
 	if (ft_strcmp(args[0], "echo") == 0)
 		result = ft_echo(args);
-	// if (ft_strcmp(args[0], "cd") == 0)
-	// 	result = ft_cd(args, mini->env);
+	if (ft_strcmp(args[0], "cd") == 0)
+		result = ft_cd(args, sh->env);
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args[0], "env") == 0)

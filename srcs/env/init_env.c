@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 23:51:31 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 23:28:22 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/05 22:49:27 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int				init_env(t_sh *sh, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
+		if (ft_strncmp("OLDPWD", env_array[i], 5) == 0)
+		{
+			i++;
+			continue;
+		}
 		new = malloc_with_list_malloc(sizeof(t_env));
 		new->value = ft_strdup_and_list_malloc(env_array[i]);
 		new->next = NULL;
@@ -57,6 +62,11 @@ int				init_secret_env(t_sh *sh, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
+		if (ft_strncmp("OLDPWD", env_array[i], 5) == 0)
+		{
+			i++;
+			continue;
+		}
 		new = malloc_with_list_malloc(sizeof(t_env));
 		new->value = ft_strdup_and_list_malloc(env_array[i]);
 		new->next = NULL;
