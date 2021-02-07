@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/05 22:46:33 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/07 16:10:06 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		exec_builtin(t_sh *sh, char **args)
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args[0], "env") == 0)
-		ft_env(sh->env);
-	// if (ft_strcmp(args[0], "export") == 0)
-	// 	ft_export(args, mini->env, mini->secret_env);
-	// if (ft_strcmp(args[0], "unset") == 0)
-	// 	ft_unset(args, mini);
+		ft_env(args, sh->env);
+	if (ft_strcmp(args[0], "export") == 0)
+		ft_export(args, sh->env, sh->secret_env);
+	if (ft_strcmp(args[0], "unset") == 0)
+		ft_unset(args, sh->env, sh->secret_env);
 	if (ft_strcmp(args[0], "exit") == 0)
 	{
 		ft_exit(sh ,args);
@@ -83,25 +83,6 @@ int		main(int argc, char **argv, char **env_array)
 	init_env(sh, env_array);
 	init_secret_env(sh, env_array);
 	
-	// for_debug
-	// if (ft_strcmp(argv[1], "check_env") == 0)
-	// {
-	// 	while (sh->env->next)
-	// 	{
-	// 		printf("%s\n", sh->env->value);
-	// 		sh->env = sh->env->next;
-	// 	}
-	// 	printf("\'%s\' ", sh->env->value);
-	// }
-	// if (ft_strcmp(argv[1], "check_secret_env") == 0)
-	// {
-	// 	while (sh->env->next)
-	// 	{
-	// 		printf("%s\n", sh->env->value);
-	// 		sh->env = sh->env->next;
-	// 	}
-	// 	printf("\'%s\' ", sh->env->value);
-	// }
 
 	while (i < argc)
 	{
@@ -112,11 +93,63 @@ int		main(int argc, char **argv, char **env_array)
 	if (argc > 1)
 		result = exec_builtin(sh, args);
 	i = 0;
-	// while (i < argc -1)
-	// {
-	// 	free(args[i]);
-	// 	i++;
-	// }
+	
+	// for_debug
+	if (ft_strcmp(argv[1], "check_env") == 0)
+	{
+		while (sh->env->next)
+		{
+			printf("%s\n", sh->env->value);
+			sh->env = sh->env->next;
+		}
+		printf("\'%s\' ", sh->env->value);
+	}
+	if (ft_strcmp(argv[1], "check_secret_env") == 0)
+	{
+		while (sh->secret_env->next)
+		{
+			printf("%s\n", sh->secret_env->value);
+			sh->secret_env = sh->secret_env->next;
+		}
+		printf("\'%s\' ", sh->secret_env->value);
+	}
+	if (ft_strcmp(argv[1], "export") == 0)
+	{
+		printf("\n\n========debug for export=========\n");
+		printf("========env=========\n");
+		while (sh->env->next)
+		{
+			printf("%s\n", sh->env->value);
+			sh->env = sh->env->next;
+		}
+		printf("\n========secret_env========\n");
+		printf("\'%s\' ", sh->env->value);
+		while (sh->secret_env->next)
+		{
+			printf("%s\n", sh->secret_env->value);
+			sh->secret_env = sh->secret_env->next;
+		}
+		printf("\'%s\' ", sh->secret_env->value);
+	}
+	if (ft_strcmp(argv[1], "unset") == 0)
+	{
+		printf("\n\n========debug for unset=========\n");
+		printf("========env=========\n");
+		while (sh->env->next)
+		{
+			printf("%s\n", sh->env->value);
+			sh->env = sh->env->next;
+		}
+		printf("\n========secret_env========\n");
+		printf("\'%s\' ", sh->env->value);
+		while (sh->secret_env->next)
+		{
+			printf("%s\n", sh->secret_env->value);
+			sh->secret_env = sh->secret_env->next;
+		}
+		printf("\'%s\' ", sh->secret_env->value);
+	}
+	
 	ft_lstclear(&g_list_malloc, free);
 	return(argc);
 }

@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/05 22:43:03 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/06 18:05:06 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 
 static int		update_oldpwd(t_env *env)
 {
+	// secret_envの変更も必要
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 

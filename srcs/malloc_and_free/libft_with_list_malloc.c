@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_list_malloc.c                                 :+:      :+:    :+:   */
+/*   libft_with_list_malloc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/12 18:06:39 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 21:02:25 by kdoi             ###   ########.fr       */
+/*   Created: 2021/02/06 16:38:40 by kdoi              #+#    #+#             */
+/*   Updated: 2021/02/06 16:44:55 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_list_malloc(void)
+char	*ft_strdup_and_list_malloc(const char *s1)
 {
-	ft_lstclear(&g_list_malloc, free);
+	char	*res;
+
+	if (!(res = ft_strdup(s1)))
+		exit_and_free("Failed to malloc. \n");
+	add_list_malloc(res);
+	return(res);
 }

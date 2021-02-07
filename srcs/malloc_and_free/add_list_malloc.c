@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 19:06:13 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 23:29:16 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/06 16:42:53 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	void	exit_and_print(char *s)
 	exit(1);
 }
 
-static	void	exit_and_free(char *s)
+void			exit_and_free(char *s)
 {
 	ft_lstclear(&g_list_malloc, free);
 	exit_and_print(s);
@@ -51,7 +51,7 @@ void			*malloc_with_list_malloc(size_t size)
 	void *res;
 
 	if (!(res = malloc(size)))
-		exit_and_print("Failed to malloc. \n");
+		exit_and_free("Failed to malloc. \n");
 	if (res)
 		add_list_malloc(res);
 	return (res);
