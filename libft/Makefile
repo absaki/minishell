@@ -6,7 +6,7 @@
 #    By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/23 16:25:43 by kikeda            #+#    #+#              #
-#    Updated: 2020/12/23 14:50:28 by kikeda           ###   ########.fr        #
+#    Updated: 2021/02/09 22:42:19 by kikeda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC += ft_putnbr_fd.c
 
 BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c
 BONUS += ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c
-BONUS += ft_lstmap.c ft_nsplit.c ft_isnumstr.c
+BONUS += ft_lstmap.c ft_nsplit.c ft_isnumstr.c ft_lstnewdup.c
 
 FLAG =	-Wall -Werror -Wextra
 OBJ  =	$(SRC:.c=.o)

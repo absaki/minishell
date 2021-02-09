@@ -1,7 +1,7 @@
 NAME = minishell.out
 
-SRC =   srcs/main.c
-SRC +=  srcs/exec.c srcs/splitline.c srcs/parse.c
+SRC =   srcs/main/main.c
+SRC +=  srcs/main/exec.c srcs/util/splitline.c srcs/parse/parse.c srcs/init/init.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft
 OBJ  =	$(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:58:36 by kikeda            #+#    #+#             */
-/*   Updated: 2020/12/23 14:49:24 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/09 22:42:08 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap
 				(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list			*ft_lstnewdup(void *content);
 
 #endif

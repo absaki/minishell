@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/06 22:42:40 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/09 23:16:46 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@
 
 # define DFL_PROMPT	"minishell$"
 
+typedef	t_list	t_env;
+
 char	*next_cmd(char *prompt, FILE *fp);
 void	freelist(char **list);
 int		execute(char *argv[]);
 void	fatal(char *s1, char *s2, int n);
 char	**parse(char *cmdl);
+int		initenv(char **envp, t_env **env);
 
 #endif
