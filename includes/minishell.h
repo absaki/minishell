@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/11 13:05:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/12 23:06:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@
 # define STDERR 2
 
 /*
-**For t_argio->outmode
-** WRITE for '>'
-** APPEND for '>>'
+**For t_cmdio->outmode
+** -WRITE  for ">"
+** -APPEND for ">>"
 */
 # define WRITE 0
 # define APPEND 1
 
 # define BUFF_SIZE 1024
 
-# define DFL_PROMPT	"minishell$"
+# define DFL_PROMPT	"\33[45m\33[1mminishell\33[49m\33[35m $ \33[0m"
 
 typedef	t_list	t_env;
 
@@ -59,5 +59,9 @@ int				execute(char *argv[]);
 void			fatal(char *s1, char *s2, int n);
 char			**parse(char *cmdl);
 int				initenv(char **envp, t_env **env);
+int				strlistlen(char **strlist);
+int				redirection_read(char ***argv, int i);
+int				redirection_append(char ***argv, int i);
+int				redirection_write(char ***argv, int i);
 
 #endif
