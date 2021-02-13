@@ -6,23 +6,17 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 18:05:06 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/11 19:47:09 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void		print_error_and_set_errno(char **args)
+static void		print_error_and_set_errno(char *str)
 {
-	ft_putstr_fd("cd: ", 2);
-	if (args[2])
-		ft_putstr_fd("string not in pwd: ", 2);
-	else
-	{
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putendl_fd(args[1], 2);
+	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": No such file or directory", 2);
 }
 
 static char		*get_env_path(t_env *env, const char *var, size_t len)
@@ -72,16 +66,17 @@ static int		update_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
-static int		go_to_path(int option, t_env *env)
+static int		go_to_path(int option, t_sh *sh)
 {
-	int		ret;
+	int		cd_ret;
 	char	*env_path;
+	char 	pathname[512];//debug
 
 	env_path = NULL;
 	if (option == 0)
 	{
-		update_oldpwd(env);
-		env_path = get_env_path(env, "HOME", 4);
+		update_oldpwd(sh->env);//secret_envも変更必要あり
+		env_path = get_env_path(sh->env, "HOME", 4);
 		if (!env_path)
 			ft_putendl_fd("bash : cd: HOME not set", STDERR);
 		if (!env_path)
@@ -89,34 +84,52 @@ static int		go_to_path(int option, t_env *env)
 	}
 	else if (option == 1)
 	{
-		env_path = get_env_path(env, "OLDPWD", 6);
-		if (!env_path)
+		if (sh->did_cd == 0)
+		{
 			ft_putendl_fd("bash : cd: OLDPWD not set", STDERR);
-		if (!env_path)
 			return (ERROR);
-		update_oldpwd(env);
+		}
+		env_path = get_env_path(sh->env, "OLDPWD", 6);
+		if (!env_path)
+			go_to_path(0, sh);
+		update_oldpwd(sh->env);//secret_envも変更必要あり
 	}
-	ret = chdir(env_path);
+	cd_ret = chdir(env_path);
+	if (cd_ret < 0)
+		cd_ret *= -1;
+	if (cd_ret != 0)
+		print_error_and_set_errno(env_path);
+	if (cd_ret > 0 && option == 1)
+		ft_putendl_fd(env_path, 1);
+	getcwd(pathname, 512);//debug
+    fprintf(stdout,"現在のファイルパス:%s\n", pathname);//debug
 	ft_free_and_del(env_path);
-	return (ret);
+	return (cd_ret);
 }
 
-int				ft_cd(char **args, t_env *env)
+int				ft_cd(char **args, t_sh *sh)
 {
 	int		cd_ret;
+	char 	pathname[512];//debug
 
-	if (!args[1])
-		return (go_to_path(0, env));
-	if (ft_strcmp(args[1], "-") == 0)
-		cd_ret = go_to_path(1, env);
+	// CDPATHの必要があるか確認
+	if (!args[1])//設定されていない環境変数もこちらの条件分岐に含める（パース処理後追記）
+		cd_ret = go_to_path(0, sh);
+	else if (ft_strcmp(args[1], "-") == 0)
+		cd_ret = go_to_path(1, sh);
+	//cd ""やcd ''の対処（今のディレクトリのまま）（パース処理後追記）
 	else
 	{
-		update_oldpwd(env);
+		update_oldpwd(sh->env);//secret_envも変更必要あり(double freeのエラーを後で解除)
 		cd_ret = chdir(args[1]);
 		if (cd_ret < 0)
 			cd_ret *= -1;
 		if (cd_ret != 0)
-			print_error_and_set_errno(args);
+			print_error_and_set_errno(args[1]);
+		getcwd(pathname, 512);//debug
+   		fprintf(stdout,"現在のファイルパス:%s\n", pathname);//debug
 	}
+	if (cd_ret == SUCCESS)
+		sh->did_cd = 1;
 	return (cd_ret);
 }

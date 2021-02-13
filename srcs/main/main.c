@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/07 16:10:06 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/11 19:33:18 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		exec_builtin(t_sh *sh, char **args)
 	if (ft_strcmp(args[0], "echo") == 0)
 		result = ft_echo(args);
 	if (ft_strcmp(args[0], "cd") == 0)
-		result = ft_cd(args, sh->env);
+		result = ft_cd(args, sh);
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args[0], "env") == 0)
@@ -61,6 +61,7 @@ t_sh	*make_new_sh(void)
 	sh->ret = 0;
 	sh->exit = 0;
 	sh->no_exec = 0;
+	sh->did_cd = 0;
 	add_list_malloc(sh);
 	return (sh);
 }
@@ -134,6 +135,24 @@ int		main(int argc, char **argv, char **env_array)
 	if (ft_strcmp(argv[1], "unset") == 0)
 	{
 		printf("\n\n========debug for unset=========\n");
+		printf("========env=========\n");
+		while (sh->env->next)
+		{
+			printf("%s\n", sh->env->value);
+			sh->env = sh->env->next;
+		}
+		printf("\n========secret_env========\n");
+		printf("\'%s\' ", sh->env->value);
+		while (sh->secret_env->next)
+		{
+			printf("%s\n", sh->secret_env->value);
+			sh->secret_env = sh->secret_env->next;
+		}
+		printf("\'%s\' ", sh->secret_env->value);
+	}
+	if (ft_strcmp(argv[1], "cd") == 0)
+	{
+		printf("\n\n========debug for cd=========\n");
 		printf("========env=========\n");
 		while (sh->env->next)
 		{

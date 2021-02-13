@@ -6,20 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 23:51:31 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 18:14:36 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/11 19:10:59 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// static	char	*ft_strdup_and_list_malloc(char *str)
-// {
-// 	char *res;
-
-// 	res = ft_strdup(str);
-// 	add_list_malloc(res);
-// 	return (res);
-// }
 
 int				init_secret_env(t_sh *sh, char **env_array)
 {

@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 22:48:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/03 23:45:23 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/11 17:46:55 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int				ft_echo(char **args)
 	option = 0;
 	if (count_args(args) > 1)
 	{
-		while (args[i] && ft_strcmp(args[i], "-n") == 0)
+		while (args[i] && ft_strncmp(args[i], "-n", 2) == 0)
 		{
 			option = 1;
 			i++;
+			while (ft_strncmp(args[i], "n", 1) == 0)
+				i++;
 		}
 		while (args[i])
 		{

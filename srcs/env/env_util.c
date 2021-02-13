@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/05 22:46:06 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/11 19:12:44 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			is_in_env(t_env *env, char *args)
 		get_env_name(env_name, env->value);
 		if (ft_strcmp(var_name, env_name) == 0)
 		{
-			ft_free_and_del(env->value);
+			// ft_free_and_del(env->value);
 			env->value = ft_strdup(args);
 			return (1);
 		}
