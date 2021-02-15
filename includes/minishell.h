@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/12 23:06:13 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/15 13:25:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 
 # define DFL_PROMPT	"\33[45m\33[1mminishell\33[49m\33[35m $ \33[0m"
 
-typedef	t_list	t_env;
 
 typedef	struct	s_cmdio
 {
@@ -58,7 +57,6 @@ void			freelist(char **list);
 int				execute(char *argv[]);
 void			fatal(char *s1, char *s2, int n);
 char			**parse(char *cmdl);
-int				initenv(char **envp, t_env **env);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
 int				redirection_append(char ***argv, int i);

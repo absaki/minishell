@@ -1,7 +1,7 @@
 NAME = minishell.out
 
 SRC =   srcs/main/main.c
-SRC +=  srcs/main/exec.c srcs/util/splitline.c srcs/parse/parse.c srcs/init/init.c
+SRC +=  srcs/main/exec.c srcs/util/splitline.c srcs/parse/parse.c
 SRC +=	srcs/main/redirection.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft -g

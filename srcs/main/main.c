@@ -6,16 +6,11 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/09 23:14:46 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/15 13:25:09 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	printenv(void *envstr)
-{
-	printf("%s\n", (char *)envstr);
-}
 
 int		main(int argc, char **argv, char **envp)
 {
@@ -23,11 +18,8 @@ int		main(int argc, char **argv, char **envp)
 	char	*prompt;
 	char	**arglist;
 	int		result;
-	t_env	*env;
-
-	env = NULL;
-	initenv(envp, &env);
-	ft_lstiter(env, printenv);
+	
+	(void)envp;
 	prompt = DFL_PROMPT;
 	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
 	{
