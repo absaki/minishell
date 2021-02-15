@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 12:28:58 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:34:43 by kikeda           ###   ########.fr       */
+/*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/11 21:18:09 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+char	**parse(char *cmdl)
 {
-	t_list *p;
+	char **arglist;
 
-	if (!lst || !new)
-		return ;
-	p = *lst;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	while (p->next)
-		p = p->next;
-	p->next = new;
+	arglist = ft_split(cmdl, ' ');
+	return (arglist);
 }

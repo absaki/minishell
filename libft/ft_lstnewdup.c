@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstnewdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 12:28:58 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:34:43 by kikeda           ###   ########.fr       */
+/*   Created: 2021/02/09 22:40:44 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/09 23:16:00 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_list	*ft_lstnewdup(void *content)
 {
-	t_list *p;
+	t_list *new;
 
-	if (!lst || !new)
-		return ;
-	p = *lst;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	while (p->next)
-		p = p->next;
-	p->next = new;
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return (new);
+	new->content = ft_strdup(content);
+	if (new->content == NULL)
+		return (new);
+	new->next = NULL;
+	return (new);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/10 00:00:48 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:52:39 by kdoi             ###   ########.fr       */
+/*   Created: 2020/07/03 21:24:42 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:35:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list *new_head;
-	t_list *current;
+	t_list *p;
+	t_list *start;
 
-	if (lst == NULL || f == NULL)
+	if (!f)
 		return (NULL);
-	if ((new_head = ft_lstnew(f(lst->content))) == NULL)
-		return (NULL);
-	current = new_head;
-	while (lst->next)
+	start = NULL;
+	while (lst)
 	{
-		lst = lst->next;
-		if ((current->next = ft_lstnew(f(lst->content))) == NULL)
+		p = ft_lstnew((*f)(lst->content));
+		if (!p)
 		{
-			ft_lstclear(&new_head, del);
+			ft_lstclear(&start, del);
 			return (NULL);
 		}
-		current = current->next;
+		if (!start)
+			start = p;
+		else
+			ft_lstadd_back(&start, p);
+		lst = lst->next;
 	}
-	return (new_head);
+	return (start);
 }

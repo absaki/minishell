@@ -3,48 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/10 23:05:25 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:42:35 by kdoi             ###   ########.fr       */
+/*   Created: 2020/06/26 18:20:45 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:37:21 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	set_char_table(int table[256], unsigned char *set)
+static char		*trim_begin(char const *s1, char const *set)
 {
+	int is_match;
 	int i;
 
-	i = 0;
-	while (i < 256)
-		table[i++] = 0;
-	while (*set)
-		table[*set++] = 1;
+	while (*s1)
+	{
+		i = 0;
+		is_match = 0;
+		while (set[i])
+		{
+			is_match = (*s1 == set[i] ? 1 : 0);
+			if (is_match)
+				break ;
+			i++;
+		}
+		if (is_match)
+			s1++;
+		else
+			break ;
+	}
+	return ((char *)s1);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+static int		calc_len(char const *s1, const char *set)
 {
-	char	*res;
-	int		table[256];
-	int		start;
-	int		end;
-	int		len;
+	int chk;
+	int is_match;
+	int i;
 
-	if (s1 == NULL || set == NULL)
+	chk = ft_strlen(s1) - 1;
+	while (chk)
+	{
+		i = 0;
+		is_match = 0;
+		while (set[i])
+		{
+			is_match = (s1[chk] == set[i] ? 1 : 0);
+			if (is_match)
+				break ;
+			i++;
+		}
+		if (is_match)
+			chk--;
+		else
+			break ;
+	}
+	return (chk + 1);
+}
+
+char			*ft_strtrim(char const *s1, char const *set)
+{
+	int		len;
+	char	*p;
+
+	s1 = trim_begin(s1, set);
+	if (*s1 == '\0')
+		len = 0;
+	else
+		len = calc_len(s1, set);
+	p = ft_calloc(1, len + 1);
+	if (!p)
 		return (NULL);
-	if (ft_strlen(s1) == 0)
-		return (ft_strdup(""));
-	set_char_table(table, (unsigned char *)set);
-	start = 0;
-	end = ft_strlen(s1) - 1;
-	while (start <= end && table[(unsigned char)s1[start]])
-		start++;
-	while (end >= start && table[(unsigned char)s1[end]])
-		end--;
-	len = end - start + 1;
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	(void)ft_strlcpy(res, s1 + start, len + 1);
-	return (res);
+	if (len)
+		ft_memcpy(p, s1, len);
+	return (p);
 }

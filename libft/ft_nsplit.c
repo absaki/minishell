@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_nsplit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kikeda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/30 20:18:07 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:36:23 by kikeda           ###   ########.fr       */
+/*   Created: 2020/12/08 15:45:53 by kikeda            #+#    #+#             */
+/*   Updated: 2020/12/16 17:34:21 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char		**do_split(char const *s, char c, int num)
 	return (rtn);
 }
 
-char			**ft_split(char const *s, char c)
+int				ft_nsplit(char const *s, char ***output, char c)
 {
 	char	c_str[2];
 	int		words;
@@ -101,9 +101,10 @@ char			**ft_split(char const *s, char c)
 	c_str[1] = '\0';
 	trimed = ft_strtrim(s, c_str);
 	if (trimed == 0)
-		return (NULL);
+		return (-1);
 	words = count_words(trimed, c);
 	ans = do_split(trimed, c, words);
 	free(trimed);
-	return (ans);
+	*output = ans;
+	return (words);
 }

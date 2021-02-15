@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/04 16:24:25 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:15:17 by kdoi             ###   ########.fr       */
+/*   Created: 2020/06/26 10:41:15 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:37:28 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && c <= 'Z')
-		return (c - 'A' + 'a');
-	return (c);
+	return ('A' <= c && c <= 'Z' ? c + 32 : c);
 }
