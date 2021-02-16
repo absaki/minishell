@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 18:08:41 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/17 01:42:19 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		is_builtin(t_sh *sh, char **argv)
 		ft_cd(argv, sh);
 	else
 		return (0);
-	exit (SUCCESS);
+	return (1);
 }
 
 void	exec_child(t_sh *sh, char **argv)
@@ -53,12 +53,9 @@ void	exec_child(t_sh *sh, char **argv)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	set_fd(sh, &argv);
-	if(!is_builtin(sh, argv))
-	{
-		execvp(argv[0], argv);
-		perror("cannot execute command");
-		exit(1);
-	}
+	execvp(argv[0], argv);
+	perror("cannot execute command");
+	exit(1);
 }
 
 int				execute(t_sh *sh, char *argv[])
@@ -68,7 +65,9 @@ int				execute(t_sh *sh, char *argv[])
 
 	child_info = -1;
 	if (argv[0] == NULL)
-		return (0);
+		return (SUCCESS);
+	if(is_builtin(sh, argv))
+		return (SUCCESS);
 	if ((pid = fork()) == -1)
 		perror("fork");
 	else if (pid == 0)
