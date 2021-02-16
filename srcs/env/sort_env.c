@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:36:26 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 19:44:24 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/16 18:15:29 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	write_with_dquote(char *str)
 {

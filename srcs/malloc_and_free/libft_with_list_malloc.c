@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft_with_list_malloc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 16:38:40 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 16:44:55 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/16 18:16:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	*ft_strdup_and_list_malloc(const char *s1)
 {

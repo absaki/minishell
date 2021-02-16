@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   add_list_malloc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 19:06:13 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 16:42:53 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/16 18:15:23 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_list			*g_list_malloc;
 

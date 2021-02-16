@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 23:51:31 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/11 19:10:59 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/16 18:15:31 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int				init_secret_env(t_sh *sh, char **env_array)
 {
