@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtins_checker.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/11 19:33:18 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/16 18:04:47 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 // gcc -Wall -Wextra -Werror *.c -L. ../libft/libft.a -g -fsanitize=address
 
@@ -66,7 +66,7 @@ t_sh	*make_new_sh(void)
 	return (sh);
 }
 
-int		main(int argc, char **argv, char **env_array)
+int		builtin_checker(int argc, char **argv, char **env_array)
 {
 	char			*args[argc];
 	int 			i;
@@ -170,5 +170,6 @@ int		main(int argc, char **argv, char **env_array)
 	}
 	
 	ft_lstclear(&g_list_malloc, free);
+	(void)result;
 	return(argc);
 }

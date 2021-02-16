@@ -6,16 +6,17 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/12 22:47:42 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:08:41 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_fd(char ***argv)
+void	set_fd(t_sh *sh, char ***argv)
 {
 	int i;
 
+	(void)sh;
 	i = 0;
 	while ((*argv)[i])
 	{
@@ -26,17 +27,41 @@ void	set_fd(char ***argv)
 	}
 }
 
-void	exec_child(char **argv)
+int		is_builtin(t_sh *sh, char **argv)
+{
+	if(ft_strncmp(argv[0], "echo", 5) == 0)
+		ft_echo(argv);
+	else if(ft_strncmp(argv[0], "env", 4) == 0)
+		ft_env(argv, sh->env);
+	else if(ft_strncmp(argv[0], "exit", 5) == 0)
+		ft_exit(sh, argv);
+	else if(ft_strncmp(argv[0], "export", 7) == 0)
+		ft_export(argv, sh->env, sh->secret_env);
+	else if(ft_strncmp(argv[0], "pwd", 4) == 0)
+		ft_pwd();
+	else if(ft_strncmp(argv[0], "unset", 6) == 0)
+		ft_unset(argv, sh->env, sh->secret_env);
+	else if(ft_strncmp(argv[0], "cd", 3) == 0)
+		ft_cd(argv, sh);
+	else
+		return (0);
+	exit (SUCCESS);
+}
+
+void	exec_child(t_sh *sh, char **argv)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	set_fd(&argv);
-	execvp(argv[0], argv);
-	perror("cannot execute command");
-	exit(1);
+	set_fd(sh, &argv);
+	if(!is_builtin(sh, argv))
+	{
+		execvp(argv[0], argv);
+		perror("cannot execute command");
+		exit(1);
+	}
 }
 
-int		execute(char *argv[])
+int				execute(t_sh *sh, char *argv[])
 {
 	int pid;
 	int child_info;
@@ -47,7 +72,7 @@ int		execute(char *argv[])
 	if ((pid = fork()) == -1)
 		perror("fork");
 	else if (pid == 0)
-		exec_child(argv);
+		exec_child(sh, argv);
 	else
 	{
 		if (wait(&child_info) == -1)

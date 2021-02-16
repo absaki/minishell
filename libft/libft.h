@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:58:36 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:38:07 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 17:58:14 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char	*big, const char *little, size_t len);
+int				ft_strcmp(char *s1, char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi(const char *nptr);
 int				ft_isalpha(int c);
@@ -69,5 +70,6 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap
 				(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list			*ft_lstnewdup(void *content);
+void			*ft_free_and_del(void *ptr);
 
 #endif

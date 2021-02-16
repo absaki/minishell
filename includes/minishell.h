@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:43:40 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:04:34 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,21 @@ typedef struct	s_sh
 	int				ret;
 	int				exit;
 	int				no_exec;
+	int				did_cd;
 }				t_sh;
 
 int				ft_pwd(void);
 int				ft_echo(char **args);
 void			ft_exit(t_sh *sh, char **args);
-int				ft_env(t_env *env);
-int				ft_cd(char **args, t_env *env);
+int				ft_env(char **args, t_env *env);
+int				ft_cd(char **args, t_sh *sh);
+int				ft_export(char **args, t_env *env, t_env *secret);
+int				ft_unset(char **args, t_env *env, t_env *secret);
 
 int				init_env(t_sh *sh, char **env_array);
 int				init_secret_env(t_sh *sh, char **env_array);
+int				is_valid_env(const char *str);
+void			print_sorted_env(t_env *env);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 int				is_in_env(t_env *env, char *args);
@@ -78,6 +83,11 @@ void			*malloc_with_list_malloc(size_t size);
 void			add_list_malloc(void *ptr);
 void			*ft_malloc(void *ptr);
 void			free_list_malloc(void);
+
+t_sh			*make_new_sh(void);
+char			*ft_strdup_and_list_malloc(const char *s1);
+void			free_tda(char **tab);
+void			exit_and_free(char *s);
 
 /*
 **For t_cmdio->outmode
@@ -99,7 +109,7 @@ typedef	struct	s_cmdio
 
 char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
-int				execute(char *argv[]);
+int				execute(t_sh *sh, char *argv[]);
 void			fatal(char *s1, char *s2, int n);
 char			**parse(char *cmdl);
 int				strlistlen(char **strlist);
