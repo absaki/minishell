@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 18:16:26 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/18 18:16:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,19 @@
 # define STDERR 2
 # define BUFF_SIZE 1024
 
+# define CONN_PIPE 1
+# define CONN_SEMIC 2
+# define CONN_END 3
+
 extern t_list	*g_list_malloc;
+
+typedef struct			s_cmd
+{
+	char				*cmds;
+	int					conn;
+}						t_cmd;
+
+typedef t_list	t_cmdlist;
 
 typedef struct	s_env
 {
@@ -47,6 +59,7 @@ typedef struct	s_sh
 	// t_token			*start;
 	t_env			*env;
 	t_env			*secret_env;
+	t_cmdlist		*cmdlist;
 	int				in;
 	int				out;
 	int				fdin;
@@ -88,6 +101,8 @@ t_sh			*make_new_sh(void);
 char			*ft_strdup_and_list_malloc(const char *s1);
 void			free_tda(char **tab);
 void			exit_and_free(char *s);
+
+t_cmdlist		*sep_cmd(char *s);
 
 /*
 **For t_cmdio->outmode

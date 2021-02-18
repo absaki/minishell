@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/16 18:04:47 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/18 16:56:27 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ t_sh	*make_new_sh(void)
 {
 	t_sh	*sh;
 
-	sh = (t_sh *)malloc(sizeof(t_sh));
-	if (!sh)
+	if (!(sh = (t_sh *)malloc(sizeof(t_sh))))
 		return (NULL);
 	sh->in = 0;
 	sh->out = 0;
@@ -62,6 +61,7 @@ t_sh	*make_new_sh(void)
 	sh->exit = 0;
 	sh->no_exec = 0;
 	sh->did_cd = 0;
+	sh->cmdlist = 0;
 	add_list_malloc(sh);
 	return (sh);
 }

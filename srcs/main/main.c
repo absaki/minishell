@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/16 17:46:34 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/19 00:19:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		main(int argc, char **argv, char **envp)
 	char	**arglist;
 	int		result;
 	t_sh	*sh;
-	
+
 	sh = make_new_sh();
 	init_env(sh, envp);
 	init_secret_env(sh, envp);
