@@ -6,11 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:36:26 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 19:44:24 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/19 01:36:11 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	write_with_dquote(char *str)
 {
@@ -79,9 +79,9 @@ size_t			size_len_of_env_value(t_env *lst)
 	lst_len = 0;
 	while (lst && lst->next != NULL)
 	{
-		if (lst->value != NULL)
+		if (lst->vl != NULL)
 		{
-			lst_len += ft_strlen(lst->value);
+			lst_len += ft_strlen(lst->vl);
 			lst_len++;
 		}
 		lst = lst->next;
@@ -100,12 +100,12 @@ char			*convert_env_to_str(t_env *lst)
 	i = 0;
 	while (lst && lst->next != NULL)
 	{
-		if (lst->value != NULL)
+		if (lst->vl != NULL)
 		{
 			j = 0;
-			while (lst->value[j])
+			while (lst->vl[j])
 			{
-				env[i] = lst->value[j];
+				env[i] = lst->vl[j];
 				i++;
 				j++;
 			}

@@ -3,40 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/04 13:45:59 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:14:32 by kdoi             ###   ########.fr       */
+/*   Created: 2020/07/02 23:18:00 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:36:12 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	void	ft_putnum(int n, int fd)
+static void		write_num(unsigned int n, int fd)
 {
-	if (n == 0)
-		return ;
-	ft_putnum(n / 10, fd);
-	ft_putchar_fd(n % 10 + '0', fd);
+	char num;
+
+	if (n <= 9)
+	{
+		num = '0' + n;
+		write(fd, &num, 1);
+	}
+	else
+	{
+		write_num(n / 10, fd);
+		write_num(n % 10, fd);
+	}
 }
 
 void			ft_putnbr_fd(int n, int fd)
 {
-	if (n == -2147483648)
-	{
-		ft_putstr_fd("-2", fd);
-		n = 147483648;
-	}
 	if (n < 0)
 	{
-		n *= -1;
-		ft_putchar_fd('-', fd);
+		write(fd, "-", 1);
+		write_num((unsigned int)(n * -1), fd);
 	}
-	if (n == 0)
-	{
-		ft_putchar_fd('0', fd);
-		return ;
-	}
-	ft_putnum(n, fd);
-	return ;
+	else
+		write_num((unsigned int)n, fd);
 }

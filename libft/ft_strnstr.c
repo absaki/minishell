@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/04 16:23:12 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:15:09 by kdoi             ###   ########.fr       */
+/*   Created: 2020/06/25 10:22:09 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:37:12 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t i;
-	size_t j;
+	int				is_match;
+	unsigned int	i;
+	char			*start;
 
-	if (*needle == '\0')
-		return ((char *)haystack);
-	i = 0;
-	while (haystack[i] && i < len)
+	start = (char *)big;
+	is_match = 0;
+	if (ft_strlen(little) == 0)
+		return ((char *)big);
+	while (*start)
 	{
-		j = 0;
-		while (haystack[i + j] == needle[j] && i + j < len)
+		i = 0;
+		while ((unsigned int)(start - big) + i < len)
 		{
-			j++;
-			if (needle[j] == '\0')
-				return ((char *)haystack + i);
+			if (little[i] == '\0')
+				break ;
+			is_match = (start[i] == little[i] ? 1 : 0);
+			i++;
+			if (is_match == 0)
+				break ;
 		}
-		i++;
+		if (is_match && little[i] == '\0')
+			return ((char *)start);
+		start++;
 	}
-	return (NULL);
+	return (0);
 }

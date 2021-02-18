@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_isnumstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/03 12:28:58 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/15 13:34:43 by kikeda           ###   ########.fr       */
+/*   Created: 2020/12/23 14:46:06 by kikeda            #+#    #+#             */
+/*   Updated: 2020/12/23 14:48:59 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_isnumstr(const char *s)
 {
-	t_list *p;
+	int i;
 
-	if (!lst || !new)
-		return ;
-	p = *lst;
-	if (!*lst)
+	i = 0;
+	while (s[i])
 	{
-		*lst = new;
-		return ;
+		if (!ft_isdigit((int)s[i]))
+			return (0);
+		i++;
 	}
-	while (p->next)
-		p = p->next;
-	p->next = new;
+	return (1);
 }

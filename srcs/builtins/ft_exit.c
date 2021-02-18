@@ -6,33 +6,98 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/04 23:14:17 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/18 23:45:05 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-static	int	ft_check_strisnum(const char *str)
+static int		ft_will_overflow(int sign, unsigned long n, int next_digit)
 {
-	int	i;
+	if (sign == 1)
+	{
+		if (n > (LONG_MAX / 10))
+		{
+			return (1);
+		}
+		if (n == (LONG_MAX / 10) && next_digit > (LONG_MAX % 10))
+		{
+			return (1);
+		}
+	}
+	else if (sign == -1)
+	{
+		if (n > (LONG_MAX / 10))
+		{
+			return (1);
+		}
+		if (n == (LONG_MAX / 10) && next_digit > 8)
+		{
+			return (1);
+		}
+	}
+	return (0);
+}
+
+static long		ft_strtonbr(const char *str, int sign)
+{
+	unsigned long	n;
+	int				d;
+
+	n = 0;
+	while (ft_isdigit(*str))
+	{
+		d = *str - '0';
+		if (ft_will_overflow(sign, n, d))
+			return (-1);
+		n = n * 10 + d;
+		str++;
+	}
+	return (n * sign);
+}
+
+static	long	ft_str_to_long(const char *str)
+{
+	int		i;
+	int		sign;
 
 	i = 0;
 	if (str == NULL)
-		return (0);
-	if (str[0] == '-')
-		i++;
-	while (str[i])
+		return (ERROR);
+	if (*str == '-')
 	{
-		if (ft_isdigit(str[i]) == 0)
-			return (0);
-		i++;
+		str++;
+		sign = -1;
 	}
-	return (1);
+	else
+		sign = 1;
+	return (ft_strtonbr(str, sign));
 }
 
-void		ft_exit(t_sh *sh, char **args)
+static	int		mod_by_256(char *str)
 {
-	// ここは、例のgithubではargsではなくcmdだが、便宜上argsにしておく
+	long	mod;
+	int		sign;
+
+	mod = ft_str_to_long(str);
+	sign = (mod < 0) ? -1 : 1;
+	if (sign == -1)
+	{
+		if (ft_strcmp(str, "-9223372036854775808") == 0)
+			return (0);
+		else
+			mod *= -1;
+	}
+	while (mod >= 256)
+	{
+		mod %= 256;
+	}
+	mod = (sign > 0) ? mod : (256 - mod);
+	return ((int)mod);
+}
+
+void			ft_exit(t_sh *sh, char **args)
+{
 	sh->exit = 1;
 	ft_putstr_fd("exit\n", STDERR);
 	if (args[1] && args[2])
@@ -40,7 +105,9 @@ void		ft_exit(t_sh *sh, char **args)
 		sh->ret = 1;
 		ft_putendl_fd("bash: exit: too many arguments", STDERR);
 	}
-	else if (args[1] && ft_check_strisnum(args[1]) == 0)
+	else if (args[1] && ft_strcmp(args[1], "-1") == 0)
+		sh->ret = 255;
+	else if (args[1] && ft_str_to_long(args[1]) == -1)
 	{
 		sh->ret = 255;
 		ft_putstr_fd("bash: exit: ", STDERR);
@@ -48,7 +115,7 @@ void		ft_exit(t_sh *sh, char **args)
 		ft_putendl_fd(": numeric argument required", STDERR);
 	}
 	else if (args[1])
-		sh->ret = ft_atoi(args[1]);
+		sh->ret = mod_by_256(args[1]);
 	else
 		sh->ret = 0;
 }

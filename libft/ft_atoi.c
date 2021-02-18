@@ -3,57 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/04 16:19:53 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/11 16:09:55 by kdoi             ###   ########.fr       */
+/*   Created: 2020/06/25 23:40:32 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:34:00 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isspace(int c)
+int	ft_atoi(const char *nptr)
 {
-	if (c == '\t' || c == '\n' || c == '\v' ||
-			c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
+	unsigned long long	ans;
+	int					is_minus;
 
-static int	ft_will_overflow(unsigned long n, int next_digit)
-{
-	if (n > (LONG_MAX) / 10)
-		return (1);
-	if (n == (LONG_MAX / 10) && next_digit > (LONG_MAX % 10))
-		return (1);
-	return (0);
-}
-
-static int	ft_strtonbr(const char *str, int sign)
-{
-	unsigned long	n;
-	int				d;
-
-	n = 0;
-	while (ft_isdigit(*str))
+	ans = 0;
+	while ((0 < *nptr && *nptr <= 26) || *nptr == ' ')
+		nptr++;
+	is_minus = (*nptr == '-' ? 1 : 0);
+	nptr += (*nptr == '-' || *nptr == '+' ? 1 : 0);
+	while ('0' <= *nptr && *nptr <= '9')
 	{
-		d = *str - '0';
-		if (ft_will_overflow(n, d))
-			return (sign == 1 ? (int)LONG_MAX : (int)LONG_MIN);
-		n = n * 10 + d;
-		str++;
+		if ('0' <= *nptr && *nptr <= '9')
+		{
+			ans *= 10;
+			ans += *nptr - '0';
+		}
+		nptr++;
 	}
-	return ((int)n * sign);
-}
-
-int			ft_atoi(const char *str)
-{
-	int		sign;
-
-	while (ft_isspace(*str))
-		str++;
-	sign = (*str == '-') ? -1 : 1;
-	if (*str == '+' || *str == '-')
-		str++;
-	return (ft_strtonbr(str, sign));
+	return (ans * (is_minus ? -1 : 1));
 }

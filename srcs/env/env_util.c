@@ -6,25 +6,25 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/11 19:12:44 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/19 01:36:11 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int			env_add(const char *value, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
 
-	if (env && env->value == NULL)
+	if (env && env->vl == NULL)
 	{
-		env->value = ft_strdup(value);
+		env->vl = ft_strdup(value);
 		return (SUCCESS);
 	}
 	if (!(new = malloc(sizeof(t_env))))
 		return (-1);
-	new->value = ft_strdup(value);
+	new->vl = ft_strdup(value);
 	while (env && env->next && env->next->next)
 		env = env->next;
 	tmp = env->next;
@@ -55,11 +55,11 @@ int			is_in_env(t_env *env, char *args)
 	get_env_name(var_name, args);
 	while (env && env->next)
 	{
-		get_env_name(env_name, env->value);
+		get_env_name(env_name, env->vl);
 		if (ft_strcmp(var_name, env_name) == 0)
 		{
-			// ft_free_and_del(env->value);
-			env->value = ft_strdup(args);
+			ft_free_and_del(env->vl);
+			env->vl = ft_strdup(args);
 			return (1);
 		}
 		env = env->next;

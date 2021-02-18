@@ -3,52 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/10 23:23:33 by kdoi              #+#    #+#             */
-/*   Updated: 2020/07/10 23:23:40 by kdoi             ###   ########.fr       */
+/*   Created: 2020/07/01 21:17:15 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/15 13:34:37 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_swap(char *a, char *b)
+static int		calc_digit(int n)
 {
-	char c;
+	int ans;
 
-	c = *a;
-	*a = *b;
-	*b = c;
+	ans = 0;
+	while (n)
+	{
+		n /= 10;
+		ans++;
+	}
+	return (ans);
 }
 
-static void	ft_reverse(char *s)
+static void		put_itoa(char *str, unsigned int n, int digit)
 {
 	int i;
-	int j;
 
 	i = 0;
-	j = ft_strlen(s) - 1;
-	while (i < j)
-		ft_swap(&s[i++], &s[j--]);
+	while (i < digit)
+	{
+		*(str + digit - 1 - i) = (n % 10) + '0';
+		n /= 10;
+		i++;
+	}
 }
 
-char		*ft_itoa(int n)
+char			*ft_itoa(int n)
 {
-	char	s[12];
-	int		i;
-	int		sign;
+	char	*rtn;
+	int		digit;
 
-	if (n == INT_MIN)
-		return (ft_strdup("-2147483648"));
-	if ((sign = n) < 0)
-		n = -n;
-	i = 0;
-	s[i++] = n % 10 + '0';
-	while ((n /= 10) > 0)
-		s[i++] = n % 10 + '0';
-	if (sign < 0)
-		s[i++] = '-';
-	s[i] = '\0';
-	ft_reverse(s);
-	return (ft_strdup(s));
+	if (n == 0)
+	{
+		rtn = ft_calloc(1, 2);
+		*rtn = '0';
+		return (rtn);
+	}
+	rtn = ft_calloc(1, calc_digit(n) + (n < 0 ? 2 : 1));
+	if (!rtn)
+		return (NULL);
+	*rtn = (n < 0 ? '-' : '\0');
+	digit = calc_digit(n);
+	if (n < 0)
+		put_itoa(rtn + 1, (unsigned int)(n * -1), digit);
+	else
+		put_itoa(rtn, (unsigned int)n, digit);
+	return (rtn);
 }

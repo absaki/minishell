@@ -6,11 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:14:24 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/07 23:23:41 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/19 00:44:53 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	print_error_in_export(char *arg)
 {
@@ -57,6 +57,8 @@ int			ft_export(char **args, t_env *env, t_env *secret)
 {
 	int		flag_error;
 
+	// 引数の変更
+	// unsetフラグの変更
 	flag_error = 0;
 	if (!args[1])
 	{

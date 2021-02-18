@@ -6,11 +6,11 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/06 19:15:50 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/19 01:34:23 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int		is_env_char(int c)
 {
@@ -82,13 +82,13 @@ char	*get_env_value(char *arg, t_env *env)
 	char	*env_val;
 
 	env_val = ft_strdup("");
-	while (env && env->value)
+	while (env && env->vl)
 	{
-		get_env_name(env_name, env->value);
+		get_env_name(env_name, env->vl);
 		if (ft_strcmp(arg, env_name) == 0)
 		{
 			ft_free_and_del(env_val);
-			env_val = env_value(env->value);
+			env_val = env_value(env->vl);
 			return (env_val);
 		}
 		env = env->next;
