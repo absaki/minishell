@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 23:51:21 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:01:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@ void	exec_pipe(t_sh *sh)
 {
 	t_cmd *cmd;
 	char	**argv;
-	int child_info;
 
 	while(sh->cmdlist)
 	{
 		cmd = sh->cmdlist->content;
 		argv = parse(cmd->cmds);
 		sh->pid = execute(sh, argv, cmd->conn);
-		if (wait(&child_info) == -1)
-			perror("wait");
 		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;

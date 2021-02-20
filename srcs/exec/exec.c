@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 23:51:25 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:26:36 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,35 @@ void set_fd(t_sh *sh, char ***argv)
 	}
 }
 
-int is_builtin_nopipe(t_sh *sh, char **argv)
+int buk_fds(int fds[3])
 {
-	if (sh->pipin != -1 || sh->pipout != -1)
-		return (0);
+	fds[0] = dup(0);
+	fds[1] = dup(1);
+	fds[2] = dup(2);
+	
+	if(fds[0] && fds[1] && fds[2])
+		return (SUCCESS);
+	else
+		return (ERROR);
+}
+
+int reset_fds(int fds[3])
+{
+	if(
+		dup2(fds[0], 0) != -1
+		&& dup2(fds[1], 1) != -1
+		&& dup2(fds[2], 2) != -1
+		&& close(fds[0]) != -1
+		&& close(fds[1]) != -1
+		&& close(fds[2]) != -1)
+	{
+		return (SUCCESS);		
+	}
+	return (ERROR);
+}
+
+int do_builtin(t_sh *sh, char **argv)
+{
 	if (ft_strncmp(argv[0], "echo", 5) == 0)
 		ft_echo(argv);
 	else if (ft_strncmp(argv[0], "env", 4) == 0)
@@ -48,6 +73,29 @@ int is_builtin_nopipe(t_sh *sh, char **argv)
 	else
 		return (0);
 	return (1);
+}
+
+int is_builtin_nopipe(t_sh *sh, char **argv)
+{
+	int fds[3];
+	
+	if (sh->pipin != -1 || sh->pipout != -1)
+		return (0);
+	if (!ft_strncmp(argv[0], "echo", 5)
+		|| !ft_strncmp(argv[0], "env", 4)
+		|| !ft_strncmp(argv[0], "exit", 5)
+		|| !ft_strncmp(argv[0], "export", 7)
+		|| !ft_strncmp(argv[0], "pwd", 4)
+		|| !ft_strncmp(argv[0], "unset", 6)
+		|| !ft_strncmp(argv[0], "cd", 3))
+	{
+		buk_fds(fds);
+		set_fd(sh, &argv);
+		do_builtin(sh, argv);
+		reset_fds(fds);
+		return (1);
+	}
+	return (0);
 }
 
 void exec_child(t_sh *sh, char **argv, int newpipe[2])
@@ -76,6 +124,7 @@ int execute(t_sh *sh, char *argv[], int conn)
 {
 	int pid;
 	int newpipe[2];
+	int child_info;
 
 	newpipe[0] = -1;
 	if (argv[0] == NULL)
@@ -100,6 +149,8 @@ int execute(t_sh *sh, char *argv[], int conn)
 			sh->pipout = newpipe[0];
 			sh->pipin = newpipe[1];
 		}
+		if (wait(&child_info) == -1)
+			perror("wait");
 	}
 	return (pid);
 }
