@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 18:36:38 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:45:42 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int		main(int argc, char **argv, char **envp)
 	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
 	{
 		sh->cmdlist = sep_list(cmdline);
-		pipemap(sh);
+		if(sh->cmdlist)
+			pipemap(sh);
 		// if ((arglist = parse(cmdline)) != NULL)
 		// {
 		// 	result = execute(sh, arglist);

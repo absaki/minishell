@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 00:01:49 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 00:53:25 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exec_pipe(t_sh *sh)
 {
 	t_cmd *cmd;
 	char	**argv;
+	int child_info;
 
 	while(sh->cmdlist)
 	{
@@ -26,6 +27,7 @@ void	exec_pipe(t_sh *sh)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
 	}
+	waitpid(sh->pid, &child_info, WUNTRACED);
 	sh->pipin = -1;
 	sh->pipout = -1;
 }

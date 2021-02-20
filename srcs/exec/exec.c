@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 00:26:36 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 01:05:32 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int do_builtin(t_sh *sh, char **argv)
 	return (1);
 }
 
-int is_builtin_nopipe(t_sh *sh, char **argv)
+int is_builtin_nopipe(t_sh *sh, char **argv, int newpipe[2])
 {
 	int fds[3];
-	
-	if (sh->pipin != -1 || sh->pipout != -1)
+
+	if (newpipe[0] != -1 && newpipe[1] != -1)
 		return (0);
 	if (!ft_strncmp(argv[0], "echo", 5)
 		|| !ft_strncmp(argv[0], "env", 4)
@@ -115,6 +115,8 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 		close(newpipe[1]);
 	}
 	set_fd(sh, &argv);
+	if(do_builtin(sh, argv))
+		exit (EXIT_SUCCESS);
 	execvp(argv[0], argv);
 	perror("cannot execute command");
 	exit(1);
@@ -124,15 +126,14 @@ int execute(t_sh *sh, char *argv[], int conn)
 {
 	int pid;
 	int newpipe[2];
-	int child_info;
 
 	newpipe[0] = -1;
 	if (argv[0] == NULL)
 		return (SUCCESS);
-	if (is_builtin_nopipe(sh, argv))
-		return (SUCCESS);
 	if (conn == CONN_PIPE)
 		pipe(newpipe);
+	if (is_builtin_nopipe(sh, argv, newpipe))
+		return (SUCCESS);
 	if ((pid = fork()) == -1)
 		perror("fork");
 	else if (pid == 0)
@@ -149,8 +150,6 @@ int execute(t_sh *sh, char *argv[], int conn)
 			sh->pipout = newpipe[0];
 			sh->pipin = newpipe[1];
 		}
-		if (wait(&child_info) == -1)
-			perror("wait");
 	}
 	return (pid);
 }
