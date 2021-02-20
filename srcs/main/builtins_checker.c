@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/18 16:56:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 22:31:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_sh	*make_new_sh(void)
 	sh->out = 0;
 	sh->fdin = 0;
 	sh->fdout = 0;
-	sh->pipin = 0;
-	sh->pipout = 0;
+	sh->pipin = -1;
+	sh->pipout = -1;
 	sh->pid = 0;
 	sh->charge = 0;
 	sh->parent = 0;

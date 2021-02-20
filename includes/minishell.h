@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/18 18:16:49 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 23:45:10 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct	s_sh
 	int				fdout;
 	int				pipin;
 	int				pipout;
-	int				pid;
+	pid_t			pid;
 	int				charge;
 	int				parent;
 	int				last;
@@ -102,7 +102,8 @@ char			*ft_strdup_and_list_malloc(const char *s1);
 void			free_tda(char **tab);
 void			exit_and_free(char *s);
 
-t_cmdlist		*sep_cmd(char *s);
+t_cmdlist		*sep_list(char *s);
+int				pipemap(t_sh *sh);
 
 /*
 **For t_cmdio->outmode
@@ -124,7 +125,7 @@ typedef	struct	s_cmdio
 
 char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
-int				execute(t_sh *sh, char *argv[]);
+int				execute(t_sh *sh, char *argv[], int conn);
 void			fatal(char *s1, char *s2, int n);
 char			**parse(char *cmdl);
 int				strlistlen(char **strlist);

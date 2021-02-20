@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 00:19:13 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 18:36:38 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		main(int argc, char **argv, char **envp)
 {
 	char	*cmdline;
 	char	*prompt;
-	char	**arglist;
-	int		result;
+	// char	**arglist;
+	int		result = SUCCESS;
 	t_sh	*sh;
 
 	sh = make_new_sh();
@@ -26,12 +26,14 @@ int		main(int argc, char **argv, char **envp)
 	prompt = DFL_PROMPT;
 	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
 	{
-		if ((arglist = parse(cmdline)) != NULL)
-		{
-			result = execute(sh, arglist);
-			freelist(arglist);
-		}
-		free(cmdline);
+		sh->cmdlist = sep_list(cmdline);
+		pipemap(sh);
+		// if ((arglist = parse(cmdline)) != NULL)
+		// {
+		// 	result = execute(sh, arglist);
+		// 	freelist(arglist);
+		// }
+		// free(cmdline);
 	}
 	return (result);
 	(void)argc;

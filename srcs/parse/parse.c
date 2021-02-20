@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 00:18:42 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/20 22:43:22 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 		exit(1);
 	if ((rtn->cmds = ft_substr(s, start, i - start)) == NULL)
 		exit(1);
-	printf("in dup_cmdcontent: substr = %s\n", rtn->cmds);
 	if (s[i] == '|')
 		rtn->conn = CONN_PIPE;
 	else if (s[i] == ';')
@@ -37,7 +36,7 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	return (rtn);
 }
 
-t_cmdlist	*sep_cmd(char *s)
+t_cmdlist	*sep_list(char *s)
 {
 	int			i;
 	int			start;
@@ -64,7 +63,7 @@ t_cmdlist	*sep_cmd(char *s)
 
 char		**parse(char *cmdl)
 {
-	char **arglist;
+	char		**arglist;
 
 	arglist = ft_split(cmdl, ' ');
 	return (arglist);
