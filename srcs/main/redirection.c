@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 22:48:08 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/12 23:07:31 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:45:46 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int		redirection_append(char ***argv, int i)
 {
 	int fd;
 
-	if (ft_strncmp((*argv)[i], ">>", 2) == 0 && (*argv)[i + 1])
+	if ((ft_strncmp((*argv)[i], ">>", 3) == 0 && (*argv)[i + 1])
+		|| (ft_strncmp((*argv)[i], "1>>", 4) == 0 && (*argv)[i + 1]))
 	{
 		if ((fd = open((*argv)[i + 1], O_APPEND | O_CREAT | O_WRONLY,
 			S_IRWXU | S_IRGRP)) != -1)
@@ -81,15 +82,56 @@ int		redirection_append(char ***argv, int i)
 	return (0);
 }
 
+int		redirection_append_err(char ***argv, int i)
+{
+	int fd;
+
+	if (ft_strncmp((*argv)[i], "2>>", 4) == 0 && (*argv)[i + 1])
+	{
+		if ((fd = open((*argv)[i + 1], O_APPEND | O_CREAT | O_WRONLY,
+			S_IRWXU | S_IRGRP)) != -1)
+			dup2(fd, 2);
+		else
+		{
+			ft_putstr_fd("No such file or directory\n", 2);
+			exit(-1);
+		}
+		*argv = cut_arg_redirection(argv, i);
+		return (1);
+	}
+	return (0);
+}
+
 int		redirection_write(char ***argv, int i)
 {
 	int		fd;
 
-	if (ft_strncmp((*argv)[i], ">", 2) == 0 && (*argv)[i + 1])
+	if ((ft_strncmp((*argv)[i], ">", 2) == 0 && (*argv)[i + 1])
+		|| (ft_strncmp((*argv)[i], "1>", 3) == 0 && (*argv)[i + 1]))
 	{
 		if ((fd = open((*argv)[i + 1], O_CREAT | O_WRONLY | O_TRUNC,
 			S_IRWXU | S_IRGRP)) != -1)
 			dup2(fd, 1);
+		else
+		{
+			ft_putstr_fd("No such file or directory\n", 2);
+			exit(-1);
+		}
+		*argv = cut_arg_redirection(argv, i);
+		return (1);
+	}
+	return (0);
+}
+
+int		redirection_error(char ***argv, int i)
+{
+	int		fd;
+
+	if (ft_strncmp((*argv)[i], "2>", 3) == 0 && (*argv)[i + 1])
+	{
+		if ((fd = open((*argv)[i + 1], O_CREAT | O_WRONLY | O_TRUNC,
+			S_IRWXU | S_IRGRP)) != -1)
+			dup2(fd, 2);
 		else
 		{
 			ft_putstr_fd("No such file or directory\n", 2);

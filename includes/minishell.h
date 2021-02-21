@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 23:45:10 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:43:45 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ char			**parse(char *cmdl);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
 int				redirection_append(char ***argv, int i);
+int				redirection_append_err(char ***argv, int i);
 int				redirection_write(char ***argv, int i);
+int				redirection_error(char ***argv, int i);
 
 #endif

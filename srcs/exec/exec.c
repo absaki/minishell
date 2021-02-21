@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 01:05:32 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/21 23:44:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void set_fd(t_sh *sh, char ***argv)
 	while ((*argv)[i])
 	{
 		i -= redirection_write(argv, i);
+		i -= redirection_error(argv, i);
 		i -= redirection_append(argv, i);
+		i -= redirection_append_err(argv, i);
 		i -= redirection_read(argv, i);
 		i++;
 	}
