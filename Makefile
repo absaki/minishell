@@ -9,6 +9,7 @@ SRC +=	srcs/builtins/ft_cd.c srcs/main/builtins_checker.c
 SRC +=	srcs/env/env_util.c srcs/env/get_env.c srcs/env/init_env.c srcs/env/sort_env.c
 SRC +=	srcs/malloc_and_free/add_list_malloc.c srcs/malloc_and_free/free_util.c
 SRC +=	srcs/malloc_and_free/libft_with_list_malloc.c srcs/pipe/pipe.c
+SRC +=	srcs/parse/split_args.c srcs/util/args_util.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft -g
 OBJ  =	$(SRC:.c=.o)

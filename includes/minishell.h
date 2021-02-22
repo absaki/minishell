@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 23:43:45 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/22 22:24:17 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void			exit_and_free(char *s);
 
 t_cmdlist		*sep_list(char *s);
 int				pipemap(t_sh *sh);
+void			no_mem(void);
+int				joinlast_onechr(char c, char **tmp);
+char 			**split_args(char *s, t_sh *sh);
 
 /*
 **For t_cmdio->outmode
@@ -127,7 +130,7 @@ char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
 int				execute(t_sh *sh, char *argv[], int conn);
 void			fatal(char *s1, char *s2, int n);
-char			**parse(char *cmdl);
+char			**parse(char *cmdl, t_sh *sh);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
 int				redirection_append(char ***argv, int i);

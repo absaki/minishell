@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/20 22:43:22 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/22 16:37:35 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ t_cmdlist	*sep_list(char *s)
 	return (rtn);
 }
 
-char		**parse(char *cmdl)
+char		**parse(char *cmdl, t_sh *sh)
 {
 	char		**arglist;
-
-	arglist = ft_split(cmdl, ' ');
+	arglist = split_args(cmdl, sh);
+	// arglist = ft_split(cmdl, ' ');
 	return (arglist);
 }
