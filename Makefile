@@ -4,9 +4,9 @@ SRC =   srcs/main/main.c
 SRC +=  srcs/exec/exec.c srcs/util/splitline.c srcs/parse/parse.c
 SRC +=	srcs/main/redirection.c
 SRC +=	srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c
-SRC +=	srcs/builtins/ft_export.c srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c srcs/builtins/ft_unset_util.c
+SRC +=	srcs/builtins/ft_export.c srcs/builtins/ft_export_util_with_args.c srcs/builtins/ft_export_util_with_noarg.c srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c srcs/builtins/ft_unset_util.c
 SRC +=	srcs/builtins/ft_cd.c srcs/main/builtins_checker.c
-SRC +=	srcs/env/env_util.c srcs/env/get_env.c srcs/env/init_env.c srcs/env/sort_env.c
+SRC +=	srcs/env/env_util.c srcs/env/get_env.c srcs/env/init_env.c
 SRC +=	srcs/malloc_and_free/add_list_malloc.c srcs/malloc_and_free/free_util.c
 SRC +=	srcs/malloc_and_free/libft_with_list_malloc.c
 

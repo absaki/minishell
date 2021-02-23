@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 15:24:44 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/19 01:44:49 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/20 16:49:28 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,27 @@ static size_t	sizenv(char *env)
 	return (i);
 }
 
-static	void	search_env_and_secret(char **args,
-	t_env *env, t_env *secret, int i)
+static	void	search_env_and_secret(char *str, t_env *env,
+										t_env *secret, t_sh *sh)
 {
 	while (env && env->next)
 	{
-		if (ft_strncmp(args[i], env->next->vl,
+		if (ft_strncmp(str, env->next->vl,
 			sizenv(env->next->vl)) == 0)
+		{
+			check_args_in_unset(str, sh);
 			env->next = env->next->next;
+		}
 		env = env->next;
 	}
 	while (secret && secret->next)
 	{
-		if (ft_strncmp(args[i], secret->next->vl,
+		if (ft_strncmp(str, secret->next->vl,
 			sizenv(secret->next->vl)) == 0)
+		{
+			check_args_in_unset(str, sh);
 			secret->next = secret->next->next;
+		}
 		secret = secret->next;
 	}
 }
@@ -64,7 +70,7 @@ static void		ft_unset_loop(char **args, t_sh *sh, int *flag_error)
 			sh->senv = (sh->senv->next) ? sh->senv->next : sh->env;
 		}
 		else
-			search_env_and_secret(args, sh->env, sh->senv, i);
+			search_env_and_secret(args[i], sh->env, sh->senv, sh);
 	}
 }
 

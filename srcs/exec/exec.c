@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 01:30:10 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/20 16:50:30 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int		is_builtin(t_sh *sh, char **argv)
 	if(ft_strncmp(argv[0], "echo", 5) == 0)
 		ft_echo(argv);
 	else if(ft_strncmp(argv[0], "env", 4) == 0)
-		ft_env(argv, sh->env);
+		ft_env(argv, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	else if(ft_strncmp(argv[0], "exit", 5) == 0)
 		ft_exit(sh, argv);
 	else if(ft_strncmp(argv[0], "export", 7) == 0)
-		ft_export(argv, sh->env, sh->senv);
+		ft_export(argv, sh->env, sh->senv, sh);
 	else if(ft_strncmp(argv[0], "pwd", 4) == 0)
 		ft_pwd();
 	else if(ft_strncmp(argv[0], "unset", 6) == 0)

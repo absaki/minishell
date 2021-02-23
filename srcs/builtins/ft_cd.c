@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/19 01:34:38 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/23 19:17:26 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int		update_pwd(t_sh *sh)
 	if (is_in_env(sh->senv, pwd) == 0)
 		env_add(pwd, sh->senv);
 	ft_free_and_del(pwd);
+	if (sh->unset_pwd == 1 && sh->unset_pwd_s == 0)
+		sh->unset_pwd = 0;
 	return (SUCCESS);
 }
 
@@ -79,6 +81,8 @@ static int		update_oldpwd(t_sh *sh, char *pre_cwd)
 	if (is_in_env(sh->senv, oldpwd) == 0)
 		env_add(oldpwd, sh->senv);
 	ft_free_and_del(oldpwd);
+	if (sh->unset_oldpwd == 1 && sh->unset_oldpwd_s == 0)
+		sh->unset_oldpwd = 0;
 	return (SUCCESS);
 }
 
@@ -87,7 +91,7 @@ static int		go_to_path(int option, t_sh *sh)
 {
 	int		cd_ret;
 	char	*env_path;
-	char 	pre_cwd[PATH_MAX];//debug
+	char 	pre_cwd[PATH_MAX];
 
 	if (getcwd(pre_cwd, PATH_MAX) == NULL)
 		return (ERROR);
@@ -106,7 +110,6 @@ static int		go_to_path(int option, t_sh *sh)
 		ft_putendl_fd(env_path, 1);
 	update_oldpwd(sh, pre_cwd);
 	update_pwd(sh);
-    // fprintf(stdout,"現在のファイルパス:%s\n", pathname);//debug
 	ft_free_and_del(env_path);
 	return (cd_ret);
 }
@@ -118,8 +121,6 @@ int				ft_cd(char **args, t_sh *sh)
 
 	if (!args[1])//設定されていない環境変数もこちらの条件分岐に含める（パース処理後追記）
 		cd_ret = go_to_path(0, sh);
-	else if (ft_strcmp(args[1], "-") == 0)
-		cd_ret = go_to_path(1, sh);
 	//cd ""やcd ''の対処（今のディレクトリのまま）（パース処理後追記）
 	else
 	{

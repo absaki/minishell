@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/19 01:34:23 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/23 19:18:57 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		is_valid_env(const char *str)
 	int		i;
 
 	if (str[0] == '-' || str[0] == '=' || ('0' <= str[0] && str[0] <= '9'))
-		return(-1);
+		return (-1);
 	i = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalnum(str[i]) == 0 && str[i] !='_' && str[i] != '\\')
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_' && str[i] != '\\')
 			return (-1);
 		i++;
 	}

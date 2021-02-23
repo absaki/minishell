@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/19 01:34:23 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/21 19:01:07 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int		exec_builtin(t_sh *sh, char **args)
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args[0], "env") == 0)
-		ft_env(args, sh->env);
+		ft_env(args, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	if (ft_strcmp(args[0], "export") == 0)
-		ft_export(args, sh->env, sh->senv);
+		ft_export(args, sh->env, sh->senv, sh);
 	if (ft_strcmp(args[0], "unset") == 0)
 		ft_unset(args, sh);
 	if (ft_strcmp(args[0], "exit") == 0)
@@ -64,6 +64,8 @@ t_sh	*make_new_sh(void)
 	sh->did_cd = 0;
 	sh->unset_pwd = 0;
 	sh->unset_oldpwd = 0;
+	sh->unset_pwd_s = 0;
+	sh->unset_oldpwd_s = 0;
 	add_list_malloc(sh);
 	return (sh);
 }
