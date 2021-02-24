@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 11:00:04 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 14:17:29 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int dollar(char *s, t_sh *sh, char **tmp)
 	free(cpy);
 	free(*tmp);
 	*tmp = new;
-	return (end + 1);
+	return (end);
 }
 
 int s_quote(char *s, char **tmp)
@@ -99,7 +99,7 @@ int d_quote(char *s, t_sh *sh, char **tmp)
 	free(cpy);
 	free(*tmp);
 	*tmp = new;
-	return (i + 1);
+	return (i + 2);
 }
 
 int join_arglist(char **tmp, char ***args, char *s)
