@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/20 22:31:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 13:51:35 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int		exec_builtin(t_sh *sh, char **args)
 	if (ft_strcmp(args[0], "pwd") == 0)
 		result = ft_pwd();
 	if (ft_strcmp(args[0], "env") == 0)
-		ft_env(args, sh->env);
+		ft_env(args, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	if (ft_strcmp(args[0], "export") == 0)
-		ft_export(args, sh->env, sh->secret_env);
+		ft_export(args, sh->env, sh->senv, sh);
 	if (ft_strcmp(args[0], "unset") == 0)
-		ft_unset(args, sh->env, sh->secret_env);
+		ft_unset(args, sh);
 	if (ft_strcmp(args[0], "exit") == 0)
 	{
 		ft_exit(sh ,args);
@@ -45,14 +45,15 @@ t_sh	*make_new_sh(void)
 {
 	t_sh	*sh;
 
-	if (!(sh = (t_sh *)malloc(sizeof(t_sh))))
+	sh = (t_sh *)malloc(sizeof(t_sh));
+	if (!sh)
 		return (NULL);
 	sh->in = 0;
 	sh->out = 0;
 	sh->fdin = 0;
 	sh->fdout = 0;
-	sh->pipin = -1;
-	sh->pipout = -1;
+	sh->pipin = 0;
+	sh->pipout = 0;
 	sh->pid = 0;
 	sh->charge = 0;
 	sh->parent = 0;
@@ -61,7 +62,10 @@ t_sh	*make_new_sh(void)
 	sh->exit = 0;
 	sh->no_exec = 0;
 	sh->did_cd = 0;
-	sh->cmdlist = 0;
+	sh->unset_pwd = 0;
+	sh->unset_oldpwd = 0;
+	sh->unset_pwd_s = 0;
+	sh->unset_oldpwd_s = 0;
 	add_list_malloc(sh);
 	return (sh);
 }
@@ -82,7 +86,7 @@ int		builtin_checker(int argc, char **argv, char **env_array)
 		return(0);
 	}
 	init_env(sh, env_array);
-	init_secret_env(sh, env_array);
+	init_senv(sh, env_array);
 	
 
 	while (i < argc)
@@ -100,19 +104,19 @@ int		builtin_checker(int argc, char **argv, char **env_array)
 	{
 		while (sh->env->next)
 		{
-			printf("%s\n", sh->env->value);
+			printf("%s\n", sh->env->vl);
 			sh->env = sh->env->next;
 		}
-		printf("\'%s\' ", sh->env->value);
+		printf("\'%s\' ", sh->env->vl);
 	}
-	if (ft_strcmp(argv[1], "check_secret_env") == 0)
+	if (ft_strcmp(argv[1], "check_senv") == 0)
 	{
-		while (sh->secret_env->next)
+		while (sh->senv->next)
 		{
-			printf("%s\n", sh->secret_env->value);
-			sh->secret_env = sh->secret_env->next;
+			printf("%s\n", sh->senv->vl);
+			sh->senv = sh->senv->next;
 		}
-		printf("\'%s\' ", sh->secret_env->value);
+		printf("\'%s\' ", sh->senv->vl);
 	}
 	if (ft_strcmp(argv[1], "export") == 0)
 	{
@@ -120,17 +124,17 @@ int		builtin_checker(int argc, char **argv, char **env_array)
 		printf("========env=========\n");
 		while (sh->env->next)
 		{
-			printf("%s\n", sh->env->value);
+			printf("%s\n", sh->env->vl);
 			sh->env = sh->env->next;
 		}
-		printf("\n========secret_env========\n");
-		printf("\'%s\' ", sh->env->value);
-		while (sh->secret_env->next)
+		printf("\n========senv========\n");
+		printf("\'%s\' ", sh->env->vl);
+		while (sh->senv->next)
 		{
-			printf("%s\n", sh->secret_env->value);
-			sh->secret_env = sh->secret_env->next;
+			printf("%s\n", sh->senv->vl);
+			sh->senv = sh->senv->next;
 		}
-		printf("\'%s\' ", sh->secret_env->value);
+		printf("\'%s\' ", sh->senv->vl);
 	}
 	if (ft_strcmp(argv[1], "unset") == 0)
 	{
@@ -138,17 +142,17 @@ int		builtin_checker(int argc, char **argv, char **env_array)
 		printf("========env=========\n");
 		while (sh->env->next)
 		{
-			printf("%s\n", sh->env->value);
+			printf("%s\n", sh->env->vl);
 			sh->env = sh->env->next;
 		}
-		printf("\n========secret_env========\n");
-		printf("\'%s\' ", sh->env->value);
-		while (sh->secret_env->next)
+		printf("\n========senv========\n");
+		printf("\'%s\' ", sh->env->vl);
+		while (sh->senv->next)
 		{
-			printf("%s\n", sh->secret_env->value);
-			sh->secret_env = sh->secret_env->next;
+			printf("%s\n", sh->senv->vl);
+			sh->senv = sh->senv->next;
 		}
-		printf("\'%s\' ", sh->secret_env->value);
+		printf("\'%s\' ", sh->senv->vl);
 	}
 	if (ft_strcmp(argv[1], "cd") == 0)
 	{
@@ -156,17 +160,17 @@ int		builtin_checker(int argc, char **argv, char **env_array)
 		printf("========env=========\n");
 		while (sh->env->next)
 		{
-			printf("%s\n", sh->env->value);
+			printf("%s\n", sh->env->vl);
 			sh->env = sh->env->next;
 		}
-		printf("\n========secret_env========\n");
-		printf("\'%s\' ", sh->env->value);
-		while (sh->secret_env->next)
+		printf("\n========senv========\n");
+		printf("\'%s\' ", sh->env->vl);
+		while (sh->senv->next)
 		{
-			printf("%s\n", sh->secret_env->value);
-			sh->secret_env = sh->secret_env->next;
+			printf("%s\n", sh->senv->vl);
+			sh->senv = sh->senv->next;
 		}
-		printf("\'%s\' ", sh->secret_env->value);
+		printf("\'%s\' ", sh->senv->vl);
 	}
 	
 	ft_lstclear(&g_list_malloc, free);

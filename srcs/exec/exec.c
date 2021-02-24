@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 23:44:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 14:01:33 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ int do_builtin(t_sh *sh, char **argv)
 	if (ft_strncmp(argv[0], "echo", 5) == 0)
 		ft_echo(argv);
 	else if (ft_strncmp(argv[0], "env", 4) == 0)
-		ft_env(argv, sh->env);
+		ft_env(argv, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	else if (ft_strncmp(argv[0], "exit", 5) == 0)
 		ft_exit(sh, argv);
 	else if (ft_strncmp(argv[0], "export", 7) == 0)
-		ft_export(argv, sh->env, sh->secret_env);
+		ft_export(argv, sh->env, sh->senv, sh);
 	else if (ft_strncmp(argv[0], "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(argv[0], "unset", 6) == 0)
-		ft_unset(argv, sh->env, sh->secret_env);
+		ft_unset(argv, sh);
 	else if (ft_strncmp(argv[0], "cd", 3) == 0)
 		ft_cd(argv, sh);
 	else

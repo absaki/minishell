@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 00:45:42 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 13:57:57 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		main(int argc, char **argv, char **envp)
 
 	sh = make_new_sh();
 	init_env(sh, envp);
-	init_secret_env(sh, envp);
+	init_senv(sh, envp);
 	prompt = DFL_PROMPT;
 	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
 	{

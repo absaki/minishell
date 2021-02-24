@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/16 18:15:34 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 13:50:40 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		is_valid_env(const char *str)
 	int		i;
 
 	if (str[0] == '-' || str[0] == '=' || ('0' <= str[0] && str[0] <= '9'))
-		return(-1);
+		return (-1);
 	i = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalnum(str[i]) == 0 && str[i] !='_' && str[i] != '\\')
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_' && str[i] != '\\')
 			return (-1);
 		i++;
 	}
@@ -82,13 +82,13 @@ char	*get_env_value(char *arg, t_env *env)
 	char	*env_val;
 
 	env_val = ft_strdup("");
-	while (env && env->value)
+	while (env && env->vl)
 	{
-		get_env_name(env_name, env->value);
+		get_env_name(env_name, env->vl);
 		if (ft_strcmp(arg, env_name) == 0)
 		{
 			ft_free_and_del(env_val);
-			env_val = env_value(env->value);
+			env_val = env_value(env->vl);
 			return (env_val);
 		}
 		env = env->next;

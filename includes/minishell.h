@@ -6,14 +6,13 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/21 23:43:45 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 14:01:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -50,7 +49,7 @@ typedef t_list	t_cmdlist;
 
 typedef struct	s_env
 {
-	char			*value;
+	char			*vl;
 	struct s_env	*next;
 }				t_env;
 
@@ -58,7 +57,7 @@ typedef struct	s_sh
 {
 	// t_token			*start;
 	t_env			*env;
-	t_env			*secret_env;
+	t_env			*senv;
 	t_cmdlist		*cmdlist;
 	int				in;
 	int				out;
@@ -74,20 +73,28 @@ typedef struct	s_sh
 	int				exit;
 	int				no_exec;
 	int				did_cd;
+	int				unset_pwd;
+	int				unset_oldpwd;
+	int				unset_pwd_s;
+	int				unset_oldpwd_s;
 }				t_sh;
 
 int				ft_pwd(void);
 int				ft_echo(char **args);
 void			ft_exit(t_sh *sh, char **args);
-int				ft_env(char **args, t_env *env);
+int				ft_env(char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int				ft_cd(char **args, t_sh *sh);
-int				ft_export(char **args, t_env *env, t_env *secret);
-int				ft_unset(char **args, t_env *env, t_env *secret);
+int				ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
+int				ft_export_loop(char **args, t_env *env, t_env *secret, t_sh *sh);
+char			*convert_env_to_str(t_env *lst);
+void			sort_env_by_asc(char **tab, int env_len);
+int				ft_unset(char **args, t_sh *sh);
+void			check_args_in_unset(char *str, t_sh *sh);
+void			print_error_in_unset(char *arg);
 
 int				init_env(t_sh *sh, char **env_array);
-int				init_secret_env(t_sh *sh, char **env_array);
+int				init_senv(t_sh *sh, char **env_array);
 int				is_valid_env(const char *str);
-void			print_sorted_env(t_env *env);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 int				is_in_env(t_env *env, char *args);
