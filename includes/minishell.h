@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/22 22:24:17 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 10:58:32 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int				is_valid_env(const char *str);
 void			print_sorted_env(t_env *env);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
+char			*get_env_value(char *arg, t_env *env);
 int				is_in_env(t_env *env, char *args);
 
 void			*malloc_with_list_malloc(size_t size);

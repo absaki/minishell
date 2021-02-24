@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/23 00:55:01 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 11:00:04 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,35 @@
 // int replase_var(char *s, t_sh *sh, char **tmp)
 // {
 // }
+
+int dollar(char *s, t_sh *sh, char **tmp)
+{
+	int i;
+	int end;
+	char *new;
+	char *cpy;
+
+(void)new;(void)sh;(void)tmp;
+	i = 1;
+	while(s[i] && ft_isalnum(s[i]))
+		i++;
+	end = i;
+	if((cpy = malloc(sizeof(char) * end)) == NULL)
+		no_mem();
+	i = 0;
+	while(i + 1 < end)
+	{
+		cpy[i] = s[i + 1];
+		i++;
+	}
+	cpy[i] = '\0';
+	if((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
+		no_mem();
+	free(cpy);
+	free(*tmp);
+	*tmp = new;
+	return (end + 1);
+}
 
 int s_quote(char *s, char **tmp)
 {
@@ -128,6 +157,8 @@ char **split_args(char *s, t_sh *sh)
 			i += s_quote(&s[i], &tmp);
 		else if (s[i] == '\"')
 			i += d_quote(&s[i], sh, &tmp);
+		else if (s[i] == '$')
+			i += dollar(&s[i], sh, &tmp);
 		else
 			i += joinlast_onechr(s[i], &tmp);
 	}
