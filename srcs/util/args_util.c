@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_util.c                                        :+:      :+:    :+:   */
+/*   args_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/12 18:06:39 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/22 18:36:02 by kikeda           ###   ########.fr       */
+/*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/22 23:18:32 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_list_malloc(void)
+int		joinlast_onechr(char c, char **tmp)
 {
-	ft_lstclear(&g_list_malloc, free);
-}
-
-void	free_tda(char **tab)
-{
-	int	i;
+	char	*new;
+	int		i;
+	int		newsize;
 
 	i = 0;
-	while (tab[i])
+	newsize = ft_strlen(*tmp) + 2;
+	new = malloc(newsize);
+	if (new == NULL)
+		no_mem();
+	while(*tmp != NULL && (*tmp)[i])
 	{
-		if (tab[i])
-			ft_free_and_del(tab[i]);
+		new[i] = (*tmp)[i];
 		i++;
 	}
-	if (tab)
-		ft_free_and_del(tab);
-}
-
-void	no_mem(void)
-{
-	exit(1);
+	free(*tmp);
+	new[i++] = c;
+	new[i] = '\0';
+	*tmp = new;
+	return (1);
 }

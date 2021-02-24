@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:01:18 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/24 14:21:54 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int				init_senv(t_sh *sh, char **env_array);
 int				is_valid_env(const char *str);
 int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
+char			*get_env_value(char *arg, t_env *env);
 int				is_in_env(t_env *env, char *args);
 
 void			*malloc_with_list_malloc(size_t size);
@@ -111,6 +112,9 @@ void			exit_and_free(char *s);
 
 t_cmdlist		*sep_list(char *s);
 int				pipemap(t_sh *sh);
+void			no_mem(void);
+int				joinlast_onechr(char c, char **tmp);
+char 			**split_args(char *s, t_sh *sh);
 
 /*
 **For t_cmdio->outmode
@@ -134,7 +138,7 @@ char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
 int				execute(t_sh *sh, char *argv[], int conn);
 void			fatal(char *s1, char *s2, int n);
-char			**parse(char *cmdl);
+char			**parse(char *cmdl, t_sh *sh);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
 int				redirection_append(char ***argv, int i);
