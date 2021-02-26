@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:17:29 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/26 23:29:05 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 // {
 // }
 
-int dollar(char *s, t_sh *sh, char **tmp)
+int	dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 {
 	int i;
 	int end;
 	char *new;
 	char *cpy;
 
-(void)new;(void)sh;(void)tmp;
 	i = 1;
 	while(s[i] && ft_isalnum(s[i]))
 		i++;
@@ -43,6 +42,43 @@ int dollar(char *s, t_sh *sh, char **tmp)
 	free(*tmp);
 	*tmp = new;
 	return (end);
+}
+
+int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
+{
+	int i;
+	int end;
+	char *new;
+	char *cpy;
+
+	i = 1;
+	while(s[i] && s[i] != '}')
+		i++;
+	end = i;
+	if((cpy = malloc(sizeof(char) * end)) == NULL)
+		no_mem();
+	i = 0;
+	while(i + 2 < end)
+	{
+		cpy[i] = s[i + 2];
+		i++;
+	}
+	cpy[i] = '\0';
+	if((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
+		no_mem();
+	free(cpy);
+	free(*tmp);
+	*tmp = new;
+	return (end + 1);
+}
+
+int dollar(char *s, t_sh *sh, char **tmp)
+{
+	if(s[1] && s[1] == '{')
+		return (dollar_with_parenthesis(s, sh, tmp));
+	if(*(s + 1))
+		return (dollar_without_parenthesis(s, sh, tmp));
+	return (0);
 }
 
 int s_quote(char *s, char **tmp)
