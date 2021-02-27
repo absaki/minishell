@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/23 19:18:57 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/27 23:38:12 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*get_env_value(char *arg, t_env *env)
 	char	env_name[BUFF_SIZE];
 	char	*env_val;
 
+	if (arg[0] == 0)
+		return (NULL);
 	env_val = ft_strdup("");
 	while (env && env->vl)
 	{

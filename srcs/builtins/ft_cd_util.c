@@ -1,38 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_util.c                                        :+:      :+:    :+:   */
+/*   ft_cd_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/12 18:06:39 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/22 18:36:02 by kikeda           ###   ########.fr       */
+/*   Created: 2021/02/27 23:49:26 by kdoi              #+#    #+#             */
+/*   Updated: 2021/02/27 23:50:37 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_list_malloc(void)
+void		print_error_and_set_errno(char *str)
 {
-	ft_lstclear(&g_list_malloc, free);
-}
-
-void	free_tda(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		if (tab[i])
-			ft_free_and_del(tab[i]);
-		i++;
-	}
-	if (tab)
-		ft_free_and_del(tab);
-}
-
-void	no_mem(void)
-{
-	exit(1);
+	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": No such file or directory", 2);
 }

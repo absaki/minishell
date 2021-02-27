@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/18 23:45:05 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/24 14:00:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,8 @@ static long		ft_strtonbr(const char *str, int sign)
 
 static	long	ft_str_to_long(const char *str)
 {
-	int		i;
 	int		sign;
 
-	i = 0;
 	if (str == NULL)
 		return (ERROR);
 	if (*str == '-')

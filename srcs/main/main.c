@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/19 01:30:10 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/02/24 13:57:57 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,25 @@ int		main(int argc, char **argv, char **envp)
 {
 	char	*cmdline;
 	char	*prompt;
-	char	**arglist;
-	int		result;
+	// char	**arglist;
+	int		result = SUCCESS;
 	t_sh	*sh;
-	
+
 	sh = make_new_sh();
 	init_env(sh, envp);
 	init_senv(sh, envp);
 	prompt = DFL_PROMPT;
 	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
 	{
-		if ((arglist = parse(cmdline)) != NULL)
-		{
-			result = execute(sh, arglist);
-			freelist(arglist);
-		}
-		free(cmdline);
+		sh->cmdlist = sep_list(cmdline);
+		if(sh->cmdlist)
+			pipemap(sh);
+		// if ((arglist = parse(cmdline)) != NULL)
+		// {
+		// 	result = execute(sh, arglist);
+		// 	freelist(arglist);
+		// }
+		// free(cmdline);
 	}
 	return (result);
 	(void)argc;
