@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/26 23:29:05 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/27 22:17:34 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // {
 // }
 
-int	dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
+int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 {
 	int i;
 	int end;
@@ -24,19 +24,19 @@ int	dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 	char *cpy;
 
 	i = 1;
-	while(s[i] && ft_isalnum(s[i]))
+	while (s[i] && ft_isalnum(s[i]))
 		i++;
 	end = i;
-	if((cpy = malloc(sizeof(char) * end)) == NULL)
+	if ((cpy = malloc(sizeof(char) * end)) == NULL)
 		no_mem();
 	i = 0;
-	while(i + 1 < end)
+	while (i + 1 < end)
 	{
 		cpy[i] = s[i + 1];
 		i++;
 	}
 	cpy[i] = '\0';
-	if((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
+	if ((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
 		no_mem();
 	free(cpy);
 	free(*tmp);
@@ -52,19 +52,19 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 	char *cpy;
 
 	i = 1;
-	while(s[i] && s[i] != '}')
+	while (s[i] && s[i] != '}')
 		i++;
 	end = i;
-	if((cpy = malloc(sizeof(char) * end)) == NULL)
+	if ((cpy = malloc(sizeof(char) * end)) == NULL)
 		no_mem();
 	i = 0;
-	while(i + 2 < end)
+	while (i + 2 < end)
 	{
 		cpy[i] = s[i + 2];
 		i++;
 	}
 	cpy[i] = '\0';
-	if((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
+	if ((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
 		no_mem();
 	free(cpy);
 	free(*tmp);
@@ -74,9 +74,9 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 
 int dollar(char *s, t_sh *sh, char **tmp)
 {
-	if(s[1] && s[1] == '{')
+	if (s[1] && s[1] == '{')
 		return (dollar_with_parenthesis(s, sh, tmp));
-	if(*(s + 1))
+	if (*(s + 1))
 		return (dollar_without_parenthesis(s, sh, tmp));
 	return (0);
 }
@@ -89,19 +89,19 @@ int s_quote(char *s, char **tmp)
 	char *cpy;
 
 	i = 1;
-	while(s[i] && s[i] != '\'')
+	while (s[i] && s[i] != '\'')
 		i++;
 	end = i;
-	if((cpy = malloc(sizeof(char) * end)) == NULL)
+	if ((cpy = malloc(sizeof(char) * end)) == NULL)
 		no_mem();
 	i = 0;
-	while(s[i + 1] && s[i + 1] != '\'')
+	while (s[i + 1] && s[i + 1] != '\'')
 	{
 		cpy[i] = s[i + 1];
 		i++;
 	}
 	cpy[i] = '\0';
-	if((new = ft_strjoin(*tmp, cpy)) == NULL)
+	if ((new = ft_strjoin(*tmp, cpy)) == NULL)
 		no_mem();
 	free(cpy);
 	free(*tmp);
@@ -111,31 +111,17 @@ int s_quote(char *s, char **tmp)
 
 int d_quote(char *s, t_sh *sh, char **tmp)
 {
-	(void)sh;
 	int i;
-	int end;
-	char *new;
-	char *cpy;
 
 	i = 1;
-	while(s[i] && s[i] != '\"')
-		i++;
-	end = i;
-	if((cpy = malloc(sizeof(char) * end)) == NULL)
-		no_mem();
-	i = 0;
-	while(s[i + 1] && s[i + 1] != '\"')
+	while (s[i] != '\"')
 	{
-		cpy[i] = s[i + 1];
-		i++;
+		if (s[i] && s[i] == '$')
+			i += dollar(&(s[i]), sh, tmp);
+		else if (s[i])
+			i += joinlast_onechr(s[i], tmp);
 	}
-	cpy[i] = '\0';
-	if((new = ft_strjoin(*tmp, cpy)) == NULL)
-		no_mem();
-	free(cpy);
-	free(*tmp);
-	*tmp = new;
-	return (i + 2);
+	return (i + 1);
 }
 
 int join_arglist(char **tmp, char ***args, char *s)
