@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args_util.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 22:53:22 by kikeda           ###   ########.fr       */
+/*   Created: 2021/02/28 18:16:01 by kikeda            #+#    #+#             */
+/*   Updated: 2021/02/28 22:47:08 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd *cmd)
+void sig_int(int status)
 {
-	free(cmd->cmds);
-	free(cmd);
+	(void)status;
+	if (g_sig.pid == 0)
+	{
+		ft_putstr_fd("\n", STDERR);
+		ft_putstr_fd(DFL_PROMPT, STDERR);
+	}
+	else
+	{
+		ft_putstr_fd("\n", STDERR);
+		g_sig.sigint = 1;
+	}
+	return;
 }
 
-int		joinlast_onechr(char c, char **tmp)
+void sig_quit(int status)
 {
-	char	*new;
-	int		i;
-	int		newsize;
-
-	i = 0;
-	newsize = ft_strlen(*tmp) + 2;
-	new = malloc(newsize);
-	if (new == NULL)
-		no_mem();
-	while(*tmp != NULL && (*tmp)[i])
-	{
-		new[i] = (*tmp)[i];
-		i++;
-	}
-	free(*tmp);
-	new[i++] = c;
-	new[i] = '\0';
-	*tmp = new;
-	return (1);
+	(void)status;
+	return;
 }

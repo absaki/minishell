@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/22 16:36:40 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/28 22:57:42 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	exec_pipe(t_sh *sh)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
 	}
-	waitpid(sh->pid, &child_info, WUNTRACED);
+	g_sig.pid = sh->pid;
+	waitpid(g_sig.pid, &child_info, 0);
+	g_sig.pid = 0;
 	sh->pipin = -1;
 	sh->pipout = -1;
 }
@@ -35,11 +37,13 @@ void	exec_pipe(t_sh *sh)
 int	pipemap(t_sh *sh)
 {
 	t_cmd		*cmd;
-
+	g_sig.sigint = 0;
 	while(sh->cmdlist && (cmd = sh->cmdlist->content))
 	{
 		exec_pipe(sh);
 		sh->cmdlist = sh->cmdlist->next;
+		if(g_sig.sigint)
+			ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
 	// while(list && (cmd = list->content))
 	// {

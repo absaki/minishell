@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:21:54 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/28 22:54:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@
 # define CONN_PIPE 1
 # define CONN_SEMIC 2
 # define CONN_END 3
+
+typedef struct s_sigstatus
+{
+	int		pid;
+	int		sigint;
+	int		sigquit;
+	int		status;
+}				t_sigstatus;
+
+extern t_sigstatus g_sig;
 
 extern t_list	*g_list_malloc;
 
@@ -115,6 +125,10 @@ int				pipemap(t_sh *sh);
 void			no_mem(void);
 int				joinlast_onechr(char c, char **tmp);
 char 			**split_args(char *s, t_sh *sh);
+
+void			sig_int(int status);
+void			sig_quit(int status);
+void			free_cmd(t_cmd *cmd);
 
 /*
 **For t_cmdio->outmode

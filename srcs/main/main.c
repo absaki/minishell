@@ -6,11 +6,19 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 13:57:57 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/28 22:46:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_sigstatus g_sig;
+
+void	setup(void)
+{
+	signal(SIGINT, sig_int);
+	signal(SIGQUIT, sig_quit);
+}
 
 int		main(int argc, char **argv, char **envp)
 {
@@ -20,6 +28,7 @@ int		main(int argc, char **argv, char **envp)
 	int		result = SUCCESS;
 	t_sh	*sh;
 
+	setup();
 	sh = make_new_sh();
 	init_env(sh, envp);
 	init_senv(sh, envp);
@@ -39,12 +48,6 @@ int		main(int argc, char **argv, char **envp)
 	return (result);
 	(void)argc;
 	(void)argv;
-}
-
-void	setup(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 void	fatal(char *s1, char *s2, int n)

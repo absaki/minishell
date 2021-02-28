@@ -11,7 +11,7 @@ SRC +=	srcs/malloc_and_free/add_list_malloc.c srcs/malloc_and_free/free_util.c
 SRC +=	srcs/malloc_and_free/libft_with_list_malloc.c srcs/pipe/pipe.c
 SRC +=	srcs/builtins/ft_export_util_with_args.c srcs/builtins/ft_unset_util.c
 SRC +=	srcs/builtins/ft_export_util_with_noarg.c
-SRC +=	srcs/parse/split_args.c srcs/util/args_util.c
+SRC +=	srcs/parse/split_args.c srcs/util/args_util.c srcs/signal/signal.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft -g
 OBJ  =	$(SRC:.c=.o)
