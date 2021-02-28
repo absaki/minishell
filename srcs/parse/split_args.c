@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 18:05:46 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/02/28 23:22:59 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 	i = 1;
 	while (s[i] && ft_isalnum(s[i]))
 		i++;
+	if(i == 1)
+		return (joinlast_onechr('$', tmp));
 	end = i;
 	if ((cpy = malloc(sizeof(char) * end)) == NULL)
 		no_mem();
@@ -54,6 +56,8 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 	i = 1;
 	while (s[i] && s[i] != '}')
 		i++;
+	if(i == 2)
+		return (3);
 	end = i;
 	if ((cpy = malloc(sizeof(char) * end)) == NULL)
 		no_mem();
@@ -74,11 +78,17 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 
 int dollar(char *s, t_sh *sh, char **tmp)
 {
+	if (!s[1])
+		return (joinlast_onechr('$', tmp));
+	if (!ft_strncmp(s, "$\"\"", 3))
+		return (3);
+	if (!ft_strncmp(s, "$\'\'", 3))
+		return (3);
 	if (s[1] && s[1] == '{')
 		return (dollar_with_parenthesis(s, sh, tmp));
 	if (*(s + 1))
 		return (dollar_without_parenthesis(s, sh, tmp));
-	return (0);
+	return (1);
 }
 
 int s_quote(char *s, char **tmp)
