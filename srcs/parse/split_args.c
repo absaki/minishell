@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 23:22:59 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/01 11:04:58 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 	i = 1;
 	while (s[i] && ft_isalnum(s[i]))
 		i++;
-	if(i == 1)
+	if (i == 1)
 		return (joinlast_onechr('$', tmp));
 	end = i;
 	if ((cpy = malloc(sizeof(char) * end)) == NULL)
@@ -56,7 +56,7 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 	i = 1;
 	while (s[i] && s[i] != '}')
 		i++;
-	if(i == 2)
+	if (i == 2)
 		return (3);
 	end = i;
 	if ((cpy = malloc(sizeof(char) * end)) == NULL)
@@ -122,7 +122,6 @@ int s_quote(char *s, char **tmp)
 int d_quote(char *s, t_sh *sh, char **tmp)
 {
 	int i;
-
 	i = 1;
 	while (s[i] != '\"')
 	{
@@ -130,6 +129,8 @@ int d_quote(char *s, t_sh *sh, char **tmp)
 			i += dollar(&(s[i]), sh, tmp);
 		else if (s[i])
 			i += joinlast_onechr(s[i], tmp);
+		else if (s[i] == '\\' && s[i + 1])
+			i += (joinlast_onechr(s[i + 1], tmp) + 1);
 	}
 	return (i + 1);
 }
@@ -175,10 +176,10 @@ char **split_args(char *s, t_sh *sh)
 	int i;
 
 	i = 0;
-	rtn = malloc(sizeof(char *));
-	rtn[0] = 0;
 	tmp = malloc(sizeof(char));
 	tmp[0] = 0;
+	rtn = malloc(sizeof(char *));
+	rtn[0] = 0;
 	while (s[i] && s[i] == ' ')
 		i++;
 	while (s[i])
@@ -191,16 +192,12 @@ char **split_args(char *s, t_sh *sh)
 			i += d_quote(&s[i], sh, &tmp);
 		else if (s[i] == '$')
 			i += dollar(&s[i], sh, &tmp);
+		else if (s[i] == '\\' && s[i + 1])
+			i += (joinlast_onechr(s[i + 1], &tmp) + 1);
 		else
 			i += joinlast_onechr(s[i], &tmp);
 	}
 	if (tmp[0])
 		join_arglist(&tmp, &rtn, &s[i]);
-	i = 0;
-	// while(rtn[i])
-	// {
-	// 	printf("arg[%d]->%s<-\n", i, rtn[i]);
-	// 	i++;
-	// }
 	return (rtn);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 22:53:22 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/01 11:00:37 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,15 @@ void	free_cmd(t_cmd *cmd)
 int		joinlast_onechr(char c, char **tmp)
 {
 	char	*new;
-	int		i;
-	int		newsize;
-
-	i = 0;
-	newsize = ft_strlen(*tmp) + 2;
-	new = malloc(newsize);
-	if (new == NULL)
+	int		tmpsize;
+	
+	tmpsize = ft_strlen(*tmp);
+	if ((new = malloc(sizeof(char) * (tmpsize + 2))) == NULL)
 		no_mem();
-	while(*tmp != NULL && (*tmp)[i])
-	{
-		new[i] = (*tmp)[i];
-		i++;
-	}
+	ft_memcpy(new, *tmp, ft_strlen(*tmp));
 	free(*tmp);
-	new[i++] = c;
-	new[i] = '\0';
+	new[tmpsize] = c;
+	new[tmpsize + 1] = '\0';
 	*tmp = new;
 	return (1);
 }
