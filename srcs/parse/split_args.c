@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/01 11:04:58 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/03 00:11:37 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,34 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 	return (end + 1);
 }
 
+int dollar_question_with_parenthesis(char **tmp)
+{
+	char *new;
+	char *oldstr;
+
+	if ((new = ft_itoa(g_sig.status)) == NULL)
+		no_mem();
+	oldstr = *tmp;
+	if ((*tmp = ft_strjoin(oldstr, new)) == NULL)
+		no_mem();
+	free(oldstr);
+	return (4);
+}
+
+int dollar_question_without_parenthesis(char **tmp)
+{
+	char *new;
+	char *oldstr;
+
+	if ((new = ft_itoa(g_sig.status)) == NULL)
+		no_mem();
+	oldstr = *tmp;
+	if ((*tmp = ft_strjoin(oldstr, new)) == NULL)
+		no_mem();
+	free(oldstr);
+	return (2);
+}
+
 int dollar(char *s, t_sh *sh, char **tmp)
 {
 	if (!s[1])
@@ -84,6 +112,10 @@ int dollar(char *s, t_sh *sh, char **tmp)
 		return (3);
 	if (!ft_strncmp(s, "$\'\'", 3))
 		return (3);
+	if (!ft_strncmp(s, "$?", 2))
+		return (dollar_question_without_parenthesis(tmp));
+	if (!ft_strncmp(s, "${?}", 4))
+		return (dollar_question_with_parenthesis(tmp));
 	if (s[1] && s[1] == '{')
 		return (dollar_with_parenthesis(s, sh, tmp));
 	if (*(s + 1))
