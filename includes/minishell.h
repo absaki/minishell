@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 22:54:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/02 18:55:38 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
@@ -129,6 +131,8 @@ char 			**split_args(char *s, t_sh *sh);
 void			sig_int(int status);
 void			sig_quit(int status);
 void			free_cmd(t_cmd *cmd);
+int				my_execvp(char *file, char **argv, t_sh *sh);
+char			**makeenvlist(t_env *env);
 
 /*
 **For t_cmdio->outmode

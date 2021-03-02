@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:01:33 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/02 16:40:26 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,10 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 	set_fd(sh, &argv);
 	if(do_builtin(sh, argv))
 		exit (EXIT_SUCCESS);
-	execvp(argv[0], argv);
-	perror("cannot execute command");
+	// execvp(argv[0], argv);
+	my_execvp(argv[0], argv, sh);
+	ft_putstr_fd(argv[0], STDERR);
+	ft_putendl_fd(": command not found", STDERR);
 	exit(1);
 }
 
