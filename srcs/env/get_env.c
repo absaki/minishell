@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/28 16:15:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/03 15:11:51 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,19 @@ char    *get_env_value(char *arg, t_env *env)
     char    env_name[BUFF_SIZE];
     char    *env_val;
 
-    if (arg[0] == 0)
-        return (NULL);
-    env_val = ft_strdup("");
-    while (env && env->vl)
-    {
-        get_env_name(env_name, env->vl);
-        if (ft_strcmp(arg, env_name) == 0)
-        {
-            ft_free_and_del(env_val);
-            env_val = env_value(env->vl);
-            return (env_val);
-        }
-        env = env->next;
-    }
-    return (env_val);
+	if (arg[0] == 0)
+		return (NULL);
+	env_val = ft_strdup("");
+	while (env && env->vl)
+	{
+		get_env_name(env_name, env->vl);
+		if (ft_strcmp(arg, env_name) == 0)
+		{
+			ft_free_and_del(env_val);
+			env_val = env_value(env->vl);
+			return (env_val);
+		}
+		env = env->next;
+	}
+	return (env_val);
 }

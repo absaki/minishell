@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/24 13:49:25 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/03 15:11:39 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void		print_error_and_set_errno(char *str)
-{
-	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putendl_fd(": No such file or directory", 2);
-}
 
 static char		*get_env_path(t_env *env, const char *var, size_t len)
 {
@@ -67,7 +60,7 @@ static int		update_pwd(t_sh *sh)
 	return (SUCCESS);
 }
 
-static int		update_oldpwd(t_sh *sh, char *pre_cwd)
+static	int		update_oldpwd(t_sh *sh, char *pre_cwd)
 {
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
@@ -86,12 +79,11 @@ static int		update_oldpwd(t_sh *sh, char *pre_cwd)
 	return (SUCCESS);
 }
 
-
-static int		go_to_path(int option, t_sh *sh)
+static	int		go_to_path(int option, t_sh *sh)
 {
 	int		cd_ret;
 	char	*env_path;
-	char 	pre_cwd[PATH_MAX];
+	char	pre_cwd[PATH_MAX];
 
 	if (getcwd(pre_cwd, PATH_MAX) == NULL)
 		return (ERROR);
@@ -117,11 +109,10 @@ static int		go_to_path(int option, t_sh *sh)
 int				ft_cd(char **args, t_sh *sh)
 {
 	int		cd_ret;
-	char 	pre_cwd[PATH_MAX];//debug
+	char	pre_cwd[PATH_MAX];
 
-	if (!args[1])//設定されていない環境変数もこちらの条件分岐に含める（パース処理後追記）
+	if (!args[1])
 		cd_ret = go_to_path(0, sh);
-	//cd ""やcd ''の対処（今のディレクトリのまま）（パース処理後追記）
 	else
 	{
 		if (getcwd(pre_cwd, PATH_MAX) == NULL)

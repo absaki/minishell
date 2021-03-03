@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 22:54:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/03 15:11:24 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int				ft_echo(char **args);
 void			ft_exit(t_sh *sh, char **args);
 int				ft_env(char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int				ft_cd(char **args, t_sh *sh);
+void			print_error_and_set_errno(char *str);
 int				ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
 int				ft_export_loop(char **args, t_env *env, t_env *secret, t_sh *sh);
 char			*convert_env_to_str(t_env *lst);
