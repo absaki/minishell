@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:01:33 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/03 01:18:14 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ int reset_fds(int fds[3])
 int do_builtin(t_sh *sh, char **argv)
 {
 	if (ft_strncmp(argv[0], "echo", 5) == 0)
-		ft_echo(argv);
+		g_sig.status = ft_echo(argv);
 	else if (ft_strncmp(argv[0], "env", 4) == 0)
-		ft_env(argv, sh->env, sh->unset_pwd, sh->unset_oldpwd);
+		g_sig.status = ft_env(argv, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	else if (ft_strncmp(argv[0], "exit", 5) == 0)
 		ft_exit(sh, argv);
 	else if (ft_strncmp(argv[0], "export", 7) == 0)
-		ft_export(argv, sh->env, sh->senv, sh);
+		g_sig.status = ft_export(argv, sh->env, sh->senv, sh);
 	else if (ft_strncmp(argv[0], "pwd", 4) == 0)
-		ft_pwd();
+		g_sig.status = ft_pwd();
 	else if (ft_strncmp(argv[0], "unset", 6) == 0)
-		ft_unset(argv, sh);
+		g_sig.status = ft_unset(argv, sh);
 	else if (ft_strncmp(argv[0], "cd", 3) == 0)
-		ft_cd(argv, sh);
+		g_sig.status = ft_cd(argv, sh);
 	else
 		return (0);
 	return (1);
@@ -80,8 +80,7 @@ int do_builtin(t_sh *sh, char **argv)
 int is_builtin_nopipe(t_sh *sh, char **argv, int newpipe[2])
 {
 	int fds[3];
-
-	if (newpipe[0] != -1 && newpipe[1] != -1)
+	if (newpipe[0] != -1 || sh->pipin != -1)
 		return (0);
 	if (!ft_strncmp(argv[0], "echo", 5)
 		|| !ft_strncmp(argv[0], "env", 4)
@@ -118,10 +117,12 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 	}
 	set_fd(sh, &argv);
 	if(do_builtin(sh, argv))
-		exit (EXIT_SUCCESS);
-	execvp(argv[0], argv);
-	perror("cannot execute command");
-	exit(1);
+		exit (g_sig.status);
+	// execvp(argv[0], argv);
+	my_execvp(argv[0], argv, sh);
+	ft_putstr_fd(argv[0], STDERR);
+	ft_putendl_fd(": command not found", STDERR);
+	exit(127);
 }
 
 int execute(t_sh *sh, char *argv[], int conn)
@@ -135,7 +136,7 @@ int execute(t_sh *sh, char *argv[], int conn)
 	if (conn == CONN_PIPE)
 		pipe(newpipe);
 	if (is_builtin_nopipe(sh, argv, newpipe))
-		return (SUCCESS);
+		return (0);
 	if ((pid = fork()) == -1)
 		perror("fork");
 	else if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:12:52 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/03 15:17:42 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	exec_pipe(t_sh *sh)
 {
 	t_cmd *cmd;
 	char	**argv;
-	int child_info;
 
 	while(sh->cmdlist)
 	{
@@ -28,7 +27,11 @@ void	exec_pipe(t_sh *sh)
 		sh->cmdlist = sh->cmdlist->next;
 	}
 	g_sig.pid = sh->pid;
-	waitpid(g_sig.pid, &child_info, 0);
+	waitpid(g_sig.pid, &g_sig.status, 0);
+	if(WIFEXITED(g_sig.status))
+		g_sig.status = WEXITSTATUS(g_sig.status);
+	else if(WIFSIGNALED(g_sig.status))
+		g_sig.status = WTERMSIG(g_sig.status);
 	g_sig.pid = 0;
 	sh->pipin = -1;
 	sh->pipout = -1;

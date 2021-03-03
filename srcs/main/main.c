@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:13:54 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/03 15:17:25 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		main(int argc, char **argv, char **envp)
 {
 	char	*cmdline;
 	char	*prompt;
-	// char	**arglist;
 	int		result = SUCCESS;
 	t_sh	*sh;
 
@@ -38,12 +37,6 @@ int		main(int argc, char **argv, char **envp)
 		sh->cmdlist = sep_list(cmdline);
 		if(sh->cmdlist)
 			pipemap(sh);
-		// if ((arglist = parse(cmdline)) != NULL)
-		// {
-		// 	result = execute(sh, arglist);
-		// 	freelist(arglist);
-		// }
-		// free(cmdline);
 	}
 	return (result);
 	(void)argc;

@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args_util.c                                        :+:      :+:    :+:   */
+/*   makeenvlist.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:17:48 by kike             ###   ########.fr       */
+/*   Created: 2021/03/02 18:47:30 by kike              #+#    #+#             */
+/*   Updated: 2021/03/02 18:54:51 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd *cmd)
+char **makeenvlist(t_env *env)
 {
-	free(cmd->cmds);
-	free(cmd);
-}
+    int i;
+    char **envlist;
+    t_env *tmp;
 
-int		joinlast_onechr(char c, char **tmp)
-{
-	char	*new;
-	int		tmpsize;
-	
-	tmpsize = ft_strlen(*tmp);
-	if ((new = malloc(sizeof(char) * (tmpsize + 2))) == NULL)
-		no_mem();
-	ft_memcpy(new, *tmp, ft_strlen(*tmp));
-	free(*tmp);
-	new[tmpsize] = c;
-	new[tmpsize + 1] = '\0';
-	*tmp = new;
-	return (1);
+    i = 0;
+    tmp = env;
+    while(tmp)
+    {
+        i++;
+        tmp = tmp->next;
+    }
+    envlist = malloc(sizeof(char *) * (i + 1));
+    i = 0;
+    while(env)
+    {
+        if((envlist[i] = ft_strdup(env->vl)) == NULL)
+            no_mem();
+        i++;
+        env = env->next;
+    }
+    envlist[i] = NULL;
+    return (envlist);
 }
