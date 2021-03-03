@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 14:22:04 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/03 15:09:00 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	t_cmd *rtn;
 
 	if ((rtn = malloc(sizeof(t_cmd))) == NULL)
-		exit(1);
+		no_mem();
 	if ((rtn->cmds = ft_substr(s, start, i - start)) == NULL)
-		exit(1);
+		no_mem();
 	if (s[i] == '|')
 		rtn->conn = CONN_PIPE;
 	else if (s[i] == ';')
@@ -36,25 +36,39 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	return (rtn);
 }
 
+int			flag_parenthesis(char c, int status)
+{
+	if (!status && (c == '\"' || c == '\''))
+		return ((int)c);
+	if (!status && c == '{')
+		return ((int)'}');
+	else if (status && (c == status))
+		return (0);
+	return (status);
+}
+
 t_cmdlist	*sep_list(char *s)
 {
 	int			i;
 	int			start;
+	int			parenthesis;
 	t_cmdlist	*rtn;
 	t_cmdlist	*newitem;
 
 	i = 0;
 	start = 0;
 	rtn = 0;
+	parenthesis = 0;
 	while (*s)
 	{
-		if (is_conjuction(s[i]))
+		parenthesis = flag_parenthesis(s[i], parenthesis);
+		if (!parenthesis && is_conjuction(s[i]))
 		{
 			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
 			ft_lstadd_back(&rtn, newitem);
 			start = i + 1;
 		}
-		if (s[i] == '\0')
+		if(s[i] == '\0')
 			break ;
 		i++;
 	}
