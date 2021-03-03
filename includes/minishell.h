@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:17:01 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/04 00:08:20 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void			sig_quit(int status);
 void			free_cmd(t_cmd *cmd);
 int				my_execvp(char *file, char **argv, t_sh *sh);
 char			**makeenvlist(t_env *env);
+void			add_space_front(char **cmdl);
+void			add_space_back(char **cmdl);
 
 /*
 **For t_cmdio->outmode

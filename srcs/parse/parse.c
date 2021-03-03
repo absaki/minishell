@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 22:09:16 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/04 00:26:45 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,15 @@ t_cmdlist	*sep_list(char *s)
 char		**parse(char *cmdl, t_sh *sh)
 {
 	char		**arglist;
+	add_space_front(&cmdl);
+	add_space_back(&cmdl);
 	arglist = split_args(cmdl, sh);
+	// int i = 0;m
+	// while(arglist[i])
+	// {
+	// 	printf("arg[%d]=->%s<-\n", i, arglist[i]);
+	// 	i++;
+	// }
 	// arglist = ft_split(cmdl, ' ');
 	return (arglist);
 }
