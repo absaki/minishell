@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:17:48 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/03 22:09:59 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		joinlast_onechr(char c, char **tmp)
 {
 	char	*new;
 	int		tmpsize;
-	
+
 	tmpsize = ft_strlen(*tmp);
 	if ((new = malloc(sizeof(char) * (tmpsize + 2))) == NULL)
 		no_mem();

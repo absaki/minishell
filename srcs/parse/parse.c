@@ -6,7 +6,7 @@
 /*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:09:00 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/03 22:09:16 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	return (rtn);
 }
 
-int			flag_parenthesis(char c, int status)
+int			flag_parenthesis(char c, int status, char beforec)
 {
+	if (beforec == '\\')
+		return (status);
 	if (!status && (c == '\"' || c == '\''))
 		return ((int)c);
 	if (!status && c == '{')
@@ -61,7 +63,7 @@ t_cmdlist	*sep_list(char *s)
 	parenthesis = 0;
 	while (*s)
 	{
-		parenthesis = flag_parenthesis(s[i], parenthesis);
+		parenthesis = flag_parenthesis(s[i], parenthesis, s[i - 1]);
 		if (!parenthesis && is_conjuction(s[i]))
 		{
 			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
