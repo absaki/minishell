@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:17:42 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/05 00:27:57 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	exec_pipe(t_sh *sh)
 		sh->cmdlist = sh->cmdlist->next;
 	}
 	g_sig.pid = sh->pid;
-	waitpid(g_sig.pid, &g_sig.status, 0);
+	waitpid(g_sig.pid, &g_sig.status, WUNTRACED);
+	while (wait(NULL) > 0) ;
 	if(WIFEXITED(g_sig.status))
 		g_sig.status = WEXITSTATUS(g_sig.status);
 	else if(WIFSIGNALED(g_sig.status))
