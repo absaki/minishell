@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/12 15:28:57 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/04 15:16:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ char	*next_cmd(char *prompt, FILE *fp)
 		buf[pos++] = c;
 	}
 	if (c == EOF && pos == 0)
-		return (NULL);
+	{
+		ft_putendl_fd("exit", STDERR);
+		return (NULL);	
+	}
 	buf[pos] = '\0';
 	return (buf);
 }
