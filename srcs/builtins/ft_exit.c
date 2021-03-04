@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/24 14:00:49 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/05 00:36:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,5 @@ void			ft_exit(t_sh *sh, char **args)
 		sh->ret = mod_by_256(args[1]);
 	else
 		sh->ret = 0;
+	exit(sh->ret);
 }
