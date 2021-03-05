@@ -1,4 +1,4 @@
-NAME = minishell.out
+NAME = minishell
 
 SRC =   srcs/main/main.c
 SRC +=  srcs/exec/exec.c srcs/util/splitline.c srcs/parse/parse.c
