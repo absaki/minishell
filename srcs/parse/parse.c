@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/04 00:26:45 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/05 23:22:33 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,27 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 
 int			flag_parenthesis(char c, int status, char beforec)
 {
-	if (beforec == '\\')
+	static int backslashed = 0;
+
+	if (beforec == 0)
+		backslashed = 0;
+	if (backslashed)
+	{
+		backslashed = 0;
 		return (status);
-	if (!status && (c == '\"' || c == '\''))
+	}
+	if (c == '\\')
+	{
+		backslashed = 1;
+		return (status);
+	}
+	if (!status && !backslashed && (c == '\"' || c == '\''))
 		return ((int)c);
-	if (!status && c == '{')
+	if (!status && !backslashed && c == '{')
 		return ((int)'}');
-	else if (status && (c == status))
+	else if (status && !backslashed && (c == status))
 		return (0);
+	backslashed = 0;
 	return (status);
 }
 
@@ -63,7 +76,7 @@ t_cmdlist	*sep_list(char *s)
 	parenthesis = 0;
 	while (*s)
 	{
-		parenthesis = flag_parenthesis(s[i], parenthesis, s[i - 1]);
+		parenthesis = flag_parenthesis(s[i], parenthesis, i>0?s[i - 1]:0);
 		if (!parenthesis && is_conjuction(s[i]))
 		{
 			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
