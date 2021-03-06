@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/04 00:08:20 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/06 15:32:39 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void			add_space_back(char **cmdl);
 # define WRITE 0
 # define APPEND 1
 
-# define DFL_PROMPT	"\33[45m\33[1mminishell\33[49m\33[35m $ \33[0m"
+# define DFL_PROMPT	"MiniShell$"
 
 
 typedef	struct	s_cmdio
