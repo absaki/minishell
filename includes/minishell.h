@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/06 17:04:18 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/06 18:46:58 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void			check_args_in_unset(char *str, t_sh *sh);
 void			print_error_in_unset(char *arg);
 int				ft_isspace(int c);
 int				ft_will_overflow(int sign, unsigned long n, int next_digit);
+char			*check_env_value(char *arg, t_env *env);
 
 
 int				init_env(t_sh *sh, char **env_array);
@@ -115,6 +116,7 @@ int				env_add(const char *value, t_env *env);
 char			*get_env_name(char *dest, const char *src);
 char			*get_env_value(char *arg, t_env *env);
 int				is_in_env(t_env *env, char *args);
+char			*env_value(char *env);
 
 void			*malloc_with_list_malloc(size_t size);
 void			add_list_malloc(void *ptr);

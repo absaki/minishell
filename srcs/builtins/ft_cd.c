@@ -6,13 +6,13 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/06 17:12:51 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/06 18:47:23 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*get_env_path(t_env *env, const char *var, size_t len)
+static	char	*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
 	int		i;
@@ -60,22 +60,22 @@ static int		update_pwd(t_sh *sh)
 	return (SUCCESS);
 }
 
-static	int		update_oldpwd(t_sh *sh, char *pre_cwd)
+static	int		update_oldpwd(t_sh *sh)
 {
-	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
-	if (getcwd(cwd, PATH_MAX) == NULL)
-		return (ERROR);
-	if (!(oldpwd = ft_strjoin("OLDPWD=", pre_cwd)))
-		return (ERROR);
-	if (is_in_env(sh->env, oldpwd) == 0)
-		env_add(oldpwd, sh->env);
-	if (is_in_env(sh->senv, oldpwd) == 0)
-		env_add(oldpwd, sh->senv);
-	ft_free_and_del(oldpwd);
-	if (sh->unset_oldpwd == 1 && sh->unset_oldpwd_s == 0)
-		sh->unset_oldpwd = 0;
+	if (check_env_value("PWD", sh->env) != NULL)
+	{
+		if (!(oldpwd = ft_strjoin("OLD", get_env_value("PWD", sh->env))))
+			return (ERROR);
+		if (is_in_env(sh->env, oldpwd) == 0)
+			env_add(oldpwd, sh->env);
+		if (is_in_env(sh->senv, oldpwd) == 0)
+			env_add(oldpwd, sh->senv);
+		ft_free_and_del(oldpwd);
+		if (sh->unset_oldpwd == 1 && sh->unset_oldpwd_s == 0)
+			sh->unset_oldpwd = 0;
+	}
 	return (SUCCESS);
 }
 
@@ -94,11 +94,12 @@ static	int		go_to_path(t_sh *sh)
 	if (!env_path)
 		return (ERROR);
 	cd_ret = chdir(env_path);
-	if (cd_ret < 0)
-		cd_ret *= -1;
 	if (cd_ret != 0)
+	{
 		print_error_and_set_errno(env_path);
-	update_oldpwd(sh, pre_cwd);
+		return (ERROR);
+	}
+	update_oldpwd(sh);
 	update_pwd(sh);
 	ft_free_and_del(env_path);
 	return (cd_ret);
@@ -122,7 +123,7 @@ int				ft_cd(char **args, t_sh *sh)
 			print_error_and_set_errno(args[1]);
 		if (cd_ret == 0)
 		{
-			update_oldpwd(sh, pre_cwd);
+			update_oldpwd(sh);
 			update_pwd(sh);
 		}
 	}
