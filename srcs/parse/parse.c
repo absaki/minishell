@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/05 23:22:33 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/06 17:06:34 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ t_cmdlist	*sep_list(char *s)
 			break ;
 		i++;
 	}
+	if (parenthesis)
+		ft_putendl_fd("sytax error", STDERR);
 	return (rtn);
 }
 
