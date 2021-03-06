@@ -6,26 +6,14 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/06 11:02:00 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/06 13:43:55 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_pipe(t_sh *sh)
+static void do_wait(t_sh *sh)
 {
-	t_cmd *cmd;
-	char	**argv;
-
-	while(sh->cmdlist)
-	{
-		cmd = sh->cmdlist->content;
-		argv = parse(cmd->cmds, sh);
-		sh->pid = execute(sh, argv, cmd->conn);
-		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
-			break ;
-		sh->cmdlist = sh->cmdlist->next;
-	}
 	g_sig.pid = sh->pid;
 	waitpid(g_sig.pid, &g_sig.status, WUNTRACED);
 	while (wait(NULL) > 0) ;
@@ -38,6 +26,30 @@ void	exec_pipe(t_sh *sh)
 	sh->pipout = -1;
 }
 
+int	exec_pipe(t_sh *sh)
+{
+	t_cmd *cmd;
+	char	**argv;
+
+	while(sh->cmdlist)
+	{
+		cmd = sh->cmdlist->content;
+		if (cmd->conn ==CONN_PIPE && (cmd->cmds)[0] == 0)
+		{
+			ft_putendl_fd("syntax error", STDERR);
+			g_sig.status = 2;
+			return (ERROR);
+		}
+		argv = parse(cmd->cmds, sh);
+		sh->pid = execute(sh, argv, cmd->conn);
+		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
+			break ;
+		sh->cmdlist = sh->cmdlist->next;
+	}
+	do_wait(sh);
+	return (SUCCESS);
+}
+
 int	pipemap(t_sh *sh)
 {
 	t_cmd		*cmd;
@@ -45,16 +57,12 @@ int	pipemap(t_sh *sh)
 	g_sig.sigquit = 0;
 	while(sh->cmdlist && (cmd = sh->cmdlist->content))
 	{
-		if (ft_strlen(cmd->cmds) == 0)
-		{
-			ft_putendl_fd("syntax error", STDERR);
-			g_sig.status = 2;
+		if(exec_pipe(sh) == ERROR)
 			break ;
-		}
-		exec_pipe(sh);
 		sh->cmdlist = sh->cmdlist->next;
 		if(g_sig.sigint)
 			ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
+	ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	return (SUCCESS);
 }
