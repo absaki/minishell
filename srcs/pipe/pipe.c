@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/05 00:27:57 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/06 11:02:00 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,16 @@ int	pipemap(t_sh *sh)
 	g_sig.sigquit = 0;
 	while(sh->cmdlist && (cmd = sh->cmdlist->content))
 	{
+		if (ft_strlen(cmd->cmds) == 0)
+		{
+			ft_putendl_fd("syntax error", STDERR);
+			g_sig.status = 2;
+			break ;
+		}
 		exec_pipe(sh);
 		sh->cmdlist = sh->cmdlist->next;
 		if(g_sig.sigint)
 			ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
-	// while(list && (cmd = list->content))
-	// {
-	// 	arglist = parse(cmd->cmds);	
-	// 	result = execute(sh, arglist);
-	// 	if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
-	// 		{
-	// 			list = list->next;
-	// 			break ;
-	// 		}
-	// 	list = list->next;
-	// }
 	return (SUCCESS);
 }
