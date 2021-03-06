@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/03 15:11:39 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/06 17:12:51 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static	int		update_oldpwd(t_sh *sh, char *pre_cwd)
 	return (SUCCESS);
 }
 
-static	int		go_to_path(int option, t_sh *sh)
+static	int		go_to_path(t_sh *sh)
 {
 	int		cd_ret;
 	char	*env_path;
@@ -98,8 +98,6 @@ static	int		go_to_path(int option, t_sh *sh)
 		cd_ret *= -1;
 	if (cd_ret != 0)
 		print_error_and_set_errno(env_path);
-	if (cd_ret > 0 && option == 1)
-		ft_putendl_fd(env_path, 1);
 	update_oldpwd(sh, pre_cwd);
 	update_pwd(sh);
 	ft_free_and_del(env_path);
@@ -112,7 +110,7 @@ int				ft_cd(char **args, t_sh *sh)
 	char	pre_cwd[PATH_MAX];
 
 	if (!args[1])
-		cd_ret = go_to_path(0, sh);
+		cd_ret = go_to_path(sh);
 	else
 	{
 		if (getcwd(pre_cwd, PATH_MAX) == NULL)

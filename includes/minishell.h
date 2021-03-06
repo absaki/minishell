@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/06 15:32:39 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/06 17:04:18 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void			sort_env_by_asc(char **tab, int env_len);
 int				ft_unset(char **args, t_sh *sh);
 void			check_args_in_unset(char *str, t_sh *sh);
 void			print_error_in_unset(char *arg);
+int				ft_isspace(int c);
+int				ft_will_overflow(int sign, unsigned long n, int next_digit);
+
 
 int				init_env(t_sh *sh, char **env_array);
 int				init_senv(t_sh *sh, char **env_array);
@@ -136,6 +139,7 @@ int				my_execvp(char *file, char **argv, t_sh *sh);
 char			**makeenvlist(t_env *env);
 void			add_space_front(char **cmdl);
 void			add_space_back(char **cmdl);
+
 
 /*
 **For t_cmdio->outmode

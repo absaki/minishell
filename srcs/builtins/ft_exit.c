@@ -3,43 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/05 00:36:49 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/06 17:17:44 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		ft_will_overflow(int sign, unsigned long n, int next_digit)
-{
-	if (sign == 1)
-	{
-		if (n > (LONG_MAX / 10))
-		{
-			return (1);
-		}
-		if (n == (LONG_MAX / 10) && next_digit > (LONG_MAX % 10))
-		{
-			return (1);
-		}
-	}
-	else if (sign == -1)
-	{
-		if (n > (LONG_MAX / 10))
-		{
-			return (1);
-		}
-		if (n == (LONG_MAX / 10) && next_digit > 8)
-		{
-			return (1);
-		}
-	}
-	return (0);
-}
-
-static long		ft_strtonbr(const char *str, int sign)
+static long	ft_strtonbr(const char *str, int sign)
 {
 	unsigned long	n;
 	int				d;
@@ -56,45 +29,48 @@ static long		ft_strtonbr(const char *str, int sign)
 	return (n * sign);
 }
 
-static	long	ft_str_to_long(const char *str)
+long		ft_atol(const char *str)
 {
 	int		sign;
 
-	if (str == NULL)
-		return (ERROR);
-	if (*str == '-')
-	{
+	while (ft_isspace(*str))
 		str++;
-		sign = -1;
-	}
-	else
-		sign = 1;
+	sign = (*str == '-') ? -1 : 1;
+	if (*str == '+' || *str == '-')
+		str++;
 	return (ft_strtonbr(str, sign));
 }
 
-static	int		mod_by_256(char *str)
+int			ft_isdigits(char *s)
 {
-	long	mod;
-	int		sign;
-
-	mod = ft_str_to_long(str);
-	sign = (mod < 0) ? -1 : 1;
-	if (sign == -1)
+	while (ft_isspace(*s))
+		s++;
+	if (*s == '-' || *s == '+')
+		s++;
+	while (ft_isspace(*s))
+		s++;
+	if (*s == '\0')
+		return (0);
+	while (*s)
 	{
-		if (ft_strcmp(str, "-9223372036854775808") == 0)
+		if (!ft_isdigit(*s) && !ft_isspace(*s))
 			return (0);
-		else
-			mod *= -1;
+		s++;
 	}
-	while (mod >= 256)
-	{
-		mod %= 256;
-	}
-	mod = (sign > 0) ? mod : (256 - mod);
-	return ((int)mod);
+	return (1);
 }
 
-void			ft_exit(t_sh *sh, char **args)
+int			get_status(char *str)
+{
+	long	status;
+
+	status = ft_atol(str);
+	if (status == -1 && ft_strcmp(str, "-1") != 0)
+		status = 255;
+	return ((int)status);
+}
+
+void		ft_exit(t_sh *sh, char **args)
 {
 	sh->exit = 1;
 	ft_putstr_fd("exit\n", STDERR);
@@ -103,18 +79,14 @@ void			ft_exit(t_sh *sh, char **args)
 		sh->ret = 1;
 		ft_putendl_fd("bash: exit: too many arguments", STDERR);
 	}
-	else if (args[1] && ft_strcmp(args[1], "-1") == 0)
-		sh->ret = 255;
-	else if (args[1] && ft_str_to_long(args[1]) == -1)
-	{
-		sh->ret = 255;
-		ft_putstr_fd("bash: exit: ", STDERR);
-		ft_putstr_fd(args[1], STDERR);
-		ft_putendl_fd(": numeric argument required", STDERR);
-	}
 	else if (args[1])
-		sh->ret = mod_by_256(args[1]);
-	else
-		sh->ret = 0;
+	{
+		if (ft_isdigits(args[1]))
+			sh->ret = get_status(args[1]);
+		else
+			sh->ret = 255;
+	}
+	if (sh->ret == 255)
+		ft_putendl_fd("minishell: exit: numeric argument required", STDERR);
 	exit(sh->ret);
 }
