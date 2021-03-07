@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdsearch.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:49:27 by kike              #+#    #+#             */
-/*   Updated: 2021/03/02 18:56:48 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/07 23:29:28 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char    *serch_path(char *file, t_env *env)
         full = ft_strjoin(pathlist[i], tmp);
         if(stat(full, &statvar) == 0)
         {
-            if(S_IXUSR|statvar.st_mode)
+            if(S_IXUSR & statvar.st_mode)
             {
                 free(tmp);
                 return (full) ;
