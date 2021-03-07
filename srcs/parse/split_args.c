@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/08 00:18:56 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/08 00:49:39 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,10 @@ int d_quote(char *s, t_sh *sh, char **tmp)
 	{
 		if (s[i] && s[i] == '$')
 			i += dollar(&(s[i]), sh, tmp, 0);
-		else if (s[i])
-			i += joinlast_onechr(s[i], tmp);
 		else if (s[i] == '\\' && s[i + 1])
 			i += (joinlast_onechr(s[i + 1], tmp) + 1);
+		else if (s[i])
+			i += joinlast_onechr(s[i], tmp);
 	}
 	return (i + 1);
 }
