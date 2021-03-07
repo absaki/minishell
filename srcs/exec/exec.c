@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/07 23:48:21 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/08 00:01:57 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,10 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 	my_execvp(argv[0], argv, sh);
 	ft_putstr_fd(argv[0], STDERR);
 	ft_putstr_fd(": ", STDERR);
-	ft_putendl_fd(strerror(errno), STDERR);
+	if(errno = 14)
+		ft_putendl_fd("command not found", STDERR);
+	else
+		ft_putendl_fd(strerror(errno), STDERR);
 	exit(127);
 }
 
