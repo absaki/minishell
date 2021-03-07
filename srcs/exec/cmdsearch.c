@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:49:27 by kike              #+#    #+#             */
-/*   Updated: 2021/03/07 23:29:28 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/08 00:33:54 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char    *serch_path(char *file, t_env *env)
         full = ft_strjoin(pathlist[i], tmp);
         if(stat(full, &statvar) == 0)
         {
-            if(S_IXUSR & statvar.st_mode)
+            if(S_IXUSR & statvar.st_mode
+            || S_IXGRP & statvar.st_mode
+            || S_IXOTH & statvar.st_mode)
             {
                 free(tmp);
                 return (full) ;
@@ -45,6 +47,9 @@ char    *serch_path(char *file, t_env *env)
         }
         i++;
     }
+    ft_putstr_fd(file, STDERR);
+	ft_putstr_fd(": ", STDERR);
+    ft_putendl_fd("command not found", STDERR);
     free(tmp);
     return (NULL);
 }
@@ -59,5 +64,7 @@ int     my_execvp(char *file, char **argv, t_sh *sh)
     else
         cmdpath = file;
     envp = makeenvlist(sh->env);
-    return (execve(cmdpath, argv, envp));
+    if (cmdpath)
+        return (execve(cmdpath, argv, envp));
+    exit(127);
 }
