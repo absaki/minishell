@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 22:09:53 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/08 00:18:56 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // {
 // }
 
-int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
+int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 {
 	int i;
 	int end;
@@ -43,10 +43,17 @@ int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp)
 	free(cpy);
 	free(*tmp);
 	*tmp = new;
+	if (trim)
+	{
+		if (trim && ((new = ft_strtrim(*tmp, " ")) == NULL))
+			no_mem();
+		free (*tmp);
+		*tmp = new;
+	}
 	return (end);
 }
 
-int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
+int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp ,int trim)
 {
 	int i;
 	int end;
@@ -73,6 +80,13 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp)
 	free(cpy);
 	free(*tmp);
 	*tmp = new;
+	if (trim)
+	{
+		if (trim && ((new = ft_strtrim(*tmp, " ")) == NULL))
+			no_mem();
+		free (*tmp);
+		*tmp = new;
+	}
 	return (end + 1);
 }
 
@@ -104,7 +118,7 @@ int dollar_question_without_parenthesis(char **tmp)
 	return (2);
 }
 
-int dollar(char *s, t_sh *sh, char **tmp)
+int dollar(char *s, t_sh *sh, char **tmp, int trim)
 {
 	if (!s[1])
 		return (joinlast_onechr('$', tmp));
@@ -117,9 +131,9 @@ int dollar(char *s, t_sh *sh, char **tmp)
 	if (!ft_strncmp(s, "${?}", 4))
 		return (dollar_question_with_parenthesis(tmp));
 	if (s[1] && s[1] == '{')
-		return (dollar_with_parenthesis(s, sh, tmp));
+		return (dollar_with_parenthesis(s, sh, tmp, trim));
 	if (*(s + 1))
-		return (dollar_without_parenthesis(s, sh, tmp));
+		return (dollar_without_parenthesis(s, sh, tmp, trim));
 	return (1);
 }
 
@@ -158,7 +172,7 @@ int d_quote(char *s, t_sh *sh, char **tmp)
 	while (s[i] != '\"')
 	{
 		if (s[i] && s[i] == '$')
-			i += dollar(&(s[i]), sh, tmp);
+			i += dollar(&(s[i]), sh, tmp, 0);
 		else if (s[i])
 			i += joinlast_onechr(s[i], tmp);
 		else if (s[i] == '\\' && s[i + 1])
@@ -223,7 +237,7 @@ char **split_args(char *s, t_sh *sh)
 		else if (s[i] == '\"')
 			i += d_quote(&s[i], sh, &tmp);
 		else if (s[i] == '$')
-			i += dollar(&s[i], sh, &tmp);
+			i += dollar(&s[i], sh, &tmp, 1);
 		else if (s[i] == '\\' && s[i + 1])
 			i += (joinlast_onechr(s[i + 1], &tmp) + 1);
 		else
