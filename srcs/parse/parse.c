@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/06 17:06:34 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/10 12:55:41 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			is_conjuction(char c)
+int			is_pipe_semic(char c)
 {
 	if (c == '|' || c == ';' || c == '\0')
 		return (1);
@@ -36,7 +36,7 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	return (rtn);
 }
 
-int			flag_parenthesis(char c, int status, char beforec)
+int			flag_p(char c, int status, char beforec)
 {
 	static int backslashed = 0;
 
@@ -76,8 +76,8 @@ t_cmdlist	*sep_list(char *s)
 	parenthesis = 0;
 	while (*s)
 	{
-		parenthesis = flag_parenthesis(s[i], parenthesis, i>0?s[i - 1]:0);
-		if (!parenthesis && is_conjuction(s[i]))
+		parenthesis = flag_p(s[i], parenthesis, i>0?s[i - 1]:0);
+		if (!parenthesis && is_pipe_semic(s[i]))
 		{
 			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
 			ft_lstadd_back(&rtn, newitem);
@@ -95,8 +95,10 @@ t_cmdlist	*sep_list(char *s)
 char		**parse(char *cmdl, t_sh *sh)
 {
 	char		**arglist;
-	add_space_front(&cmdl);
-	add_space_back(&cmdl);
+	
+	// add_space_front(&cmdl);
+	// add_space_back(&cmdl);
+	redirection_parse(sh, cmdl);
 	arglist = split_args(cmdl, sh);
 	// int i = 0;m
 	// while(arglist[i])

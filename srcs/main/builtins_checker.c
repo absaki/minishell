@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_checker.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/27 00:23:29 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/10 21:53:51 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_sh	*make_new_sh(void)
 	sh->unset_oldpwd = 0;
 	sh->unset_pwd_s = 0;
 	sh->unset_oldpwd_s = 0;
+	sh->rdlist = 0;
 	add_list_malloc(sh);
 	return (sh);
 }

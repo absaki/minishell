@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/06 18:46:58 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/10 21:57:39 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,22 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_redirection
+{
+	int		fd;
+	char	*file;
+	int		f_append;
+}				t_redirection;
+
+typedef t_list t_rdlist;
+
 typedef struct	s_sh
 {
 	// t_token			*start;
 	t_env			*env;
 	t_env			*senv;
 	t_cmdlist		*cmdlist;
+	t_rdlist		*rdlist;
 	int				in;
 	int				out;
 	int				fdin;
@@ -141,6 +151,11 @@ int				my_execvp(char *file, char **argv, t_sh *sh);
 char			**makeenvlist(t_env *env);
 void			add_space_front(char **cmdl);
 void			add_space_back(char **cmdl);
+int				flag_p(char c, int status, char beforec);
+int				dollar(char *s, t_sh *sh, char **tmp, int trim);
+int				s_quote(char *s, char **tmp);
+int				d_quote(char *s, t_sh *sh, char **tmp);
+
 
 
 /*
@@ -172,5 +187,6 @@ int				redirection_append(char ***argv, int i);
 int				redirection_append_err(char ***argv, int i);
 int				redirection_write(char ***argv, int i);
 int				redirection_error(char ***argv, int i);
+char 			*redirection_parse(t_sh *sh, char *s);
 
 #endif
