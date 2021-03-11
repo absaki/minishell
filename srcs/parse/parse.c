@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/10 12:55:41 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/11 14:41:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,13 @@ char		**parse(char *cmdl, t_sh *sh)
 	
 	// add_space_front(&cmdl);
 	// add_space_back(&cmdl);
-	redirection_parse(sh, cmdl);
-	arglist = split_args(cmdl, sh);
+	if(redirection_parse(sh, cmdl))
+	{
+		arglist = split_args(cmdl, sh);
+		return (arglist);
+	}
+	else
+		return (0);
 	// int i = 0;m
 	// while(arglist[i])
 	// {
@@ -107,5 +112,5 @@ char		**parse(char *cmdl, t_sh *sh)
 	// 	i++;
 	// }
 	// arglist = ft_split(cmdl, ' ');
-	return (arglist);
+	// return (arglist);
 }

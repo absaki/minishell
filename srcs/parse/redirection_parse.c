@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/11 12:40:51 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/11 14:38:01 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ char  *redirection_parse(t_sh *sh, char *s)
             break ;
         i++;
     }
-    if (par || i == -1)
-        ft_putendl_fd("sytax error", STDERR);
     rtn = s;
-    return (rtn);
+    return ((par || i < 0) ? 0 : rtn);
 }
