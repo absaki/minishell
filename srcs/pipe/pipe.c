@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/11 14:44:17 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/11 15:22:25 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static void do_wait(t_sh *sh)
 	sh->pipout = -1;
 }
 
-int exec_pipe_err(void)
+int exec_pipe_err(t_sh *sh)
 {
 	ft_putendl_fd("syntax error", STDERR);
 	g_sig.status = 2;
+	ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 	return (ERROR);
 }
 
@@ -42,13 +43,13 @@ int	exec_pipe(t_sh *sh)
 	{
 		cmd = sh->cmdlist->content;
 		if ((cmd->conn ==CONN_PIPE && (cmd->cmds)[0] == 0) || ((argv = parse(cmd->cmds, sh)) == 0))
-			return(exec_pipe_err());
-		argv = parse(cmd->cmds, sh);
+			return(exec_pipe_err(sh));
 		sh->pid = execute(sh, argv, cmd->conn);
 		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
 	}
+	ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 	do_wait(sh);
 	return (SUCCESS);
 }

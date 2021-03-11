@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/10 21:57:39 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/11 14:51:15 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,6 @@ int				redirection_append_err(char ***argv, int i);
 int				redirection_write(char ***argv, int i);
 int				redirection_error(char ***argv, int i);
 char 			*redirection_parse(t_sh *sh, char *s);
+void			rd_free(t_redirection *rd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/11 14:38:01 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/11 15:21:22 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_redirection *t_rd_dup(char *rdfile, int mode)
         new->f_append = 1;
     if(rdfile)
         new->file = rdfile;
-    printf("fd=%d,append=%d,str=\"%s\"\n", new->fd, new->f_append, new->file);
+    // printf("fd=%d,append=%d,str=\"%s\"\n", new->fd, new->f_append, new->file);
     return (new);
 }
 
@@ -109,7 +109,8 @@ int    store_filename(t_sh *sh, char **rtn, int pos, int mode)
     if (ft_strlen(tmp) == 0)
         return (-1);
     set_rd(sh, tmp, mode);
-    return (pos - 1);
+    printf("rd read file->%s, next->%s\n",tmp, &(*rtn)[pos]);
+    return (pos);
 }
 
 char  *redirection_parse(t_sh *sh, char *s)
@@ -126,12 +127,15 @@ char  *redirection_parse(t_sh *sh, char *s)
     while (s && sh)
     {
         par = flag_p(s[i], par, i > 0 ? s[i - 1] : 0);
+        printf("NOW TESTING \"%c\" is %d\n",s[i], (int)s[i]);
         if (!par && ((rd = is_num_rd(&(s[i]), &i)) || (rd = is_nonum_rd(&(s[i]), &i))))
             i = store_filename(sh, &rtn, i + 1, rd);
-        if (i == -1 || s[i] == '\0')
+        else if (i == -1 || s[i] == '\0')
             break ;
-        i++;
+        else
+            i++;
     }
     rtn = s;
+    printf("rd read fin\n");
     return ((par || i < 0) ? 0 : rtn);
 }
