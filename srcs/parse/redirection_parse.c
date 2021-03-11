@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/11 11:56:31 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/11 12:40:51 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int    store_filename(t_sh *sh, char **rtn, int pos, int mode)
 		else
 			pos += joinlast_onechr((*rtn)[pos], &tmp);
 	}
+    if (ft_strlen(tmp) == 0)
+        return (-1);
     set_rd(sh, tmp, mode);
     return (pos - 1);
 }
@@ -126,11 +128,11 @@ char  *redirection_parse(t_sh *sh, char *s)
         par = flag_p(s[i], par, i > 0 ? s[i - 1] : 0);
         if (!par && ((rd = is_num_rd(&(s[i]), &i)) || (rd = is_nonum_rd(&(s[i]), &i))))
             i = store_filename(sh, &rtn, i + 1, rd);
-        if (s[i] == '\0')
+        if (i == -1 || s[i] == '\0')
             break ;
         i++;
     }
-    if (par)
+    if (par || i == -1)
         ft_putendl_fd("sytax error", STDERR);
     rtn = s;
     return (rtn);
