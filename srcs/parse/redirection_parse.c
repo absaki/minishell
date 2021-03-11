@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_parse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/11 15:21:22 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/11 17:02:33 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int    store_filename(t_sh *sh, char **rtn, int pos, int mode)
     if (ft_strlen(tmp) == 0)
         return (-1);
     set_rd(sh, tmp, mode);
-    printf("rd read file->%s, next->%s\n",tmp, &(*rtn)[pos]);
     return (pos);
 }
 
@@ -127,7 +126,6 @@ char  *redirection_parse(t_sh *sh, char *s)
     while (s && sh)
     {
         par = flag_p(s[i], par, i > 0 ? s[i - 1] : 0);
-        printf("NOW TESTING \"%c\" is %d\n",s[i], (int)s[i]);
         if (!par && ((rd = is_num_rd(&(s[i]), &i)) || (rd = is_nonum_rd(&(s[i]), &i))))
             i = store_filename(sh, &rtn, i + 1, rd);
         else if (i == -1 || s[i] == '\0')
@@ -136,6 +134,5 @@ char  *redirection_parse(t_sh *sh, char *s)
             i++;
     }
     rtn = s;
-    printf("rd read fin\n");
     return ((par || i < 0) ? 0 : rtn);
 }

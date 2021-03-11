@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/08 00:32:44 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/11 17:00:21 by kike             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void set_fd(t_sh *sh, char ***argv)
-{
-	int i;
-
-	(void)sh;
-	i = 0;
-	while ((*argv)[i])
-	{
-		i -= redirection_write(argv, i);
-		i -= redirection_error(argv, i);
-		i -= redirection_append(argv, i);
-		i -= redirection_append_err(argv, i);
-		i -= redirection_read(argv, i);
-		i++;
-	}
-}
 
 int buk_fds(int fds[3])
 {
@@ -91,7 +74,8 @@ int is_builtin_nopipe(t_sh *sh, char **argv, int newpipe[2])
 		|| !ft_strncmp(argv[0], "cd", 3))
 	{
 		buk_fds(fds);
-		set_fd(sh, &argv);
+		if(set_fd(sh) == ERROR)
+			return (1);
 		do_builtin(sh, argv);
 		reset_fds(fds);
 		return (1);
@@ -115,7 +99,8 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 		dup2(newpipe[1], 1);
 		close(newpipe[1]);
 	}
-	set_fd(sh, &argv);
+	if(set_fd(sh) == ERROR)
+		exit(1);
 	if(do_builtin(sh, argv))
 		exit (g_sig.status);
 	// execvp(argv[0], argv);
