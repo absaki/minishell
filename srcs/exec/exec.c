@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 21:47:25 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:54:19 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int execute(t_sh *sh, char *argv[], int conn)
 
 	newpipe[0] = -1;
 	if (argv[0] == NULL)
-		return (SUCCESS);
+		return (-200);
 	if (conn == CONN_PIPE)
 		pipe(newpipe);
 	if (is_builtin_nopipe(sh, argv, newpipe))
