@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_rd_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 16:42:11 by kike              #+#    #+#             */
-/*   Updated: 2021/03/11 17:01:14 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/12 21:12:55 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int open0(t_redirection *rd)
 {
     int fd;
 
-    if ((fd = open(rd->file, O_RDONLY,
-		S_IRWXU | S_IRGRP)) != -1)
+    if ((fd = open(rd->file, O_RDONLY) != -1))
         {
 		dup2(fd, 0);
         return (SUCCESS);
@@ -35,7 +34,7 @@ static int open1(t_redirection *rd)
         permisiion = O_APPEND | O_CREAT | O_WRONLY;
     else
         permisiion = O_CREAT | O_WRONLY | O_TRUNC;
-    if ((fd = open(rd->file, permisiion, S_IRWXU | S_IRGRP)) != -1)
+    if ((fd = open(rd->file, permisiion, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) != -1)
         {
 		dup2(fd, 1);
         return (SUCCESS);
@@ -53,7 +52,7 @@ static int open2(t_redirection *rd)
         permisiion = O_APPEND | O_CREAT | O_WRONLY;
     else
         permisiion = O_CREAT | O_WRONLY | O_TRUNC;
-    if ((fd = open(rd->file, permisiion, S_IRWXU | S_IRGRP)) != -1)
+    if ((fd = open(rd->file, permisiion, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) != -1)
         {
 		dup2(fd, 2);
         return (SUCCESS);
