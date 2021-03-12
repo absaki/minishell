@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/11 17:00:27 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/12 17:18:27 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,15 +180,16 @@ char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
 int				execute(t_sh *sh, char *argv[], int conn);
 void			fatal(char *s1, char *s2, int n);
-char			**parse(char *cmdl, t_sh *sh);
+char			**parse(char **cmdl, t_sh *sh);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
 int				redirection_append(char ***argv, int i);
 int				redirection_append_err(char ***argv, int i);
 int				redirection_write(char ***argv, int i);
 int				redirection_error(char ***argv, int i);
-char 			*redirection_parse(t_sh *sh, char *s);
 void			rd_free(t_redirection *rd);
 int				set_fd(t_sh *sh);
+int				substrend(char **str, int rstart, int rend);
+int 		    redirection_parse(t_sh *sh, char **s);
 
 #endif
