@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/11 17:00:21 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/12 21:47:25 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ int is_builtin_nopipe(t_sh *sh, char **argv, int newpipe[2])
 	{
 		buk_fds(fds);
 		if(set_fd(sh) == ERROR)
+		{
+			g_sig.status = 1;
 			return (1);
+		}
 		do_builtin(sh, argv);
 		reset_fds(fds);
 		return (1);
