@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 21:04:33 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 21:39:27 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ int     redirection_parse(t_sh *sh, char **s)
             if(pos != -1)
                 substrend(&(*s), i, pos - 1);
         }
-        else if (i == -1 || (*s)[i] == '\0')
+        else if (pos == -1 || (*s)[i] == '\0')
             break ;
         else
             i++;
     }
-    return ((par || i < 0) ? ERROR : SUCCESS);
+    return ((par || pos < 0) ? ERROR : SUCCESS);
 }
