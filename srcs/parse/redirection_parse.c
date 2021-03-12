@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 17:27:02 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 21:04:33 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,21 @@ t_redirection *t_rd_dup(char *rdfile, int mode)
 int    set_rd(t_sh *sh, char *rdfile, int mode, int pos)
 {
     t_rdlist *new;
+    t_rdlist *add;
 
+    add = sh->rdlist;
     if (ft_strlen(rdfile) == 0)
         return (-1);
     if((new = malloc(sizeof(t_rdlist))) == NULL)
         no_mem();
     new->next = NULL;
     new->content = t_rd_dup(rdfile, mode);
-    while(sh->rdlist)
-        sh->rdlist = sh->rdlist->next;
-    sh->rdlist = new;
+    while(add && add->next)
+        add = add->next;
+    if (!add)
+        sh->rdlist = new;
+    else
+        add->next = new;
     return (pos);
 }
 
