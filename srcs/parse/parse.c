@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 17:19:24 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 17:26:46 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ char		**parse(char **cmdl, t_sh *sh)
 {
 	char		**arglist;
 	
-	// add_space_front(&cmdl);
-	// add_space_back(&cmdl);
 	if(redirection_parse(sh, cmdl) == SUCCESS)
 	{
 		arglist = split_args(*cmdl, sh);
@@ -105,12 +103,4 @@ char		**parse(char **cmdl, t_sh *sh)
 	}
 	else
 		return (0);
-	// int i = 0;m
-	// while(arglist[i])
-	// {
-	// 	printf("arg[%d]=->%s<-\n", i, arglist[i]);
-	// 	i++;
-	// }
-	// arglist = ft_split(cmdl, ' ');
-	// return (arglist);
 }

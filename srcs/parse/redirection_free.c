@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 14:48:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 16:55:04 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 17:27:26 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,11 @@ int	substrend(char **str, int rstart, int rend)
 	j = 0;
 	while ((*str)[i] && i < rstart)
 		new[j++] = (*str)[i++];
-	printf("first break i = %d, j = %d\n", i,j);
 	if (i == rstart)
 		i = rend + 1;
 	while ((*str)[i])
 		new[j++] = (*str)[i++];
 	new[j] = '\0';
-	printf("rstart = %d, rend = %d old = \"%s\"  new = \"%s\"\n", rstart, rend, *str, new);
 	free(*str);
 	*str = new;
 	return (SUCCESS);

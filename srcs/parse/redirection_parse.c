@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 17:17:26 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 17:27:02 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_redirection *t_rd_dup(char *rdfile, int mode)
         new->f_append = 1;
     if(rdfile)
         new->file = rdfile;
-    printf("fd=%d,append=%d,str=\"%s\"\n", new->fd, new->f_append, new->file);
     return (new);
 }
 
@@ -111,10 +110,6 @@ int    store_filename(t_sh *sh, char **s, int pos, int mode)
 			pos += joinlast_onechr((*s)[pos], &tmp);
 	}
     return (set_rd(sh, tmp, mode, pos));
-    // if (ft_strlen(tmp) == 0)
-    //     return (-1);
-    // set_rd(sh, tmp, mode);
-    // return (pos);
 }
 
 int     redirection_parse(t_sh *sh, char **s)
@@ -123,13 +118,9 @@ int     redirection_parse(t_sh *sh, char **s)
     int pos;
     int rd;
     int par;
-    // char *rtn;
 
     i = 0;
     par = 0;
-    // if((rtn = ft_strdup(s)) == NULL)
-    //     no_mem();
-    // free(s);
     while (*s && sh)
     {
         par = flag_p((*s)[i], par, i > 0 ? (*s)[i - 1] : 0);
