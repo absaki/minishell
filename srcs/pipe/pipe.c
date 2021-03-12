@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 23:54:44 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 00:36:30 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	exec_pipe(t_sh *sh)
 		sh->pid = execute(sh, argv, cmd->conn);
 		if (sh->pid == -200)
 			return(exec_pipe_err(sh));
+		ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
 	}
-	ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 	do_wait(sh);
 	return (SUCCESS);
 }

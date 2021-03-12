@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 16:42:11 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 23:30:43 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 00:24:20 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int open0(t_redirection *rd)
     if ((fd = open(rd->file, O_RDONLY) != -1))
         {
 		dup2(fd, 0);
+        ft_putnbr_fd(fd,2);
+        close (fd);
         return (SUCCESS);
         }
     ft_putstr_fd("No such file or directory\n", 2);
