@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/11 16:42:11 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 21:12:55 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 23:30:43 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int open1(t_redirection *rd)
     if ((fd = open(rd->file, permisiion, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) != -1)
         {
 		dup2(fd, 1);
+        close(fd);
         return (SUCCESS);
         }
     ft_putstr_fd("No such file or directory\n", 2);
@@ -55,6 +56,7 @@ static int open2(t_redirection *rd)
     if ((fd = open(rd->file, permisiion, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) != -1)
         {
 		dup2(fd, 2);
+        close(fd);
         return (SUCCESS);
         }
     ft_putstr_fd("No such file or directory\n", 2);
@@ -64,14 +66,16 @@ static int open2(t_redirection *rd)
 int         set_fd(t_sh *sh)
 {
 	t_redirection *rd;
+    t_rdlist *list;
     int open_result;
 
-	while(sh->rdlist)
+    list = sh->rdlist;
+	while(list)
 	{
-		rd = sh->rdlist->content;
+		rd = list->content;
 		if(rd->fd == 0)
 		    open_result = open0(rd);
-		else if(rd->fd == 1)
+        else if(rd->fd == 1)
 		    open_result = open1(rd);
 		else if(rd->fd == 2)
 		    open_result = open2(rd);
@@ -79,7 +83,7 @@ int         set_fd(t_sh *sh)
 			break;
         if(open_result == ERROR)
             return (ERROR);
-		sh->rdlist = sh->rdlist->next;
+		list = list->next;
 	}
     return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 21:39:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/12 21:52:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int     redirection_parse(t_sh *sh, char **s)
 
     i = 0;
     par = 0;
+    pos = 0;
     while (*s && sh)
     {
         par = flag_p((*s)[i], par, i > 0 ? (*s)[i - 1] : 0);
