@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 19:11:36 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 19:50:57 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int				ft_env(char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int				ft_cd(char **args, t_sh *sh);
 char			*get_env_path(t_env *env, const char *var, size_t len);
 int				update_cwd(t_sh *sh);
+int				check_sla(char *str);
 void			print_error_and_set_errno(char *str);
 int				ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
 int				ft_export_loop(char **args, t_env *env, t_env *secret, t_sh *sh);

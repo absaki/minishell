@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/13 19:31:14 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 19:50:36 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ static	int		go_home(t_sh *sh)
 	return (cd_ret);
 }
 
-static	int		cd_in_rf(t_sh *sh)
+static	int		cd_in_rf(t_sh *sh, char *str)
 {
 	char	*temp;
+	char	*temp_sla;
 	char	*pwd;
 
 	ft_putstr_fd("cd: error retrieving current directory: ", 2);
@@ -95,7 +96,9 @@ static	int		cd_in_rf(t_sh *sh)
 	if (!(temp = ft_strdup(sh->cwd)))
 		exit_and_free("malloc error\n");
 	ft_free_and_del(sh->cwd);
-	if (!(sh->cwd = ft_strjoin(temp, "/.")))
+	if (!(temp_sla = ft_strjoin("/", str)))
+		exit_and_free("malloc error\n");
+	if (!(sh->cwd = ft_strjoin(temp, temp_sla)))
 		exit_and_free("malloc error\n");
 	if (!(pwd = ft_strjoin("PWD=", sh->cwd)))
 		exit_and_free("malloc error\n");
@@ -113,9 +116,9 @@ int				ft_cd(char **args, t_sh *sh)
 
 	if (!args[1])
 		cd_ret = go_home(sh);
-	else if ((ft_strcmp(args[1], ".") == 0 || ft_strcmp(args[1], "./") == 0)
+	else if ((ft_strcmp(args[1], ".") == 0 || check_sla(args[1]) == SUCCESS)
 			&& getcwd(cwd, PATH_MAX) == NULL)
-		cd_ret = cd_in_rf(sh);
+		cd_ret = cd_in_rf(sh, args[1]);
 	else
 	{
 		cd_ret = chdir(args[1]);

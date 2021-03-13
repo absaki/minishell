@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 23:49:26 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/13 19:11:58 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 19:50:46 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,21 @@ char		*check_env_value(char *arg, t_env *env)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+int			check_sla(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '.')
+			return (ERROR);
+		i++;
+		if (str[i] != '/')
+			return (ERROR);
+		i++;
+	}
+	return (SUCCESS);
 }
