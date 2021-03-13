@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/13 14:50:07 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:11:55 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ void		ft_exit(t_sh *sh, char **args)
 	else
 		sh->ret = g_sig.status;
 	if (sh->ret == 255)
+	{
 		ft_putendl_fd("minishell: exit: numeric argument required", STDERR);
+		sh->ret = 2;
+	}
 	exit(sh->ret);
 }
