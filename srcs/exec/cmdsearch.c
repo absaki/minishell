@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdsearch.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:49:27 by kike              #+#    #+#             */
-/*   Updated: 2021/03/02 18:56:48 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/12 21:32:05 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char    *serch_path(char *file, t_env *env)
         full = ft_strjoin(pathlist[i], tmp);
         if(stat(full, &statvar) == 0)
         {
-            if(S_IXUSR|statvar.st_mode)
+            if(S_IXUSR & statvar.st_mode
+            || S_IXGRP & statvar.st_mode
+            || S_IXOTH & statvar.st_mode)
             {
                 free(tmp);
                 return (full) ;
@@ -45,8 +47,21 @@ char    *serch_path(char *file, t_env *env)
         }
         i++;
     }
+    ft_putstr_fd(file, STDERR);
+	ft_putstr_fd(": ", STDERR);
+    ft_putendl_fd("command not found", STDERR);
     free(tmp);
     return (NULL);
+}
+
+int     is_directory(char *fullpath)
+{
+    struct stat stat_st;
+    
+    stat(fullpath, &stat_st);
+    if(S_ISDIR(stat_st.st_mode))
+        return (1);
+    return (0);
 }
 
 int     my_execvp(char *file, char **argv, t_sh *sh)
@@ -58,6 +73,14 @@ int     my_execvp(char *file, char **argv, t_sh *sh)
         cmdpath = serch_path(file, sh->env);
     else
         cmdpath = file;
+    if(is_directory(cmdpath))
+    {
+        ft_putstr_fd(file, STDERR);
+	    ft_putendl_fd(": Is a directory", STDERR);
+        exit(126);
+    }
     envp = makeenvlist(sh->env);
-    return (execve(cmdpath, argv, envp));
+    if (cmdpath)
+        return (execve(cmdpath, argv, envp));
+    exit(127);
 }

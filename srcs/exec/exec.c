@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 01:18:14 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/12 23:54:19 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void set_fd(t_sh *sh, char ***argv)
-{
-	int i;
-
-	(void)sh;
-	i = 0;
-	while ((*argv)[i])
-	{
-		i -= redirection_write(argv, i);
-		i -= redirection_error(argv, i);
-		i -= redirection_append(argv, i);
-		i -= redirection_append_err(argv, i);
-		i -= redirection_read(argv, i);
-		i++;
-	}
-}
 
 int buk_fds(int fds[3])
 {
@@ -91,7 +74,11 @@ int is_builtin_nopipe(t_sh *sh, char **argv, int newpipe[2])
 		|| !ft_strncmp(argv[0], "cd", 3))
 	{
 		buk_fds(fds);
-		set_fd(sh, &argv);
+		if(set_fd(sh) == ERROR)
+		{
+			g_sig.status = 1;
+			return (1);
+		}
 		do_builtin(sh, argv);
 		reset_fds(fds);
 		return (1);
@@ -115,13 +102,15 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 		dup2(newpipe[1], 1);
 		close(newpipe[1]);
 	}
-	set_fd(sh, &argv);
+	if(set_fd(sh) == ERROR)
+		exit(1);
 	if(do_builtin(sh, argv))
 		exit (g_sig.status);
 	// execvp(argv[0], argv);
 	my_execvp(argv[0], argv, sh);
 	ft_putstr_fd(argv[0], STDERR);
-	ft_putendl_fd(": command not found", STDERR);
+	ft_putstr_fd(": ", STDERR);
+		ft_putendl_fd(strerror(errno), STDERR);
 	exit(127);
 }
 
@@ -132,7 +121,7 @@ int execute(t_sh *sh, char *argv[], int conn)
 
 	newpipe[0] = -1;
 	if (argv[0] == NULL)
-		return (SUCCESS);
+		return (-200);
 	if (conn == CONN_PIPE)
 		pipe(newpipe);
 	if (is_builtin_nopipe(sh, argv, newpipe))
