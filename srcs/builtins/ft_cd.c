@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/13 19:50:36 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 21:05:29 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static	int		update_oldpwd(t_sh *sh)
 	else
 	{
 		if (is_in_env(sh->env, "OLDPWD=") == 0)
-			env_add(oldpwd, sh->env);
+			env_add("OLDPWD=", sh->env);
 		if (is_in_env(sh->senv, "OLDPWD=") == 0)
-			env_add(oldpwd, sh->senv);
+			env_add("OLDPWD=", sh->senv);
 	}
 	return (SUCCESS);
 }
