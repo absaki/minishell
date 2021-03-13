@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/08 00:49:39 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 16:45:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 	char *cpy;
 
 	i = 1;
-	while (s[i] && ft_isalnum(s[i]))
+	while (s[i] && ((ft_isalnum(s[i])) || s[i] == '_'))
 		i++;
 	if (i == 1)
 		return (joinlast_onechr('$', tmp));
