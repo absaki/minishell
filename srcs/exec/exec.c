@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 23:54:19 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:03:54 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void exec_child(t_sh *sh, char **argv, int newpipe[2])
 	ft_putstr_fd(argv[0], STDERR);
 	ft_putstr_fd(": ", STDERR);
 		ft_putendl_fd(strerror(errno), STDERR);
-	exit(127);
+	exit(errno == ENOTDIR ? 126 : 127);
 }
 
 int execute(t_sh *sh, char *argv[], int conn)
