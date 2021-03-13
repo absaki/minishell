@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 14:33:15 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 14:34:41 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_sh	*setup(char **envp)
 int		main(int argc, char **argv, char **envp)
 {
 	char	*cmdline;
-	int		result = SUCCESS;
 	t_sh	*sh;
 
 	sh = setup(envp);
