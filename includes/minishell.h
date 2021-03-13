@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 17:18:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 19:11:36 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct	s_sh
 	t_env			*senv;
 	t_cmdlist		*cmdlist;
 	t_rdlist		*rdlist;
+	char			*cwd;
 	int				in;
 	int				out;
 	int				fdin;
@@ -101,11 +102,13 @@ typedef struct	s_sh
 	int				unset_oldpwd_s;
 }				t_sh;
 
-int				ft_pwd(void);
+int				ft_pwd(t_sh *sh);
 int				ft_echo(char **args);
 void			ft_exit(t_sh *sh, char **args);
 int				ft_env(char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int				ft_cd(char **args, t_sh *sh);
+char			*get_env_path(t_env *env, const char *var, size_t len);
+int				update_cwd(t_sh *sh);
 void			print_error_and_set_errno(char *str);
 int				ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
 int				ft_export_loop(char **args, t_env *env, t_env *secret, t_sh *sh);

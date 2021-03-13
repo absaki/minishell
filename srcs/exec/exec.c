@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 23:54:19 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 18:24:29 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int do_builtin(t_sh *sh, char **argv)
 	else if (ft_strncmp(argv[0], "export", 7) == 0)
 		g_sig.status = ft_export(argv, sh->env, sh->senv, sh);
 	else if (ft_strncmp(argv[0], "pwd", 4) == 0)
-		g_sig.status = ft_pwd();
+		g_sig.status = ft_pwd(sh);
 	else if (ft_strncmp(argv[0], "unset", 6) == 0)
 		g_sig.status = ft_unset(argv, sh);
 	else if (ft_strncmp(argv[0], "cd", 3) == 0)

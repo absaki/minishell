@@ -3,24 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:38:47 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/16 18:15:40 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 18:29:47 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_pwd(void)
+int		ft_pwd(t_sh *sh)
 {
-	char	cwd[PATH_MAX];
-
-	if (getcwd(cwd, PATH_MAX))
-	{
-		ft_putendl_fd(cwd, 1);
-		return (SUCCESS);
-	}
-	else
-		return (ERROR);
+	ft_putendl_fd(sh->cwd, 1);
+	return (0);
 }

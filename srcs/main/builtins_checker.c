@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_checker.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:36:05 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/10 21:53:51 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/13 18:30:48 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		exec_builtin(t_sh *sh, char **args)
 	if (ft_strcmp(args[0], "cd") == 0)
 		result = ft_cd(args, sh);
 	if (ft_strcmp(args[0], "pwd") == 0)
-		result = ft_pwd();
+		result = ft_pwd(sh);
 	if (ft_strcmp(args[0], "env") == 0)
 		ft_env(args, sh->env, sh->unset_pwd, sh->unset_oldpwd);
 	if (ft_strcmp(args[0], "export") == 0)
@@ -41,6 +41,18 @@ int		exec_builtin(t_sh *sh, char **args)
 }
 
 
+static	char	*set_cwd(void)
+{
+	char	temp_cwd[PATH_MAX];
+	char	*cwd;
+
+	if (getcwd(temp_cwd, PATH_MAX) == NULL)
+		exit_and_free("this directory is removed\n");
+	if (!(cwd = ft_strdup(temp_cwd)))
+		exit_and_free("malloc error\n");
+	return (cwd);
+}
+
 t_sh	*make_new_sh(void)
 {
 	t_sh	*sh;
@@ -48,6 +60,7 @@ t_sh	*make_new_sh(void)
 	sh = (t_sh *)malloc(sizeof(t_sh));
 	if (!sh)
 		return (NULL);
+	sh->cwd = set_cwd();
 	sh->in = 0;
 	sh->out = 0;
 	sh->fdin = 0;
