@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 15:17:25 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/13 13:19:34 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 t_sigstatus g_sig;
 
-void	setup(void)
+t_sh	*setup(char **envp)
 {
+	t_sh	*sh;
+
 	signal(SIGINT, sig_int);
 	signal(SIGQUIT, sig_quit);
+	sh = make_new_sh();
+	sh->prompt = DFL_PROMPT;
+	init_env(sh, envp);
+	init_senv(sh, envp);
+	set_shlvl(sh);
+	return (sh);
 }
 
 int		main(int argc, char **argv, char **envp)
 {
 	char	*cmdline;
-	char	*prompt;
 	int		result = SUCCESS;
 	t_sh	*sh;
 
-	setup();
-	sh = make_new_sh();
-	init_env(sh, envp);
-	init_senv(sh, envp);
-	prompt = DFL_PROMPT;
-	while ((cmdline = next_cmd(prompt, stdin)) != NULL)
+	sh = setup(envp);
+	while ((cmdline = next_cmd(sh->prompt, stdin)) != NULL)
 	{
 		sh->cmdlist = sep_list(cmdline);
 		if(sh->cmdlist)

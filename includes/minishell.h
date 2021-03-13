@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 17:18:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 13:15:20 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct	s_sh
 	int				exit;
 	int				no_exec;
 	int				did_cd;
+	char			*prompt;
 	int				unset_pwd;
 	int				unset_oldpwd;
 	int				unset_pwd_s;
@@ -118,7 +119,7 @@ int				ft_isspace(int c);
 int				ft_will_overflow(int sign, unsigned long n, int next_digit);
 char			*check_env_value(char *arg, t_env *env);
 
-
+void			set_shlvl(t_sh *sh);
 int				init_env(t_sh *sh, char **env_array);
 int				init_senv(t_sh *sh, char **env_array);
 int				is_valid_env(const char *str);
