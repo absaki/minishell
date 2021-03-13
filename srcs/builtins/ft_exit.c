@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/06 17:17:44 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 14:50:07 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void		ft_exit(t_sh *sh, char **args)
 		else
 			sh->ret = 255;
 	}
+	else
+		sh->ret = g_sig.status;
 	if (sh->ret == 255)
 		ft_putendl_fd("minishell: exit: numeric argument required", STDERR);
 	exit(sh->ret);
