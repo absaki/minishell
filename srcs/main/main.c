@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 13:19:34 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/13 14:33:15 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		main(int argc, char **argv, char **envp)
 		if(sh->cmdlist)
 			pipemap(sh);
 	}
-	return (result);
+	return (g_sig.status);
 	(void)argc;
 	(void)argv;
 }
