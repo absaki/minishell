@@ -6,7 +6,7 @@
 /*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 22:33:09 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/13 19:10:49 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/13 19:31:14 by kdoi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int				ft_cd(char **args, t_sh *sh)
 
 	if (!args[1])
 		cd_ret = go_home(sh);
-	else if (ft_strcmp(args[1], ".") == 0 && getcwd(cwd, PATH_MAX) == NULL)
+	else if ((ft_strcmp(args[1], ".") == 0 || ft_strcmp(args[1], "./") == 0)
+			&& getcwd(cwd, PATH_MAX) == NULL)
 		cd_ret = cd_in_rf(sh);
 	else
 	{
