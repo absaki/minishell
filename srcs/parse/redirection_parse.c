@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/12 21:52:13 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 16:41:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int     redirection_parse(t_sh *sh, char **s)
     pos = 0;
     while (*s && sh)
     {
+        if (pos == -1 || (*s)[i] == '\0')
+            break ;
         par = flag_p((*s)[i], par, i > 0 ? (*s)[i - 1] : 0);
         if (!par && ((rd = is_num_rd(&(*s), i)) || (rd = is_nonum_rd(&(*s), i))))
         {
@@ -136,8 +138,6 @@ int     redirection_parse(t_sh *sh, char **s)
             if(pos != -1)
                 substrend(&(*s), i, pos - 1);
         }
-        else if (pos == -1 || (*s)[i] == '\0')
-            break ;
         else
             i++;
     }
