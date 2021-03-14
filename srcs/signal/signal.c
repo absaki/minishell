@@ -6,13 +6,13 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 18:16:01 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/28 23:04:11 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:11:16 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void sig_int(int status)
+void	sig_int(int status)
 {
 	(void)status;
 	if (g_sig.pid == 0)
@@ -25,10 +25,10 @@ void sig_int(int status)
 		ft_putstr_fd("\n", STDERR);
 		g_sig.sigint = 1;
 	}
-	return;
+	return ;
 }
 
-void sig_quit(int status)
+void	sig_quit(int status)
 {
 	(void)status;
 	if (g_sig.pid == 0)
@@ -41,5 +41,5 @@ void sig_quit(int status)
 		ft_putstr_fd("Quit\n", STDERR);
 		g_sig.sigquit = 1;
 	}
-	return;
+	return ;
 }

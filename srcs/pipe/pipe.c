@@ -6,27 +6,28 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 00:36:30 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:10:36 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void do_wait(t_sh *sh)
+static void		do_wait(t_sh *sh)
 {
 	g_sig.pid = sh->pid;
 	waitpid(g_sig.pid, &g_sig.status, WUNTRACED);
-	while (wait(NULL) > 0) ;
-	if(WIFEXITED(g_sig.status))
+	while (wait(NULL) > 0)
+		(void)SUCCESS;
+	if (WIFEXITED(g_sig.status))
 		g_sig.status = WEXITSTATUS(g_sig.status);
-	else if(WIFSIGNALED(g_sig.status))
+	else if (WIFSIGNALED(g_sig.status))
 		g_sig.status = WTERMSIG(g_sig.status);
 	g_sig.pid = 0;
 	sh->pipin = -1;
 	sh->pipout = -1;
 }
 
-int exec_pipe_err(t_sh *sh)
+static int		exec_pipe_err(t_sh *sh)
 {
 	ft_putendl_fd("syntax error", STDERR);
 	g_sig.status = 2;
@@ -34,21 +35,22 @@ int exec_pipe_err(t_sh *sh)
 	return (ERROR);
 }
 
-int	exec_pipe(t_sh *sh)
+static int		exec_pipe(t_sh *sh)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 	char	**argv;
 
-	while(sh->cmdlist)
+	while (sh->cmdlist)
 	{
 		cmd = sh->cmdlist->content;
-		if ((cmd->conn ==CONN_PIPE && (cmd->cmds)[0] == 0) || ((argv = parse(&(cmd->cmds), sh)) == 0))
-			return(exec_pipe_err(sh));
+		if ((cmd->conn == CONN_PIPE && (cmd->cmds)[0] == 0)
+		|| ((argv = parse(&(cmd->cmds), sh)) == 0))
+			return (exec_pipe_err(sh));
 		sh->pid = execute(sh, argv, cmd->conn);
 		if (sh->pid == -200)
-			return(exec_pipe_err(sh));
+			return (exec_pipe_err(sh));
 		ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
-		if(cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
+		if (cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
 	}
@@ -56,17 +58,18 @@ int	exec_pipe(t_sh *sh)
 	return (SUCCESS);
 }
 
-int	pipemap(t_sh *sh)
+int				pipemap(t_sh *sh)
 {
 	t_cmd		*cmd;
+
 	g_sig.sigint = 0;
 	g_sig.sigquit = 0;
-	while(sh->cmdlist && (cmd = sh->cmdlist->content))
+	while (sh->cmdlist && (cmd = sh->cmdlist->content))
 	{
-		if(exec_pipe(sh) == ERROR)
+		if (exec_pipe(sh) == ERROR)
 			break ;
 		sh->cmdlist = sh->cmdlist->next;
-		if(g_sig.sigint)
+		if (g_sig.sigint)
 			ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
 	ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);

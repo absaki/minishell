@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 16:45:18 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:23:28 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 	if (i == 1)
 		return (joinlast_onechr('$', tmp));
 	end = i;
-	if ((cpy = malloc(sizeof(char) * end)) == NULL)
-		no_mem();
+	cpy = my_malloc(sizeof(char) * end);
 	i = 0;
 	while (i + 1 < end)
 	{
@@ -66,8 +65,7 @@ int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp ,int trim)
 	if (i == 2)
 		return (3);
 	end = i;
-	if ((cpy = malloc(sizeof(char) * end)) == NULL)
-		no_mem();
+	cpy = my_malloc(sizeof(char) * end);
 	i = 0;
 	while (i + 2 < end)
 	{
@@ -148,9 +146,7 @@ int s_quote(char *s, char **tmp)
 	while (s[i] && s[i] != '\'')
 		i++;
 	end = i;
-	if ((cpy = malloc(sizeof(char) * end)) == NULL)
-		no_mem();
-	i = 0;
+	cpy = my_malloc(sizeof(char) * end);
 	while (s[i + 1] && s[i + 1] != '\'')
 	{
 		cpy[i] = s[i + 1];
@@ -191,8 +187,7 @@ int join_arglist(char **tmp, char ***args, char *s)
 	while ((*args)[i])
 		i++;
 	len = i;
-	if ((rtn = (char **)malloc(sizeof(char *) * (len + 2))) == 0)
-		no_mem();
+	rtn = (char **)my_malloc(sizeof(char *) * (len + 2));
 	i = 0;
 	while ((*args)[i])
 	{
@@ -204,7 +199,7 @@ int join_arglist(char **tmp, char ***args, char *s)
 	if ((rtn[i] = ft_strdup(*tmp)) == NULL)
 		no_mem();
 	free(*tmp);
-	*tmp = malloc(sizeof(char) * 1);
+	*tmp = my_malloc(sizeof(char) * 1);
 	(*tmp)[0] = 0;
 	i++;
 	rtn[i] = NULL;
@@ -222,9 +217,9 @@ char **split_args(char *s, t_sh *sh)
 	int i;
 
 	i = 0;
-	tmp = malloc(sizeof(char));
+	tmp = my_malloc(sizeof(char));
 	tmp[0] = 0;
-	rtn = malloc(sizeof(char *));
+	rtn = my_malloc(sizeof(char *));
 	rtn[0] = 0;
 	while (s[i] && s[i] == ' ')
 		i++;

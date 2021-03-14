@@ -6,23 +6,11 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 00:33:43 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:20:31 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		strlistlen(char **strlist)
-{
-	int		i;
-
-	i = 0;
-	while (strlist[i])
-	{
-		i++;
-	}
-	return (i);
-}
 
 int		is_delim(char x)
 {
