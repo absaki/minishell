@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 23:23:28 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:49:01 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int s_quote(char *s, char **tmp)
 		i++;
 	end = i;
 	cpy = my_malloc(sizeof(char) * end);
+	i = 0;
 	while (s[i + 1] && s[i + 1] != '\'')
 	{
 		cpy[i] = s[i + 1];
