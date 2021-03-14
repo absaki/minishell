@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdoi <kdoi@student.42tokyo.jp>             +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:27:41 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/06 18:13:20 by kdoi             ###   ########.fr       */
+/*   Updated: 2021/03/14 18:08:01 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ char	*env_value(char *env)
 	return (env_value);
 }
 
-char    *get_env_value(char *arg, t_env *env)
+char	*get_env_value(char *arg, t_env *env)
 {
-    char    env_name[BUFF_SIZE];
-    char    *env_val;
+	char	env_name[BUFF_SIZE];
+	char	*env_val;
 
 	if (arg[0] == 0)
 		return (NULL);
