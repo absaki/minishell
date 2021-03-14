@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 21:06:45 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 18:39:26 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ int				redirection_error(char ***argv, int i);
 void			rd_free(t_redirection *rd);
 int				set_fd(t_sh *sh);
 int				substrend(char **str, int rstart, int rend);
-int 		    redirection_parse(t_sh *sh, char **s);
+int				redirection_parse(t_sh *sh, char **s);
+int				buk_fds(int fds[3]);
+int				reset_fds(int fds[3]);
 
 #endif

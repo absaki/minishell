@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   makeenvlist.c                                      :+:      :+:    :+:   */
+/*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/02 18:47:30 by kike              #+#    #+#             */
-/*   Updated: 2021/03/14 18:42:02 by kikeda           ###   ########.fr       */
+/*   Created: 2021/03/14 18:37:59 by kikeda            #+#    #+#             */
+/*   Updated: 2021/03/14 18:38:21 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**makeenvlist(t_env *env)
+int		buk_fds(int fds[3])
 {
-	int		i;
-	char	**envlist;
-	t_env	*tmp;
+	fds[0] = dup(0);
+	fds[1] = dup(1);
+	fds[2] = dup(2);
+	if (fds[0] && fds[1] && fds[2])
+		return (SUCCESS);
+	else
+		return (ERROR);
+}
 
-	i = 0;
-	tmp = env;
-	while (tmp)
+int		reset_fds(int fds[3])
+{
+	if (
+		dup2(fds[0], 0) != -1 && dup2(fds[1], 1) != -1 && dup2(fds[2], 2)
+		!= -1 && close(fds[0]) != -1
+		&& close(fds[1]) != -1 && close(fds[2]) != -1)
 	{
-		i++;
-		tmp = tmp->next;
+		return (SUCCESS);
 	}
-	envlist = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (env)
-	{
-		if ((envlist[i] = ft_strdup(env->vl)) == NULL)
-			no_mem();
-		i++;
-		env = env->next;
-	}
-	envlist[i] = NULL;
-	return (envlist);
+	return (ERROR);
 }
