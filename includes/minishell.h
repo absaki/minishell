@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 23:25:18 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:44:49 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define CONN_PIPE	1
 # define CONN_SEMIC	2
 # define CONN_END	3
-# define DFL_PROMPT	"MiniShell$"
+# define DFL_PROMPT	"minishell$ "
 
 typedef struct		s_sigstatus
 {

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 22:46:36 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 23:43:14 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_cmdlist		*sep_list(char *s)
 	start = 0;
 	rtn = 0;
 	parenthesis = 0;
-	while (*s && s[i])
+	while (*s)
 	{
 		parenthesis = flag_p(s[i], parenthesis, i > 0 ? s[i - 1] : 0);
 		if (!parenthesis && is_pipe_semic(s[i]))
@@ -83,6 +83,8 @@ t_cmdlist		*sep_list(char *s)
 			ft_lstadd_back(&rtn, newitem);
 			start = i + 1;
 		}
+		if(s[i] == '\0')
+			break ;
 		i++;
 	}
 	if (parenthesis)
