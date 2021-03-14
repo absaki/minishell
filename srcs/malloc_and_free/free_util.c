@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 18:06:39 by kdoi              #+#    #+#             */
-/*   Updated: 2021/02/22 18:36:02 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 22:42:22 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ void	free_tda(char **tab)
 void	no_mem(void)
 {
 	exit(1);
+}
+
+void	*my_malloc(size_t size)
+{
+	void	*rtn;
+
+	rtn = malloc(size);
+	if (rtn == NULL)
+		no_mem();
+	return (rtn);
 }

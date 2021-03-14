@@ -6,17 +6,17 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 13:11:18 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/13 13:51:56 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 22:40:01 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void set_shlvl(t_sh *sh)
+void	set_shlvl(t_sh *sh)
 {
-	char *lvlval;
-	int oldlvl;
-	char *new;
+	char	*lvlval;
+	int		oldlvl;
+	char	*new;
 
 	lvlval = get_env_value("SHLVL", sh->env);
 	if (lvlval[0] == '\0')

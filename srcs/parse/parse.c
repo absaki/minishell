@@ -6,20 +6,20 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/12 17:26:46 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 22:46:36 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			is_pipe_semic(char c)
+static int		is_pipe_semic(char c)
 {
 	if (c == '|' || c == ';' || c == '\0')
 		return (1);
 	return (0);
 }
 
-t_cmd		*dup_cmdcontent(char *s, int i, int start)
+static t_cmd	*dup_cmdcontent(char *s, int i, int start)
 {
 	t_cmd *rtn;
 
@@ -36,7 +36,7 @@ t_cmd		*dup_cmdcontent(char *s, int i, int start)
 	return (rtn);
 }
 
-int			flag_p(char c, int status, char beforec)
+int				flag_p(char c, int status, char beforec)
 {
 	static int backslashed = 0;
 
@@ -62,7 +62,7 @@ int			flag_p(char c, int status, char beforec)
 	return (status);
 }
 
-t_cmdlist	*sep_list(char *s)
+t_cmdlist		*sep_list(char *s)
 {
 	int			i;
 	int			start;
@@ -74,17 +74,15 @@ t_cmdlist	*sep_list(char *s)
 	start = 0;
 	rtn = 0;
 	parenthesis = 0;
-	while (*s)
+	while (*s && s[i])
 	{
-		parenthesis = flag_p(s[i], parenthesis, i>0?s[i - 1]:0);
+		parenthesis = flag_p(s[i], parenthesis, i > 0 ? s[i - 1] : 0);
 		if (!parenthesis && is_pipe_semic(s[i]))
 		{
 			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
 			ft_lstadd_back(&rtn, newitem);
 			start = i + 1;
 		}
-		if(s[i] == '\0')
-			break ;
 		i++;
 	}
 	if (parenthesis)
@@ -92,11 +90,11 @@ t_cmdlist	*sep_list(char *s)
 	return (rtn);
 }
 
-char		**parse(char **cmdl, t_sh *sh)
+char			**parse(char **cmdl, t_sh *sh)
 {
 	char		**arglist;
-	
-	if(redirection_parse(sh, cmdl) == SUCCESS)
+
+	if (redirection_parse(sh, cmdl) == SUCCESS)
 	{
 		arglist = split_args(*cmdl, sh);
 		return (arglist);

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 18:39:26 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/14 18:53:21 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ typedef	struct	s_cmdio
 char			*next_cmd(char *prompt, FILE *fp);
 void			freelist(char **list);
 int				execute(t_sh *sh, char *argv[], int conn);
-void			fatal(char *s1, char *s2, int n);
 char			**parse(char **cmdl, t_sh *sh);
 int				strlistlen(char **strlist);
 int				redirection_read(char ***argv, int i);
@@ -198,5 +197,6 @@ int				substrend(char **str, int rstart, int rend);
 int				redirection_parse(t_sh *sh, char **s);
 int				buk_fds(int fds[3]);
 int				reset_fds(int fds[3]);
+void			*my_malloc(size_t size);
 
 #endif
