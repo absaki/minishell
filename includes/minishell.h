@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 23:44:49 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 11:51:14 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,16 @@ typedef struct		s_sh
 int					ft_pwd(t_sh *sh);
 int					ft_echo(char **args);
 void				ft_exit(t_sh *sh, char **args);
-int					ft_env(char **args, t_env *env, int unset_pwd, int unset_oldpwd);
+int					ft_env(
+				char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int					ft_cd(char **args, t_sh *sh);
 char				*get_env_path(t_env *env, const char *var, size_t len);
 int					update_cwd(t_sh *sh);
 int					check_sla(char *str);
 void				print_error_and_set_errno(char *str);
 int					ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
-int					ft_export_loop(char **args, t_env *env, t_env *secret, t_sh *sh);
+int					ft_export_loop(
+				char **args, t_env *env, t_env *secret, t_sh *sh);
 char				*convert_env_to_str(t_env *lst);
 void				sort_env_by_asc(char **tab, int env_len);
 int					ft_unset(char **args, t_sh *sh);
@@ -148,7 +150,7 @@ t_cmdlist			*sep_list(char *s);
 int					pipemap(t_sh *sh);
 void				no_mem(void);
 int					joinlast_onechr(char c, char **tmp);
-char 				**split_args(char *s, t_sh *sh);
+char				**split_args(char *s, t_sh *sh);
 void				sig_int(int status);
 void				sig_quit(int status);
 void				free_cmd(t_cmd *cmd);
