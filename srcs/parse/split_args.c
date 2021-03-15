@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 12:17:25 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 12:27:06 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,16 @@ int				join_arglist(char **tmp, char ***args, char *s)
 	int		len;
 	char	**rtn;
 
-	len = ft_strlen(**args);
-	rtn = (char **)my_malloc(sizeof(char *) * (len + 2));
 	i = 0;
 	while ((*args)[i])
-	{
-		if ((rtn[i] = ft_strdup((*args)[i])) == NULL)
-			no_mem();
 		i++;
-	}
+	len = i;
+	rtn = (char **)my_malloc(sizeof(char *) * (len + 2));
+	i = -1;
+	while ((*args)[++i])
+		rtn[i] = safe_strdup((*args)[i]);
 	freelist(*args);
-	if ((rtn[i++] = ft_strdup(*tmp)) == NULL)
-		no_mem();
+	rtn[i++] = safe_strdup(*tmp);
 	free(*tmp);
 	*tmp = my_malloc(sizeof(char) * 1);
 	(*tmp)[0] = 0;

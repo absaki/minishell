@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kike <kike@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/03 22:09:59 by kike             ###   ########.fr       */
+/*   Updated: 2021/03/15 12:24:43 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ int		joinlast_onechr(char c, char **tmp)
 	new[tmpsize + 1] = '\0';
 	*tmp = new;
 	return (1);
+}
+
+char	*safe_strdup(const char * src)
+{
+	char *rtn;
+
+	rtn = ft_strdup(src);
+	if(rtn == NULL)
+		no_mem();
+	return (rtn);
 }

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 11:51:14 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 12:24:54 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,5 +174,6 @@ void				*my_malloc(size_t size);
 int					is_nonum_rd(char **str, int i);
 int					is_num_rd(char **str, int i);
 t_redirection		*t_rd_dup(char *rdfile, int mode);
+char				*safe_strdup(const char * src);
 
 #endif
