@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 11:55:38 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 12:07:39 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			main(int argc, char **argv, char **envp)
 	while ((cmdline = next_cmd(sh->prompt, stdin)) != NULL)
 	{
 		sh->cmdlist = sep_list(cmdline);
-		if (sh->cmdlist = NULL)
+		if (sh->cmdlist == NULL)
 			ft_putendl_fd("sytax error", STDERR);
 		if (sh->cmdlist)
 			pipemap(sh);
