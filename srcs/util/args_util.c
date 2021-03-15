@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 13:22:20 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 15:31:48 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	dollar_trim(int trim, char **tmp)
 	if (!trim)
 		return ;
 	new = ft_strtrim(*tmp, " ");
-	if (new)
+	if (new == NULL)
 	{
 		no_mem();
 	}
