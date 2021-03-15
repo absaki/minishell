@@ -6,18 +6,18 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 12:09:27 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 12:10:20 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 13:19:46 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
+static int	dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 {
-	int i;
-	int end;
-	char *new;
-	char *cpy;
+	int		i;
+	int		end;
+	char	*new;
+	char	*cpy;
 
 	i = 1;
 	while (s[i] && ((ft_isalnum(s[i])) || s[i] == '_'))
@@ -33,27 +33,19 @@ static int dollar_without_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 		i++;
 	}
 	cpy[i] = '\0';
-	if ((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
-		no_mem();
+	new = freeable_strjoin(*tmp, get_env_value(cpy, sh->env), 1, 1);
 	free(cpy);
-	free(*tmp);
 	*tmp = new;
-	if (trim)
-	{
-		if (trim && ((new = ft_strtrim(*tmp, " ")) == NULL))
-			no_mem();
-		free (*tmp);
-		*tmp = new;
-	}
+	dollar_trim(trim, tmp);
 	return (end);
 }
 
-static int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp ,int trim)
+static int	dollar_with_parenthesis(char *s, t_sh *sh, char **tmp, int trim)
 {
-	int i;
-	int end;
-	char *new;
-	char *cpy;
+	int		i;
+	int		end;
+	char	*new;
+	char	*cpy;
 
 	i = 1;
 	while (s[i] && s[i] != '}')
@@ -69,22 +61,14 @@ static int dollar_with_parenthesis(char *s, t_sh *sh, char **tmp ,int trim)
 		i++;
 	}
 	cpy[i] = '\0';
-	if ((new = ft_strjoin(*tmp, get_env_value(cpy, sh->env))) == NULL)
-		no_mem();
+	new = freeable_strjoin(*tmp, get_env_value(cpy, sh->env), 1, 1);
 	free(cpy);
-	free(*tmp);
 	*tmp = new;
-	if (trim)
-	{
-		if (trim && ((new = ft_strtrim(*tmp, " ")) == NULL))
-			no_mem();
-		free (*tmp);
-		*tmp = new;
-	}
+	dollar_trim(trim, tmp);
 	return (end + 1);
 }
 
-static int dollar_question_with_parenthesis(char **tmp)
+static int	dollar_question_with_parenthesis(char **tmp)
 {
 	char *new;
 	char *oldstr;
@@ -98,7 +82,7 @@ static int dollar_question_with_parenthesis(char **tmp)
 	return (4);
 }
 
-static int dollar_question_without_parenthesis(char **tmp)
+static int	dollar_question_without_parenthesis(char **tmp)
 {
 	char *new;
 	char *oldstr;
@@ -112,7 +96,7 @@ static int dollar_question_without_parenthesis(char **tmp)
 	return (2);
 }
 
-int dollar(char *s, t_sh *sh, char **tmp, int trim)
+int			dollar(char *s, t_sh *sh, char **tmp, int trim)
 {
 	if (!s[1])
 		return (joinlast_onechr('$', tmp));

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 23:20:31 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/15 13:22:37 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*next_cmd(char *prompt, FILE *fp)
 	bufspace = 0;
 	pos = 0;
 	ft_putstr_fd(prompt, STDERR);
-	// printf("%s", prompt);
 	while ((c = getc(fp)) != EOF)
 	{
 		cmdread(&buf, &bufspace, &pos);
