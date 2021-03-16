@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 19:03:03 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 22:40:11 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ char			**split_args(char *s)
 	}
 	if (tmp[0])
 		join_arglist(&tmp, &rtn, &s[i]);
+	free(tmp);
 	return (rtn);
 }

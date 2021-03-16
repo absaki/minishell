@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 16:45:59 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 23:02:58 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			main(int argc, char **argv, char **envp)
 			ft_putendl_fd("sytax error", STDERR);
 		if (sh->cmdlist)
 			pipemap(sh);
+		ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
 	return (g_sig.status);
 }

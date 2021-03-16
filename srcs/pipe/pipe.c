@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 23:10:36 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 23:02:52 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ static int		exec_pipe(t_sh *sh)
 int				pipemap(t_sh *sh)
 {
 	t_cmd		*cmd;
+	t_cmdlist	*front;
 
+	front = sh->cmdlist;
 	g_sig.sigint = 0;
 	g_sig.sigquit = 0;
 	while (sh->cmdlist && (cmd = sh->cmdlist->content))
@@ -72,6 +74,6 @@ int				pipemap(t_sh *sh)
 		if (g_sig.sigint)
 			ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
 	}
-	ft_lstclear(&(sh->cmdlist), (void (*)(void *))free_cmd);
+	sh->cmdlist = front;
 	return (SUCCESS);
 }
