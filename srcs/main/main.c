@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 12:06:02 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 14:20:11 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ static t_sh	*setup(char **envp)
 	return (sh);
 }
 
+int			islong(char *cmdline)
+{
+	if (ft_strlen(cmdline) > 1024)
+	{
+		ft_putendl_fd("too long", 2);
+		free(cmdline);
+		cmdline = 0;
+		return (1);
+	}
+	return (0);
+}
+
 int			main(int argc, char **argv, char **envp)
 {
 	char *cmdline;
@@ -36,6 +48,8 @@ int			main(int argc, char **argv, char **envp)
 	sh = setup(envp);
 	while ((cmdline = next_cmd(sh->prompt)) != NULL)
 	{
+		if (islong(cmdline))
+			continue ;
 		sh->cmdlist = sep_list(cmdline);
 		if (sh->cmdlist == NULL)
 			ft_putendl_fd("sytax error", STDERR);

@@ -6,20 +6,13 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:09:29 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 14:19:24 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		is_delim(char x)
-{
-	if (x == ' ' || x == '\t')
-		return (1);
-	return (0);
-}
-
-void	freelist(char **list)
+void				freelist(char **list)
 {
 	char **cp;
 
@@ -29,7 +22,7 @@ void	freelist(char **list)
 	free(list);
 }
 
-void	cmdread(char **buf, int *bufspace, int *pos)
+static void			cmdread(char **buf, int *bufspace, int *pos)
 {
 	if (*pos + 1 >= *bufspace)
 	{
@@ -41,7 +34,7 @@ void	cmdread(char **buf, int *bufspace, int *pos)
 	}
 }
 
-int		my_getc(int	fd)
+static int			my_getc(int fd)
 {
 	char	c[1];
 	int		status;
@@ -54,7 +47,7 @@ int		my_getc(int	fd)
 	return ((int)c[0]);
 }
 
-char	*next_cmd(char *prompt)
+char				*next_cmd(char *prompt)
 {
 	char	*buf;
 	int		bufspace;
@@ -70,7 +63,7 @@ char	*next_cmd(char *prompt)
 		{
 			cmdread(&buf, &bufspace, &pos);
 			if (c == '\n')
-				break;
+				break ;
 			buf[pos++] = c;
 		}
 		if (c == EOF && pos == 0)
@@ -80,11 +73,5 @@ char	*next_cmd(char *prompt)
 		}
 	}
 	buf[pos] = '\0';
-	if(ft_strlen(buf) > 1024)
-	{
-		ft_putendl_fd("too long", 2);
-		free (buf);
-		buf = 0;
-	}
 	return (buf);
 }
