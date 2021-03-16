@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:12:38 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/14 18:40:44 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 16:44:30 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ static void		exec_child(t_sh *sh, char **argv, int newpipe[2])
 	exit(errno == ENOTDIR ? 126 : 127);
 }
 
+static void		print_err(void)
+{
+	ft_putstr_fd("fork: ", STDERR);
+	ft_putendl_fd(strerror(errno), STDERR);
+}
+
 int				execute(t_sh *sh, char *argv[], int conn)
 {
 	int pid;
@@ -97,7 +103,7 @@ int				execute(t_sh *sh, char *argv[], int conn)
 	if (is_builtin_nopipe(sh, argv, newpipe))
 		return (0);
 	if ((pid = fork()) == -1)
-		perror("fork");
+		print_err();
 	else if (pid == 0)
 		exec_child(sh, argv, newpipe);
 	else

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:44:35 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 16:46:37 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void			cmdread(char **buf, int *bufspace, int *pos)
 		if (*bufspace == 0)
 			*buf = my_malloc(BUFSIZ);
 		else
-			*buf = my_reallocf(*buf, *bufspace,*bufspace + BUFSIZ);
+			*buf = my_reallocf(*buf, *bufspace, *bufspace + BUFSIZ);
 		*bufspace += BUFSIZ;
 	}
 }

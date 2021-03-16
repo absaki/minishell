@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:56:18 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 16:45:59 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			main(int argc, char **argv, char **envp)
 
 	sh = setup(envp);
 	cmdline = 0;
-	while (1)
+	while (argc || argv)
 	{
 		if (cmdline)
 			free(cmdline);
@@ -65,6 +65,4 @@ int			main(int argc, char **argv, char **envp)
 			pipemap(sh);
 	}
 	return (g_sig.status);
-	(void)argc;
-	(void)argv;
 }
