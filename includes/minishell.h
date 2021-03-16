@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:10:11 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 18:43:23 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,12 @@ typedef struct		s_sh
 int					ft_pwd(t_sh *sh);
 int					ft_echo(char **args);
 void				ft_exit(t_sh *sh, char **args);
-int					ft_env(
-				char **args, t_env *env, int unset_pwd, int unset_oldpwd);
 int					ft_cd(char **args, t_sh *sh);
 char				*get_env_path(t_env *env, const char *var, size_t len);
 int					update_cwd(t_sh *sh);
 int					check_sla(char *str);
 void				print_error_and_set_errno(char *str);
 int					ft_export(char **args, t_env *env, t_env *secret, t_sh *sh);
-int					ft_export_loop(
-				char **args, t_env *env, t_env *secret, t_sh *sh);
 char				*convert_env_to_str(t_env *lst);
 void				sort_env_by_asc(char **tab, int env_len);
 int					ft_unset(char **args, t_sh *sh);
@@ -157,7 +153,7 @@ void				free_cmd(t_cmd *cmd);
 int					my_execvp(char *file, char **argv, t_sh *sh);
 char				**makeenvlist(t_env *env);
 int					flag_p(char c, int status, char beforec);
-int					dollar(char *s, t_sh *sh, char **tmp, int trim);
+int					dollar(char *s, t_sh *sh, char **tmp);
 int					s_quote(char *s, char **tmp);
 int					d_quote(char *s, t_sh *sh, char **tmp);
 char				*next_cmd(char *prompt);
@@ -174,8 +170,23 @@ void				*my_malloc(size_t size);
 int					is_nonum_rd(char **str, int i);
 int					is_num_rd(char **str, int i);
 t_redirection		*t_rd_dup(char *rdfile, int mode);
-char				*safe_strdup(const char * src);
+char				*safe_strdup(const char *src);
 void				dollar_trim(int trim, char **tmp);
-char				*freeable_strjoin(char *s1, char *s2, int s1free, int s2free);
+void				replace_dollar(char **cmdl, t_sh *sh);
+char				*freeable_strjoin(
+										char *s1,
+										char *s2,
+										int s1free,
+										int s2free);
+int					ft_export_loop(
+										char **args,
+										t_env *env,
+										t_env *secret,
+										t_sh *sh);
+int					ft_env(
+										char **args,
+										t_env *env,
+										int unset_pwd,
+										int unset_oldpwd);
 
 #endif

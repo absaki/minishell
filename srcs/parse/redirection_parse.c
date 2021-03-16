@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/14 23:06:33 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 18:21:35 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int		store_filename(t_sh *sh, char **s, int pos, int mode)
 		else if ((*s)[pos] == '\"')
 			pos += d_quote(&(*s)[pos], sh, &tmp);
 		else if ((*s)[pos] == '$')
-			pos += dollar(&(*s)[pos], sh, &tmp, 1);
+			pos += dollar(&(*s)[pos], sh, &tmp);
 		else if ((*s)[pos] == '\\' && (*s)[pos + 1])
 			pos += (joinlast_onechr((*s)[pos + 1], &tmp) + 1);
 		else

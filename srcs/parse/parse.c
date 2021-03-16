@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 11:55:35 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 18:22:38 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char			**parse(char **cmdl, t_sh *sh)
 
 	if (redirection_parse(sh, cmdl) == SUCCESS)
 	{
+		replace_dollar(cmdl, sh);
 		arglist = split_args(*cmdl, sh);
 		return (arglist);
 	}

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 15:31:48 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 18:20:58 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,4 @@ char	*freeable_strjoin(char *s1, char *s2, int s1free, int s2free)
 	if (new == NULL)
 		no_mem();
 	return (new);
-}
-
-void	dollar_trim(int trim, char **tmp)
-{
-	char	*new;
-
-	if (!trim)
-		return ;
-	new = ft_strtrim(*tmp, " ");
-	if (new == NULL)
-	{
-		no_mem();
-	}
-	free(*tmp);
-	*tmp = new;
 }
