@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 18:43:23 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 19:02:55 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_cmdlist			*sep_list(char *s);
 int					pipemap(t_sh *sh);
 void				no_mem(void);
 int					joinlast_onechr(char c, char **tmp);
-char				**split_args(char *s, t_sh *sh);
+char				**split_args(char *s);
 void				sig_int(int status);
 void				sig_quit(int status);
 void				free_cmd(t_cmd *cmd);
@@ -155,7 +155,7 @@ char				**makeenvlist(t_env *env);
 int					flag_p(char c, int status, char beforec);
 int					dollar(char *s, t_sh *sh, char **tmp);
 int					s_quote(char *s, char **tmp);
-int					d_quote(char *s, t_sh *sh, char **tmp);
+int					d_quote(char *s, char **tmp);
 char				*next_cmd(char *prompt);
 void				freelist(char **list);
 int					execute(t_sh *sh, char *argv[], int conn);

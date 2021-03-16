@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 18:43:30 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 19:03:03 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ int				s_quote(char *s, char **tmp)
 	return (i + 2);
 }
 
-int				d_quote(char *s, t_sh *sh, char **tmp)
+int				d_quote(char *s, char **tmp)
 {
 	int i;
 
 	i = 1;
 	while (s[i] != '\"')
 	{
-		if (s[i] && s[i] == '$')
-			i += dollar(&(s[i]), sh, tmp);
-		else if (s[i] == '\\' && s[i + 1])
+		if (s[i] == '\\' && s[i + 1])
 			i += (joinlast_onechr(s[i + 1], tmp) + 1);
 		else if (s[i])
 			i += joinlast_onechr(s[i], tmp);
+		else
+			return (i);
 	}
 	return (i + 1);
 }
@@ -83,19 +83,19 @@ int				join_arglist(char **tmp, char ***args, char *s)
 	return (i);
 }
 
-static int		split_one_arg(char *s, int pos, char **tmp, t_sh *sh)
+static int		split_one_arg(char *s, int pos, char **tmp)
 {
 	if (s[pos] == '\'')
 		return (s_quote(&s[pos], tmp));
 	else if (s[pos] == '\"')
-		return (d_quote(&s[pos], sh, tmp));
+		return (d_quote(&s[pos], tmp));
 	else if (s[pos] == '\\' && s[pos + 1])
 		return ((joinlast_onechr(s[pos + 1], tmp) + 1));
 	else
 		return (joinlast_onechr(s[pos], tmp));
 }
 
-char			**split_args(char *s, t_sh *sh)
+char			**split_args(char *s)
 {
 	char	**rtn;
 	char	*tmp;
@@ -113,7 +113,7 @@ char			**split_args(char *s, t_sh *sh)
 		if (s[i] == ' ')
 			i += join_arglist(&tmp, &rtn, &s[i]);
 		else
-			i += split_one_arg(s, i, &tmp, sh);
+			i += split_one_arg(s, i, &tmp);
 	}
 	if (tmp[0])
 		join_arglist(&tmp, &rtn, &s[i]);
