@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 11:59:35 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 14:10:11 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct		s_sh
 	int				unset_oldpwd_s;
 }					t_sh;
 
-int					get_next_line(int fd, char **line);
 int					ft_pwd(t_sh *sh);
 int					ft_echo(char **args);
 void				ft_exit(t_sh *sh, char **args);
