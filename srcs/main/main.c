@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 12:07:39 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 13:46:09 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			main(int argc, char **argv, char **envp)
 	t_sh *sh;
 
 	sh = setup(envp);
-	while ((cmdline = next_cmd(sh->prompt, stdin)) != NULL)
+	while ((cmdline = next_cmd(sh->prompt)) != NULL)
 	{
 		sh->cmdlist = sep_list(cmdline);
 		if (sh->cmdlist == NULL)

@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/15 13:20:35 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 13:46:22 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int					flag_p(char c, int status, char beforec);
 int					dollar(char *s, t_sh *sh, char **tmp, int trim);
 int					s_quote(char *s, char **tmp);
 int					d_quote(char *s, t_sh *sh, char **tmp);
-char				*next_cmd(char *prompt, FILE *fp);
+char				*next_cmd(char *prompt);
 void				freelist(char **list);
 int					execute(t_sh *sh, char *argv[], int conn);
 char				**parse(char **cmdl, t_sh *sh);
