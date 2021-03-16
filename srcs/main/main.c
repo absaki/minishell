@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:20:11 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 14:56:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int			islong(char *cmdline)
 	if (ft_strlen(cmdline) > 1024)
 	{
 		ft_putendl_fd("too long", 2);
-		free(cmdline);
-		cmdline = 0;
 		return (1);
 	}
 	return (0);
@@ -46,12 +44,22 @@ int			main(int argc, char **argv, char **envp)
 	t_sh *sh;
 
 	sh = setup(envp);
-	while ((cmdline = next_cmd(sh->prompt)) != NULL)
+	cmdline = 0;
+	while (1)
 	{
+		if (cmdline)
+			free(cmdline);
+		if ((cmdline = next_cmd(sh->prompt)) == NULL)
+			break ;
 		if (islong(cmdline))
 			continue ;
+		if (g_sig.sigint)
+		{
+			g_sig.sigint = 0;
+			continue;
+		}
 		sh->cmdlist = sep_list(cmdline);
-		if (sh->cmdlist == NULL)
+		if (sh->cmdlist == NULL && ft_strlen(cmdline) != 0)
 			ft_putendl_fd("sytax error", STDERR);
 		if (sh->cmdlist)
 			pipemap(sh);

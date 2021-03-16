@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 14:19:24 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 14:44:35 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,26 @@ void				freelist(char **list)
 	free(list);
 }
 
+static void			*my_reallocf(void *ptr, size_t oldsize, size_t size)
+{
+	void	*new;
+
+	new = malloc(size);
+	if (new == NULL)
+		no_mem();
+	memcpy(new, ptr, oldsize);
+	free(ptr);
+	return (new);
+}
+
 static void			cmdread(char **buf, int *bufspace, int *pos)
 {
 	if (*pos + 1 >= *bufspace)
 	{
 		if (*bufspace == 0)
-			*buf = malloc(BUFSIZ);
+			*buf = my_malloc(BUFSIZ);
 		else
-			*buf = realloc(*buf, *bufspace + BUFSIZ);
+			*buf = my_reallocf(*buf, *bufspace,*bufspace + BUFSIZ);
 		*bufspace += BUFSIZ;
 	}
 }
