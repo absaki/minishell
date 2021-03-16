@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 23:02:58 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 23:28:04 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ int			main(int argc, char **argv, char **envp)
 			break ;
 		if (islong(cmdline))
 			continue ;
-		if (g_sig.sigint)
-		{
-			g_sig.sigint = 0;
-			continue;
-		}
+		if (g_sig.sigint && !(g_sig.sigint = 0))
+			continue ;
 		sh->cmdlist = sep_list(cmdline);
 		if (sh->cmdlist == NULL && ft_strlen(cmdline) != 0)
 			ft_putendl_fd("sytax error", STDERR);

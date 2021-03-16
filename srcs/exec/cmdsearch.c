@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:49:27 by kike              #+#    #+#             */
-/*   Updated: 2021/03/14 18:28:59 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 23:26:20 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char	**makepathlist(char *pathstr)
 
 	if ((pathlist = ft_split(pathstr, ':')) == NULL)
 		no_mem();
+	free(pathstr);
 	return (pathlist);
 }
 
@@ -29,21 +30,21 @@ static char	*do_serch(char **pathlist, char *file)
 	char		*full;
 
 	i = 0;
-	tmp = ft_strjoin("/", file);
+	if ((tmp = ft_strjoin("/", file)) == NULL)
+		no_mem();
 	while (pathlist[i])
 	{
 		full = ft_strjoin(pathlist[i], tmp);
 		if (stat(full, &statvar) == 0)
 		{
 			if (S_IXUSR & statvar.st_mode
-				|| S_IXGRP & statvar.st_mode
-				|| S_IXOTH & statvar.st_mode)
+	|| S_IXGRP & statvar.st_mode || S_IXOTH & statvar.st_mode)
 			{
 				free(tmp);
 				return (full);
 			}
-			free(full);
 		}
+		free(full);
 		i++;
 	}
 	free(tmp);

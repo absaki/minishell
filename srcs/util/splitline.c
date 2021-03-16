@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 16:46:37 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/16 23:09:43 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void				freelist(char **list)
 {
-	char **cp;
+	int		i;
 
-	cp = list;
-	while (*cp)
-		free(*cp++);
+	i = 0;
+	while (list[i])
+	{
+		free(list[i]);
+		i++;
+	}
 	free(list);
 }
 
