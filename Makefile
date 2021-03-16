@@ -14,7 +14,7 @@ SRC +=	srcs/parse/split_args.c srcs/util/args_util.c srcs/signal/signal.c
 SRC +=	srcs/exec/cmdsearch.c srcs/exec/makeenvlist.c
 SRC +=	srcs/parse/redirection_parse.c srcs/parse/redirection_util.c
 SRC +=	srcs/exec/open_rd_file.c srcs/main/shlvl.c
-SRC +=	srcs/exec/fd.c srcs/parse/dollar.c
+SRC +=	srcs/exec/fd.c srcs/parse/dollar.c srcs/getnextline/get_next_line.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft -g
 OBJ  =	$(SRC:.c=.o)
