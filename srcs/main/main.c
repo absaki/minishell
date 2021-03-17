@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 23:28:04 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/17 17:17:53 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int			main(int argc, char **argv, char **envp)
 	cmdline = 0;
 	while (argc || argv)
 	{
+		g_sig.sigint = 0;
+		g_sig.sigquit = 0;
 		if (cmdline)
 			free(cmdline);
 		if ((cmdline = next_cmd(sh->prompt)) == NULL)

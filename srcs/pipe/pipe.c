@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 23:17:05 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/17 17:17:39 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int				pipemap(t_sh *sh)
 	t_cmdlist	*front;
 
 	front = sh->cmdlist;
-	g_sig.sigint = 0;
-	g_sig.sigquit = 0;
 	while (sh->cmdlist && (cmd = sh->cmdlist->content))
 	{
 		if (exec_pipe(sh) == ERROR)
