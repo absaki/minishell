@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:58:36 by kikeda            #+#    #+#             */
-/*   Updated: 2021/02/24 13:49:29 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/17 20:53:10 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <limits.h>
-
 
 typedef struct	s_list
 {
