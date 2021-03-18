@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 14:58:36 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/17 20:53:10 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 15:57:58 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ t_list			*ft_lstmap
 				(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list			*ft_lstnewdup(void *content);
 void			*ft_free_and_del(void *ptr);
+char			**ft_split_empty(char *s, char c);
 
 #endif

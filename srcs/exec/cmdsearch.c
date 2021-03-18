@@ -6,23 +6,42 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 13:49:27 by kike              #+#    #+#             */
-/*   Updated: 2021/03/16 23:26:20 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 16:58:36 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**makepathlist(char *pathstr)
+static char		**trim_pathlist(char **rawlist)
 {
-	char		**pathlist;
+	int		i;
+	int		len;
+	char	**rtn;
+	char	*tmp;
 
-	if ((pathlist = ft_split(pathstr, ':')) == NULL)
-		no_mem();
-	free(pathstr);
-	return (pathlist);
+	i = 0;
+	while (rawlist[i])
+		i++;
+	len = i;
+	rtn = my_malloc(sizeof(char *) * (len + 1));
+	rtn[len] = NULL;
+	i = 0;
+	while (rawlist[i])
+	{
+		if (ft_strlen(rawlist[i]) == 0)
+		{
+			tmp = safe_strdup(".");
+			rtn[i] = tmp;
+		}
+		else
+			rtn[i] = safe_strdup(rawlist[i]);
+		i++;
+	}
+	freelist(rawlist);
+	return (rtn);
 }
 
-static char	*do_serch(char **pathlist, char *file)
+static char		*do_serch(char **pathlist, char *file)
 {
 	int			i;
 	struct stat	statvar;
@@ -51,12 +70,17 @@ static char	*do_serch(char **pathlist, char *file)
 	return (NULL);
 }
 
-static char	*serch_path(char *file, t_env *env)
+static char		*serch_path(char *file, t_env *env)
 {
 	char		**pathlist;
 	char		*full;
+	char		*pathstr;
 
-	pathlist = makepathlist(get_env_value("PATH", env));
+	pathstr = get_env_value("PATH", env);
+	if ((pathlist = ft_split_empty(pathstr, ':')) == NULL)
+		no_mem();
+	free(pathstr);
+	pathlist = trim_pathlist(pathlist);
 	full = do_serch(pathlist, file);
 	freelist(pathlist);
 	if (full == NULL)
@@ -68,7 +92,7 @@ static char	*serch_path(char *file, t_env *env)
 	return (full);
 }
 
-static int	is_directory(char *fullpath)
+static int		is_directory(char *fullpath)
 {
 	struct stat stat_st;
 
@@ -77,7 +101,7 @@ static int	is_directory(char *fullpath)
 	return (0);
 }
 
-int			my_execvp(char *file, char **argv, t_sh *sh)
+int				my_execvp(char *file, char **argv, t_sh *sh)
 {
 	char *cmdpath;
 	char **envp;

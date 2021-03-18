@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/18 14:28:13 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:50:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ static int		d_quote_rd(char *s, char **tmp, t_sh *sh)
 		else if (s[i])
 			i += joinlast_onechr(s[i], tmp);
 		else
-		{
-			printf("CRASH!\n");
 			return (i);
-		}
 	}
 	return (i + 1);
 }
