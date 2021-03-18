@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 16:34:02 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 22:40:11 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:14:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ int				d_quote(char *s, char **tmp)
 	i = 1;
 	while (s[i] != '\"')
 	{
-		if (s[i] == '\\' && s[i + 1])
+		if (s[i] == '\\' && s[i + 1] &&
+(s[i + 1] == '$' || s[i + 1] == '`' || s[i + 1] == '\"' || s[i + 1] == '\\'))
 			i += (joinlast_onechr(s[i + 1], tmp) + 1);
 		else if (s[i])
 			i += joinlast_onechr(s[i], tmp);
 		else
+		{
+			printf("CRASH!\n");
 			return (i);
+		}
 	}
 	return (i + 1);
 }
