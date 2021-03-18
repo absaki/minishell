@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 13:56:01 by kdoi              #+#    #+#             */
-/*   Updated: 2021/03/17 18:34:44 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 19:29:19 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ int			get_status(char *str)
 	long	status;
 
 	status = ft_atol(str);
+	if (status == -1 && ft_strcmp(str, "-1") != 0)
+		status = 255;
 	return ((int)status);
 }
 
 void		ft_exit(t_sh *sh, char **args)
 {
-	int		err;
-
-	err = 0;
 	sh->exit = 1;
 	ft_putstr_fd("exit\n", STDERR);
 	if (args[1] && args[2])
@@ -85,11 +84,11 @@ void		ft_exit(t_sh *sh, char **args)
 		if (ft_isdigits(args[1]))
 			sh->ret = get_status(args[1]);
 		else
-			err = 1;
+			sh->ret = 255;
 	}
 	else
 		sh->ret = g_sig.status;
-	if (err)
+	if (sh->ret == 255)
 	{
 		ft_putendl_fd("minishell: exit: numeric argument required", STDERR);
 		sh->ret = 2;
