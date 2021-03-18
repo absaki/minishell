@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:44:26 by kike              #+#    #+#             */
-/*   Updated: 2021/03/16 19:01:36 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/18 14:28:13 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,29 @@ static int		set_rd(t_sh *sh, char *rdfile, int mode, int pos)
 	return (pos);
 }
 
+static int		d_quote_rd(char *s, char **tmp, t_sh *sh)
+{
+	int i;
+
+	i = 1;
+	while (s[i] != '\"')
+	{
+		if (s[i] && s[i] == '$')
+			i += dollar(&(s[i]), sh, tmp);
+		else if (s[i] == '\\' && s[i + 1] &&
+(s[i + 1] == '$' || s[i + 1] == '`' || s[i + 1] == '\"' || s[i + 1] == '\\'))
+			i += (joinlast_onechr(s[i + 1], tmp) + 1);
+		else if (s[i])
+			i += joinlast_onechr(s[i], tmp);
+		else
+		{
+			printf("CRASH!\n");
+			return (i);
+		}
+	}
+	return (i + 1);
+}
+
 static int		store_filename(t_sh *sh, char **s, int pos, int mode)
 {
 	char *tmp;
@@ -49,7 +72,7 @@ static int		store_filename(t_sh *sh, char **s, int pos, int mode)
 		else if ((*s)[pos] == '\'')
 			pos += s_quote(&(*s)[pos], &tmp);
 		else if ((*s)[pos] == '\"')
-			pos += d_quote(&(*s)[pos], &tmp);
+			pos += d_quote_rd(&(*s)[pos], &tmp, sh);
 		else if ((*s)[pos] == '$')
 			pos += dollar(&(*s)[pos], sh, &tmp);
 		else if ((*s)[pos] == '\\' && (*s)[pos + 1])
