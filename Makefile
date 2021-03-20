@@ -15,6 +15,7 @@ SRC +=	srcs/exec/cmdsearch.c srcs/exec/makeenvlist.c
 SRC +=	srcs/parse/redirection_parse.c srcs/parse/redirection_util.c
 SRC +=	srcs/exec/open_rd_file.c srcs/main/shlvl.c
 SRC +=	srcs/exec/fd.c srcs/parse/dollar_util.c srcs/parse/dollar.c 
+SRC +=	srcs/util/cmdread_util.c
 
 FLAG =	-Wall -Werror -Wextra -Iincludes -Ilibft -g
 OBJ  =	$(SRC:.c=.o)

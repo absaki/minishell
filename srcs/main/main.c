@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:04:09 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/17 17:17:53 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/20 23:48:27 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_sigstatus g_sig;
 
-static t_sh	*setup(char **envp)
+static t_sh		*setup(char **envp)
 {
 	t_sh *sh;
 
@@ -28,7 +28,7 @@ static t_sh	*setup(char **envp)
 	return (sh);
 }
 
-int			islong(char *cmdline)
+static int		islong(char *cmdline)
 {
 	if (ft_strlen(cmdline) > 1024)
 	{
@@ -38,7 +38,18 @@ int			islong(char *cmdline)
 	return (0);
 }
 
-int			main(int argc, char **argv, char **envp)
+static void		while_init(char *cmdline)
+{
+	g_sig.sigint = 0;
+	g_sig.sigquit = 0;
+	if (cmdline)
+	{
+		free(cmdline);
+		cmdline = 0;
+	}
+}
+
+int				main(int argc, char **argv, char **envp)
 {
 	char *cmdline;
 	t_sh *sh;
@@ -47,11 +58,9 @@ int			main(int argc, char **argv, char **envp)
 	cmdline = 0;
 	while (argc || argv)
 	{
-		g_sig.sigint = 0;
-		g_sig.sigquit = 0;
-		if (cmdline)
-			free(cmdline);
-		if ((cmdline = next_cmd(sh->prompt)) == NULL)
+		while_init(cmdline);
+		ft_putstr_fd(sh->prompt, STDERR);
+		if ((cmdline = next_cmd()) == NULL)
 			break ;
 		if (islong(cmdline))
 			continue ;

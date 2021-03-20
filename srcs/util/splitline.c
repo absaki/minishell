@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 23:09:43 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/20 23:48:34 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void			*my_reallocf(void *ptr, size_t oldsize, size_t size)
 	return (new);
 }
 
-static void			cmdread(char **buf, int *bufspace, int *pos)
+static int			cmdread(char **buf, int *bufspace, int *pos)
 {
 	if (*pos + 1 >= *bufspace)
 	{
@@ -47,6 +47,7 @@ static void			cmdread(char **buf, int *bufspace, int *pos)
 			*buf = my_reallocf(*buf, *bufspace, *bufspace + BUFSIZ);
 		*bufspace += BUFSIZ;
 	}
+	return (SUCCESS);
 }
 
 static int			my_getc(int fd)
@@ -62,7 +63,7 @@ static int			my_getc(int fd)
 	return ((int)c[0]);
 }
 
-char				*next_cmd(char *prompt)
+char				*next_cmd(void)
 {
 	char	*buf;
 	int		bufspace;
@@ -71,12 +72,12 @@ char				*next_cmd(char *prompt)
 
 	bufspace = 0;
 	pos = 0;
-	ft_putstr_fd(prompt, STDERR);
 	while (1)
 	{
-		if ((c = my_getc(STDIN)) != EOF)
+		if (g_sig.sigint)
+			sigint_reset(&buf, &pos);
+		else if ((c = my_getc(STDIN)) != EOF && cmdread(&buf, &bufspace, &pos))
 		{
-			cmdread(&buf, &bufspace, &pos);
 			if (c == '\n')
 				break ;
 			buf[pos++] = c;
