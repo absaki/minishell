@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/20 23:48:34 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 00:00:09 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int			cmdread(char **buf, int *bufspace, int *pos)
 			*buf = my_reallocf(*buf, *bufspace, *bufspace + BUFSIZ);
 		*bufspace += BUFSIZ;
 	}
-	return (SUCCESS);
+	return (1);
 }
 
 static int			my_getc(int fd)
