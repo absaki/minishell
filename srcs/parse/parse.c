@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 19:03:00 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/20 22:17:16 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int				flag_p(char c, int status, char beforec)
 {
 	static int backslashed = 0;
 
+	if (status == '\'' && c != '\'')
+		return (status);
 	if (beforec == 0)
 		backslashed = 0;
 	if (backslashed)
