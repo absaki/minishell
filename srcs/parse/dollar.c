@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 18:16:53 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/18 14:18:41 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:38:26 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			replace_dollar(char **cmdl, t_sh *sh)
 				i += joinlast_onechr(old[i], &new);
 			i += joinlast_onechr(old[i], &new);
 		}
-		else if (old[i] == '$')
+		else if (old[i] == '$' && old[i > 0 ? i - 1 : i] != '\\')
 			i += dollar(&(old[i]), sh, &new);
 		else
 			i += joinlast_onechr(old[i], &new);
