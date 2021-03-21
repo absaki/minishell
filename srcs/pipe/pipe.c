@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/21 12:17:27 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:47:07 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ static void		do_wait(t_sh *sh)
 	sh->pipout = -1;
 }
 
-static int		exec_pipe_err(t_sh *sh)
+static int		exec_pipe_err(t_sh *sh, char **argv)
 {
 	ft_putendl_fd("syntax error", STDERR);
 	g_sig.status = 2;
+	freelist(argv);
 	ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 	return (ERROR);
 }
@@ -47,10 +48,10 @@ static int		exec_pipe(t_sh *sh)
 			break ;
 		if ((cmd->conn == CONN_PIPE && (cmd->cmds)[0] == 0)
 		|| ((argv = parse(&(cmd->cmds), sh)) == 0))
-			return (exec_pipe_err(sh));
+			return (exec_pipe_err(sh, argv));
 		sh->pid = execute(sh, argv, cmd->conn);
 		if (sh->pid == -200)
-			return (exec_pipe_err(sh));
+			return (exec_pipe_err(sh, argv));
 		ft_lstclear(&(sh->rdlist), (void (*)(void *))rd_free);
 		freelist(argv);
 		if (cmd->conn == CONN_SEMIC || cmd->conn == CONN_END)
