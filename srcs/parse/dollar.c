@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 18:16:53 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/21 12:02:25 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 12:05:36 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void		s_quote_dollar(char *old, int *i, char **new)
 
 static int		replace_one_block(char *old, int *i, char **new, t_sh *sh)
 {
-	printf("testing[%d]\n", *i);
 	if (old[*i] == '\\' && old[*i + 1])
 	{
 		*i += joinlast_onechr(old[*i], new)
