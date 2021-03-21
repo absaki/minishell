@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 18:34:19 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/16 18:20:58 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 12:18:40 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,20 @@ char	*freeable_strjoin(char *s1, char *s2, int s1free, int s2free)
 	if (new == NULL)
 		no_mem();
 	return (new);
+}
+
+int		is_space_or_empty(char *s)
+{
+	int	i;
+
+	if (s == NULL || ft_strlen(s) == 0)
+		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
 }

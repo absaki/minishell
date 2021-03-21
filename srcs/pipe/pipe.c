@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 18:23:04 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/17 20:35:51 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 12:17:27 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		exec_pipe(t_sh *sh)
 	while (sh->cmdlist)
 	{
 		cmd = sh->cmdlist->content;
-		if (cmd->conn == CONN_END && ft_strlen(cmd->cmds) == 0)
+		if (cmd->conn == CONN_END && is_space_or_empty(cmd->cmds))
 			break ;
 		if ((cmd->conn == CONN_PIPE && (cmd->cmds)[0] == 0)
 		|| ((argv = parse(&(cmd->cmds), sh)) == 0))
