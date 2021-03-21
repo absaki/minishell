@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:48:55 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/21 00:00:09 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:20:41 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char				*next_cmd(void)
 	while (1)
 	{
 		if (g_sig.sigint)
-			sigint_reset(&buf, &pos);
+			sigint_reset(&buf, &pos, &bufspace);
 		else if ((c = my_getc(STDIN)) != EOF && cmdread(&buf, &bufspace, &pos))
 		{
 			if (c == '\n')

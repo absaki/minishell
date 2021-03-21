@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 21:54:31 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/21 12:16:58 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:20:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ t_redirection		*t_rd_dup(char *rdfile, int mode);
 char				*safe_strdup(const char *src);
 void				dollar_trim(int trim, char **tmp);
 void				replace_dollar(char **cmdl, t_sh *sh);
-void				sigint_reset(char **buf, int *pos);
+void				sigint_reset(char **buf, int *pos, int *bufspace);
 int					is_space_or_empty(char *s);
 char				*freeable_strjoin(
 										char *s1,
