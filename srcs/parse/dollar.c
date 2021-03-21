@@ -6,14 +6,47 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 18:16:53 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/20 23:14:17 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 12:02:25 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void		d_quote_dollar(char *old, int *i, char **new, t_sh *sh)
+{
+	joinlast_onechr(old[*i], new);
+	(*i)++;
+	while (old[*i])
+	{
+		if (old[*i] == '\\' && old[*i + 1])
+		{
+			*i += joinlast_onechr(old[*i], new)
+			+ joinlast_onechr(old[*i + 1], new);
+		}
+		else if (old[*i] == '$')
+			*i += dollar(&(old[*i]), sh, new);
+		else if (old[*i] == '\"')
+		{
+			joinlast_onechr(old[*i], new);
+			(*i)++;
+			break ;
+		}
+		else
+			(*i) += joinlast_onechr(old[*i], new);
+	}
+}
+
+static void		s_quote_dollar(char *old, int *i, char **new)
+{
+	*i += joinlast_onechr(old[*i], new);
+	while (old[*i] != '\'')
+		*i += joinlast_onechr(old[*i], new);
+	*i += joinlast_onechr(old[*i], new);
+}
+
 static int		replace_one_block(char *old, int *i, char **new, t_sh *sh)
 {
+	printf("testing[%d]\n", *i);
 	if (old[*i] == '\\' && old[*i + 1])
 	{
 		*i += joinlast_onechr(old[*i], new)
@@ -22,10 +55,12 @@ static int		replace_one_block(char *old, int *i, char **new, t_sh *sh)
 	}
 	else if (old[*i] == '\'')
 	{
-		*i += joinlast_onechr(old[*i], new);
-		while (old[*i] != '\'')
-			*i += joinlast_onechr(old[*i], new);
-		*i += joinlast_onechr(old[*i], new);
+		s_quote_dollar(old, i, new);
+		return (1);
+	}
+	else if (old[*i] == '\"')
+	{
+		d_quote_dollar(old, i, new, sh);
 		return (1);
 	}
 	else if (old[*i] == '$')
@@ -48,7 +83,7 @@ void			replace_dollar(char **cmdl, t_sh *sh)
 	new[0] = '\0';
 	while (old[i])
 	{
-		if (!replace_one_block(old, &i, &new, sh))
+		if (replace_one_block(old, &i, &new, sh) == 0)
 			i += joinlast_onechr(old[i], &new);
 	}
 	free(old);
