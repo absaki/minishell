@@ -6,7 +6,7 @@
 /*   By: kikeda <kikeda@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 22:11:39 by kikeda            #+#    #+#             */
-/*   Updated: 2021/03/20 22:17:16 by kikeda           ###   ########.fr       */
+/*   Updated: 2021/03/21 14:35:18 by kikeda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		is_pipe_semic(char c)
 	return (0);
 }
 
-static t_cmd	*dup_cmdcontent(char *s, int i, int start)
+static t_cmd	*dup_cmd(char *s, int i, int start)
 {
 	t_cmd *rtn;
 
@@ -70,7 +70,7 @@ t_cmdlist		*sep_list(char *s)
 	int			start;
 	int			parenthesis;
 	t_cmdlist	*rtn;
-	t_cmdlist	*newitem;
+	t_cmdlist	*new;
 
 	i = 0;
 	start = 0;
@@ -81,14 +81,15 @@ t_cmdlist		*sep_list(char *s)
 		parenthesis = flag_p(s[i], parenthesis, i > 0 ? s[i - 1] : 0);
 		if (!parenthesis && is_pipe_semic(s[i]))
 		{
-			newitem = ft_lstnew(dup_cmdcontent(s, i, start));
-			ft_lstadd_back(&rtn, newitem);
+			ft_lstadd_back(&rtn, (new = ft_lstnew(dup_cmd(s, i, start))));
 			start = i + 1;
 		}
 		if (s[i] == '\0')
 			break ;
 		i++;
 	}
+	if (parenthesis)
+		ft_lstclear(&(rtn), (void (*)(void *))free_cmd);
 	return (parenthesis ? NULL : rtn);
 }
 
